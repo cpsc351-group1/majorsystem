@@ -1,7 +1,14 @@
 <?php
 
+/*    CREDENTIALS   */
+
+$SRVR = "localhost:3307";
+$USER = "root";
+$PASS = "root";
+$TABL = "mydb";
+
 // Creating connection
-$conn = new mysqli("localhost:3307", "root", "root", "mydb");
+$conn = new mysqli($SRVR, $USER, $PASS, $TABL);
 
 // Checking connection
 if ($conn->connect_error) {
