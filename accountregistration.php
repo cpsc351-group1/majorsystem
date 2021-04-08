@@ -24,6 +24,6 @@
     <title>Account Registration</title>
   </head>
   <body>
-    <?php echo 'test' ?>
+    <?php echo '<h1 style="text-align:right">Account Registration</h1>' ?>
   </body>
 </html>
