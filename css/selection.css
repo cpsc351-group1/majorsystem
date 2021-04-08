@@ -1,0 +1,92 @@
+/* basic layout stuff */
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.wrapper {
+  width: 90%;
+  height: 600px;
+  margin: 0 auto;
+}
+
+h4 {
+  text-align: center;
+}
+
+/* list formatting */
+
+#users {
+  height: inherit;
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  outline: 1px solid black;
+}
+
+.results {
+  overflow-y: scroll;
+  grid-column: 1 / 2;
+  padding: 0.5em;
+  outline: 1px solid black;
+}
+
+.results>div {
+  display: grid;
+  grid-template-columns: 6fr 1fr;
+  padding: 0.5em;
+  margin: 0.5em;
+  outline: 1px solid black;
+}
+
+/* to comply with the design for faculty listing... */
+
+.resultChoices {
+  text-align: center;
+}
+
+.resultChoices input[type=checkbox] {
+  width: 1.5em;
+  height: 1.5em;
+}
+
+/* options menu style */
+
+#options {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#options hr {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.searchbar {
+  width: 80%;
+}
+
+.searchbar input {
+  width: 100%;
+  height: 3em;
+}
+
+#options>div {
+  padding: 0.5em;
+}
+
+#options .emphasis {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+#options .emphasis * {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5em;
+  height: 3em;
+}
