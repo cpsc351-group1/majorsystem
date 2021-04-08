@@ -10,7 +10,7 @@ INSERT IGNORE INTO user
   VALUES (00978879, 'Beyoncé Knowles-Carter', 'Music', 'Department Lead', '1981-09-04', '2008-05-03', 'Female', 'Black');
 
 INSERT IGNORE INTO user
-  VALUES (00966678, 'Claire Boucher', 'Music', 'Associate Professor', '1988-03-17', '2018-01-04', 'Non-binary', 'White');
+  VALUES (00966678, 'Claire Boucher', 'Graphic Design', 'Associate Professor', '1988-03-17', '2018-01-04', 'Non-binary', 'White');
 
 INSERT IGNORE INTO user
   VALUES (00942069, 'Elizabeth Grant', 'Philosophy and Religion', 'Professor', '1985-06-21', '2005-04-09', 'Female', 'White');
@@ -28,7 +28,7 @@ INSERT IGNORE INTO user
   VALUES (00982429, 'Mike Lapke', 'Physics, Computer Science and Engineering', 'Associate Professor', '1960-02-03', '06-30-2020', 'Male', 'White');
 
 INSERT IGNORE INTO user
-  VALUES (09440044, 'Onika Maraj-Petty', 'Luter School of Business', 'Department Lead', '1982-12-08', '2000-09-15', 'Female', 'Black');
+  VALUES (00944004, 'Onika Maraj-Petty', 'Luter School of Business', 'Department Lead', '1982-12-08', '2000-09-15', 'Female', 'Black');
 
 /*    COMMITTEES    */
 
