@@ -1,3 +1,4 @@
+<!DOCTYPE php>
 <html>
   <head>
     <title>Account Registration</title>
