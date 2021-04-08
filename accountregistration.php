@@ -24,11 +24,6 @@
     <title>Account Registration</title>
   </head>
   <body>
-    <?php 
-    echo "<html><body>
-	<form action=\"odis.php\" method=\"post\">
-	Click the submit button to view the Master List! 
-	<br><br><input type=\"submit\" name=\"submit\"><br><br>";
-	 ?>
+    <?php echo 'test' ?>
   </body>
 </html>
