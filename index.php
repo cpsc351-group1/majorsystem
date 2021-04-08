@@ -2,6 +2,12 @@
 <html>
   <head>
     <title>CNU Committee Database</title>
+    <style media="screen">
+      body {
+        display: flex;
+        flex-flow: column nowrap;
+      }
+    </style>
   </head>
   <body>
     <?php echo '<h1>hello world</h1>' ?>
