@@ -10,6 +10,8 @@
         text-align: center;
         color: #333333;
       }
+      body {
+      background-color: dodgerblue;}
       i {
       font-weight: bold;
       color: black;
