@@ -1,0 +1,59 @@
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.wrapper {
+  width: 90%;
+  height: 600px;
+  margin: 0 auto;
+}
+
+h4 {
+  text-align: center;
+}
+
+/* profile specific formatting */
+
+#profile {
+  border: 1px solid black;
+}
+
+#info {
+  padding: 1em;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  gap: 1em;
+}
+
+#info .column {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  flex: 1;
+  gap: 1em;
+}
+
+#info .block {
+  grid-column: span 1;
+  grid-row: span 1;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+#info h5 {
+  grid-column: span 2;
+  margin: 0 0 1em 0;
+}
+
+#info input[type=submit] {
+  padding: 1em;
+  width: 100%;
+}
+
+#info .submit {
+  display: flex;
+  justify-content: center;
+}
