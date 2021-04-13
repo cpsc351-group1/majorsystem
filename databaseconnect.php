@@ -2,7 +2,7 @@
 
 /*    CREDENTIALS   */
 
-$SRVR = "localhost:3307";
+$SRVR = "localhost:3308";
 $USER = "root";
 $PASS = "root";
 $TABL = "mydb";
