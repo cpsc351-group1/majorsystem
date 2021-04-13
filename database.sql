@@ -14,6 +14,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
+DROP DATABASE IF EXISTS `mydb`;
 CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
 USE `mydb` ;
 
@@ -24,7 +25,9 @@ DROP TABLE IF EXISTS `mydb`.`User` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`User` (
   `CNU_ID` INT NOT NULL,
-  `Name` VARCHAR(45) NOT NULL,
+  `Fname` VARCHAR(45) NOT NULL,
+  `Lname` VARCHAR(45) NOT NULL,
+  `Email` VARCHAR(72) NOT NULL,
   `Department` VARCHAR(45) NOT NULL,
   `Position` VARCHAR(45) NOT NULL,
   `Birthday` DATE NOT NULL,
@@ -57,8 +60,8 @@ DROP TABLE IF EXISTS `mydb`.`Committee Seat` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`Committee Seat` (
   `Seat_ID` INT NOT NULL AUTO_INCREMENT,
   `Committee_Committee_ID` INT NOT NULL,
-  `Starting_Term` INT NOT NULL,
-  `Ending_Term` INT,
+  `Starting_Term` VARCHAR(12) NOT NULL,
+  `Ending_Term` VARCHAR(12),
   `User_CNU_ID` INT NOT NULL,
   PRIMARY KEY (`Seat_ID`, `Committee_Committee_ID`),
   INDEX `fk_Committee Seat_Committee1_idx` (`Committee_Committee_ID` ASC),
@@ -95,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Chairman` (
     REFERENCES `mydb`.`User` (`CNU_ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
+ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table `mydb`.`Election`
