@@ -1,5 +1,10 @@
 /*    USERS   */
 
+TRUNCATE TABLE `committee seat`;
+TRUNCATE TABLE `chairman`;
+TRUNCATE TABLE `committee`;
+TRUNCATE TABLE `user`;
+
 INSERT IGNORE INTO user
   VALUES (00998877, 'John Doe', 'Molecular Biology and Chemistry', 'Associate Professor', '1979-01-01', '2020-01-01', 'Male', 'White');
 
@@ -48,6 +53,7 @@ INSERT IGNORE INTO committee (Name, Description)
   VALUES ('University Faculty on Committees', 'Committee that oversees committees.');
 
 /*  COMMITTEE SEATS   */
+
 
 INSERT IGNORE INTO committee seat
   VALUES (1, 1, 'Fall 2019', NULL, 00998877);
