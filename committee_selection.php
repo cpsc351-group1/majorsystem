@@ -33,7 +33,7 @@
             <?php
 
             // Pull user details to generate checklist
-            $sql = "SELECT CNU_ID, Name, Department, Position FROM User";
+            $sql = "SELECT Committee_ID, Name, Description FROM Committee";
             $result = $conn->query($sql);
             // Store user details to array
             for ($a_result = array(); $row = $result->fetch_assoc(); $a_result[] = $row);
