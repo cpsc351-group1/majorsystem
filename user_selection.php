@@ -8,7 +8,7 @@
 
     /*    CREDENTIALS   */
 
-    $SRVR = "localhost:3308";
+    $SRVR = "localhost:8889";
     $USER = "root";
     $PASS = "root";
     $TABL = "mydb";
@@ -53,7 +53,7 @@
                 echo "<div> <label name='$id'><b>$name</b><br>$dept<br>$pos</label>
                         <div class='resultChoices'>
                           <input type='checkbox' name='$id' form='options'></input><br>
-                          <a href='/src/majorsystem/user_details.php?user=$id'><button>Details</button></a>
+                          <a href='user_details.php?user=$id'><button>Details</button></a>
                         </div>
                       </div>";
               }
