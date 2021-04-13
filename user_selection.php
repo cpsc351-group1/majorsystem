@@ -2,26 +2,8 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <!-- install JQuery -->
-    <script type="text/javascript" src="jquery3.6.0.min.js"></script>
-    <?php
-
-    /*    CREDENTIALS   */
-
-    $SRVR = "localhost:8889";
-    $USER = "root";
-    $PASS = "root";
-    $TABL = "mydb";
-
-    // Creating connection
-    $conn = new mysqli($SRVR, $USER, $PASS, $TABL);
-
-    // Checking connection
-    if ($conn->connect_error) {
-        die("Oh no! Connection failed: " . $conn->connect_error);
-    }
-    ?>
     <link rel="stylesheet" href="css/selection.css">
+    <?php include 'databaseconnect.php'?>
 
     <title>CNU Committees - System Users</title>
   </head>
@@ -39,27 +21,27 @@
             for ($a_result = array(); $row = $result->fetch_assoc(); $a_result[] = $row);
 
             if ($result->num_rows > 0) {
-              // Iterate through all users
-              foreach ($a_result as $row) {
-                $id = $row['CNU_ID'];
-                $name = $row['Name'];
-                $dept = $row['Department'];
-                $pos = $row['Position'];
+                // Iterate through all users
+                foreach ($a_result as $row) {
+                    $id = $row['CNU_ID'];
+                    $name = $row['Name'];
+                    $dept = $row['Department'];
+                    $pos = $row['Position'];
 
-                // Create div populated with relevant information
-                // and checkbox/details options.
+                    // Create div populated with relevant information
+                    // and checkbox/details options.
 
-                // Checkbox belongs to options form, placed here for visuals
-                echo "<div> <label name='$id'><b>$name</b><br>$dept<br>$pos</label>
+                    // Checkbox belongs to options form, placed here for visuals
+                    echo "<div> <label name='$id'><b>$name</b><br>$dept<br>$pos</label>
                         <div class='resultChoices'>
                           <input type='checkbox' name='$id' form='options'></input><br>
                           <a href='user_details.php?user=$id'><button>Details</button></a>
                         </div>
                       </div>";
-              }
+                }
             } else {
-              // Display blank result if no search results
-              echo "<h5>No results found for current search settings.</h5>";
+                // Display blank result if no search results
+                echo "<h5>No results found for current search settings.</h5>";
             }
 
             ?>

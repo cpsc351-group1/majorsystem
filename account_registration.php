@@ -3,22 +3,8 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/profile.css">
-    <?php
+    <?php include 'databaseconnect.php'?>
 
-    /*    CREDENTIALS   */
-    $SRVR = "localhost:3308";
-    $USER = "root";
-    $PASS = "root";
-    $TABL = "mydb";
-
-    // Creating connection
-    $conn = new mysqli($SRVR, $USER, $PASS, $TABL);
-
-    // Checking connection
-    if ($conn->connect_error) {
-        die("Oh no! Connection failed: " . $conn->connect_error);
-    }
-    ?>
     <title>CNU Committees — Registration</title>
   </head>
   <body>
