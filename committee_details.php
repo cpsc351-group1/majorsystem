@@ -7,7 +7,7 @@
 
     /*    CREDENTIALS   */
 
-    $SRVR = "localhost:8889";
+    $SRVR = "localhost:3308";
     $USER = "root";
     $PASS = "root";
     $TABL = "mydb";
