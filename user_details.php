@@ -46,7 +46,6 @@
           <div class="column">
             <div class="block">
               <h3>Employment</h3>
-              <!-- TODO: turn into dropdown menus where appropriate-->
               <?php echo "College: ".$_GET['college']; ?>
 
               <?php echo "Position: ".$_GET['position']; ?>
@@ -55,7 +54,6 @@
             </div>
             <div class="block">
               <h3>Other</h3>
-              <!-- TODO: turn these into dropdown menus -->
               <?php echo "Race: ".$_GET['race']; ?>
 
               <?php echo "Gender: ".$_GET['gender']; ?>
