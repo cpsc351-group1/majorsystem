@@ -18,9 +18,4 @@ if ($conn->connect_error) {
 // Boolean to track if already in database
 // $found = FALSE:
 
-// Do something!
-echo "This code currently has no function, but it works!<br>";
-
-$conn->close();
-
 ?>
