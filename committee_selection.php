@@ -23,11 +23,11 @@
     ?>
     <link rel="stylesheet" href="css/selection.css">
 
-    <title>CNU Committees - System Users</title>
+    <title>CNU Committees - Committees</title>
   </head>
   <body>
     <div class="wrapper">
-      <h3>System Users</h3>
+      <h3>Committees</h3>
       <div id="users">
         <div class="results">
             <?php
