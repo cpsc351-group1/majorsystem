@@ -8,7 +8,7 @@
 
     /*    CREDENTIALS   */
 
-    $SRVR = "localhost:8889";
+    $SRVR = "localhost:3308";
     $USER = "root";
     $PASS = "root";
     $TABL = "mydb";
@@ -23,17 +23,17 @@
     ?>
     <link rel="stylesheet" href="css/selection.css">
 
-    <title>CNU Committees - System Users</title>
+    <title>CNU Committees - Committees</title>
   </head>
   <body>
     <div class="wrapper">
-      <h3>System Users</h3>
+      <h3>Committees</h3>
       <div id="users">
         <div class="results">
             <?php
 
             // Pull user details to generate checklist
-            $sql = "SELECT CNU_ID, Name, Department, Position FROM User";
+            $sql = "SELECT Committee_ID, Name, Description FROM Committee";
             $result = $conn->query($sql);
             // Store user details to array
             for ($a_result = array(); $row = $result->fetch_assoc(); $a_result[] = $row);

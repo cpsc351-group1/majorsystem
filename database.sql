@@ -57,9 +57,8 @@ DROP TABLE IF EXISTS `mydb`.`Committee Seat` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`Committee Seat` (
   `Seat_ID` INT NOT NULL AUTO_INCREMENT,
   `Committee_Committee_ID` INT NOT NULL,
-  `Description` VARCHAR(45) NOT NULL,
   `Starting_Term` INT NOT NULL,
-  `Ending_Term` INT NOT NULL,
+  `Ending_Term` INT,
   `Chairman` TINYINT NOT NULL,
   `User_CNU_ID` INT NOT NULL,
   PRIMARY KEY (`Seat_ID`, `Committee_Committee_ID`),
