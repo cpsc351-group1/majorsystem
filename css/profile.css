@@ -24,7 +24,7 @@ body {
   gap: 1em;
 }
 
-.profile .body .column {
+.profile .column {
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
@@ -32,30 +32,48 @@ body {
   gap: 1em;
 }
 
-.profile .body .block {
+.profile .block {
   grid-column: span 1;
   grid-row: span 1;
   display: grid;
   grid-auto-columns: 1fr 2fr;
 }
 
-.profile .body .heading {
-  font-weight: bold;
-  grid-column: span 2;
-  margin: 0 0 1em 0;
+.profile .tiles {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
+  justify-content: space-around;
+  grid-gap: 1em;
 }
 
-.profile .body .heading.sub {
+.profile .tiles .block {
+  display: block;
+  padding: 0.5em;
+  border: 1px solid black;
+  min-height: 150px;
+}
+
+/*    profile headings and labels    */
+
+.profile .heading {
+  font-weight: bold;
+  grid-column: span 2;
+}
+
+.profile .heading.sub {
   font-size: 1.1em;
 }
 
-.profile .body .heading.major {
+.profile .heading.major {
   font-size: 1.5em;
 }
 
 .profile .body .label {
   font-style: italic;
 }
+
+/*    profile inputs    */
 
 .profile .body input[type=submit] {
   width: 100%;

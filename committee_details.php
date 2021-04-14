@@ -10,12 +10,16 @@
 
       $com = $conn->query($com_sql)->fetch_assoc();
 
+      $chair_sql = "SELECT User_CNU_ID FROM `Chairman` WHERE Committee_Committee_ID='$com_id'";
+      $chair_id = $conn->query($chair_sql)->fetch_assoc()['User_CNU_ID'];
 
-      // $com_users_sql = "SELECT * FROM `Committee Seat` WHERE committee_committee_ID='$comm_id'";
-      // $com_users = $conn->query($com_users_sql);
+
+      $com_seats_sql = "SELECT * FROM `Committee Seat` WHERE Committee_Committee_ID='$com_id'";
+
+      $com_seats = $conn->query($com_seats_sql);
     ?>
 
-    <title>CNU — <?php echo $comm['Name'];?></title>
+    <title>CNU — <?php echo $com['Name'];?></title>
   </head>
   <body>
 
@@ -36,6 +40,38 @@
 
             <button type="button" name="election">Start Election for New Seat</button>
             <button type="button" name="appoint">Appoint User to New Seat</button>
+          </div>
+        </div>
+      </div>
+      <div class="profile">
+        <div class="body block">
+          <span class='major heading'>Committee Seats</span>
+        </div>
+        <div class="body">
+          <div class="tiles">
+            <?php
+              while ($seat = $com_seats->fetch_assoc()) {
+
+                $user_id = intval($seat['User_CNU_ID']);
+
+                $user_sql = "SELECT CNU_ID, Fname, Lname, Department, Position, Photo FROM `User` WHERE CNU_ID='$user_id'";
+                $user = $conn->query($user_sql)->fetch_assoc();
+
+                $is_chair = $user['CNU_ID'] == $chair_id;
+
+                $ending_term = $seat['Ending_Term'] ?? 'Present';
+
+                // TODO: add photos, if desired :)
+
+                echo "<div class='block'>";
+                echo $is_chair ? "<span class='heading'>Committee Chair</span><br>" : "";
+                echo "<span class='sub heading'>".$user['Fname']." ".$user['Lname']."</span><br>"
+                      .$user['Department']     .", "   .$user['Position']                ."<br>"
+                      .$seat['Starting_Term']  ." - "  .$ending_term;
+
+                echo "</div>";
+              }
+            ?>
           </div>
         </div>
       </div>
