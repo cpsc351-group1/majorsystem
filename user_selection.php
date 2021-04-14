@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/selection.css">
-    <?php include 'databaseconnect.php'?>
+    <?php include 'databaseconnect.php'; ?>
 
     <title>CNU Committees - System Users</title>
   </head>
@@ -15,8 +15,9 @@
             <?php
 
             // Pull user details to generate checklist
-            $sql = "SELECT CNU_ID, Name, Department, Position FROM User";
+            $sql = "SELECT CNU_ID, Fname, Lname, Department, Position FROM User";
             $result = $conn->query($sql);
+
             // Store user details to array
             for ($a_result = array(); $row = $result->fetch_assoc(); $a_result[] = $row);
 
@@ -24,7 +25,7 @@
                 // Iterate through all users
                 foreach ($a_result as $row) {
                     $id = $row['CNU_ID'];
-                    $name = $row['Name'];
+                    $name = $row['Fname'].' '.$row['Lname'];
                     $dept = $row['Department'];
                     $pos = $row['Position'];
 
