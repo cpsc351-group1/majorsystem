@@ -9,7 +9,7 @@
   </head>
   <body>
     <div class="wrapper">
-      <h3>Committees</h3>
+      <h2>Committees</h2>
       <div id="users">
         <div class="results">
             <?php

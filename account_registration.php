@@ -13,7 +13,7 @@
   </head>
   <body>
     <div class="wrapper">
-      <h3>Account Registration</h3>
+      <h2>Account Registration</h2>
       <form class="profile" action="account_registration" method="post">
         <div class="body">
           <div class="column">

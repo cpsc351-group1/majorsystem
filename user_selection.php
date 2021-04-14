@@ -9,7 +9,7 @@
   </head>
   <body>
     <div class="wrapper">
-      <h3>System Users</h3>
+      <h2>System Users</h2>
       <div id="users">
         <div class="results">
             <?php
