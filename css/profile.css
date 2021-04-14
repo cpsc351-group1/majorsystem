@@ -39,11 +39,18 @@ body {
   grid-auto-columns: 1fr 2fr;
 }
 
-.profile .body .subheading {
+.profile .body .heading {
   font-weight: bold;
-  font-size: 1.1em;
   grid-column: span 2;
   margin: 0 0 1em 0;
+}
+
+.profile .body .heading.sub {
+  font-size: 1.1em;
+}
+
+.profile .body .heading.major {
+  font-size: 1.5em;
 }
 
 .profile .body .label {
@@ -52,4 +59,8 @@ body {
 
 .profile .body input[type=submit] {
   width: 100%;
+}
+
+.profile button {
+  height: 100%;
 }

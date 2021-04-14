@@ -18,7 +18,7 @@
         <div class="body">
           <div class="column">
             <div class="block">
-              <span class="subheading">Personal Info</span>
+              <span class="sub heading">Personal Info</span>
               <label for='fname'>First Name</label>
               <input id='fname' type="text" name="fname" placeholder="First Name" rquired>
 
@@ -33,7 +33,7 @@
 
             </div>
             <div class="block">
-              <span class="subheading">Password</span>
+              <span class="sub heading">Password</span>
               <!-- TODO: turn this into an actual password field lol -->
               <label for="pass">Password</label>
               <input id='pass' type="text" name="pass" placeholder="Password" required>
@@ -44,7 +44,7 @@
           </div>
           <div class="column">
             <div class="block">
-              <span class="subheading">Employment</span>
+              <span class="sub heading">Employment</span>
               <!-- TODO: turn into dropdown menus where appropriate-->
               <label for='college'>College</label>
               <input id='college' type="text" name="college" placeholder="College" required>
@@ -56,7 +56,7 @@
               <input id='term_hiring' type="date" name="term_hiring" required>
             </div>
             <div class="block">
-              <span class="subheading">Other</span>
+              <span class="sub heading">Other</span>
               <!-- TODO: turn these into dropdown menus -->
               <label for='race'>Race</label>
               <input id='race' type="text" name="race" placeholder="Race" required>

@@ -6,7 +6,7 @@
     <?php include 'databaseconnect.php';
 
       $user_id = intval($_GET['user']);
-      $sql = "SELECT * FROM User WHERE CNU_ID='$user_id';";
+      $sql = "SELECT * FROM `User` WHERE CNU_ID='$user_id';";
 
       $user = $conn->query($sql)->fetch_assoc();
     ?>
@@ -27,7 +27,7 @@
         <div class="body">
           <div class="column">
             <div class="block">
-              <span class="subheading">Personal Info</span>
+              <span class="sub heading">Personal Info</span>
               <span class="label">First Name:</span>
               <span><?php echo $user['Fname'];?></span>
 
@@ -43,7 +43,7 @@
           </div>
           <div class="column">
             <div class="block">
-              <span class="subheading">Employment</span>
+              <span class="sub heading">Employment</span>
               <span class="label">College:</span>
               <span><?php echo $user['Department'];?></span>
 
@@ -56,7 +56,7 @@
           </div>
           <div class="column">
             <div class="block">
-              <span class="subheading">Other</span>
+              <span class="sub heading">Other</span>
               <span class="label">Race:</span>
               <span><?php echo $user['Race'];?></span>
 
