@@ -2,70 +2,73 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="css/profile.css">
-    <?php include 'databaseconnect.php'?>
+    <link rel="stylesheet" href="css/profile.css" type="text/css">
+    <?php include 'databaseconnect.php'
+
+      /* TODO: Add sql query to update database when info is posted */
+
+    ?>
 
     <title>CNU Committees — Registration</title>
   </head>
   <body>
     <div class="wrapper">
       <h3>Account Registration</h3>
-      <form id="profile" action="account_registration" method="post">
-        <h4>Account Information</h4>
-        <div id="info">
+      <form class="profile" action="account_registration" method="post">
+        <div class="body">
           <div class="column">
             <div class="block">
-              <h5>Personal Info</h5>
+              <span class="subheading">Personal Info</span>
               <label for='fname'>First Name</label>
-              <input id='fname' type="text" name="fname" value="First Name"></input>
+              <input id='fname' type="text" name="fname" placeholder="First Name" rquired>
 
               <label for='lname'>Last Name</label>
-              <input id='lname' type="text" name="lname" value="Last Name"></input>
+              <input id='lname' type="text" name="lname" placeholder="Last Name" required>
 
               <label for='email'>Email</label>
-              <input id='email' type="email" name="email" value="Email"></input>
+              <input id='email' type="email" name="email" placeholder="Email" required>
 
               <label for='bday'>Birthday</label>
-              <input id='bday' type="date" name="bday" value="Date of Birth"></input>
+              <input id='bday' type="date" name="bday" required>
 
             </div>
             <div class="block">
-              <h5>Password</h5>
+              <span class="subheading">Password</span>
               <!-- TODO: turn this into an actual password field lol -->
               <label for="pass">Password</label>
-              <input id='pass' type="text" name="pass" value="Password"></input>
+              <input id='pass' type="text" name="pass" placeholder="Password" required>
 
               <label for='cpass'>Confirm</label>
-              <input id='cpass' type="text" name="cpass" value="Confirm Password"></input>
+              <input id='cpass' type="text" name="cpass" placeholder="Confirm Password" required>
             </div>
           </div>
           <div class="column">
             <div class="block">
-              <h5>Employment</h5>
+              <span class="subheading">Employment</span>
               <!-- TODO: turn into dropdown menus where appropriate-->
               <label for='college'>College</label>
-              <input id='college' type="text" name="college" value="College"></input>
+              <input id='college' type="text" name="college" placeholder="College" required>
 
               <label for='position'>Position</label>
-              <input id='position' type="text" name="position" value="Position"></input>
+              <input id='position' type="text" name="position" placeholder="Position" required>
 
               <label for='term_hiring'>Hiring Term</label>
-              <input id='term_hiring' type="date" name="term_hiring" value="Term of Hiring"></input>
+              <input id='term_hiring' type="date" name="term_hiring" required>
             </div>
             <div class="block">
-              <h5>Other</h5>
+              <span class="subheading">Other</span>
               <!-- TODO: turn these into dropdown menus -->
               <label for='race'>Race</label>
-              <input id='race' type="text" name="race" value="Race"></input>
+              <input id='race' type="text" name="race" placeholder="Race" required>
 
               <label for='gender'>Gender</label>
-              <input id='gender' type="text" name="gender" value="Gender"></input>
+              <input id='gender' type="text" name="gender" placeholder="Gender" required>
             </div>
           </div>
           <div class="column">
             <div class="block submit">
               <!-- TODO: add photo uploading capability -->
-              <input id='submit' type="submit" value="Create Account"></input>
+              <input id='submit' type="submit" value="Create Account">
             </div>
           </div>
         </div>

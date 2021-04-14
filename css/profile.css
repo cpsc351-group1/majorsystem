@@ -10,17 +10,13 @@ body {
   margin: 0 auto;
 }
 
-h4 {
-  text-align: center;
-}
-
 /* profile specific formatting */
 
-#profile {
+.profile {
   border: 1px solid black;
 }
 
-#info {
+.profile .body {
   padding: 1em;
   display: flex;
   flex-flow: row nowrap;
@@ -28,7 +24,7 @@ h4 {
   gap: 1em;
 }
 
-#info .column {
+.profile .body .column {
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
@@ -36,24 +32,24 @@ h4 {
   gap: 1em;
 }
 
-#info .block {
+.profile .body .block {
   grid-column: span 1;
   grid-row: span 1;
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-auto-columns: 1fr 2fr;
 }
 
-#info h5 {
+.profile .body .subheading {
+  font-weight: bold;
+  font-size: 1.1em;
   grid-column: span 2;
   margin: 0 0 1em 0;
 }
 
-#info input[type=submit] {
-  padding: 1em;
-  width: 100%;
+.profile .body .label {
+  font-style: italic;
 }
 
-#info .submit {
-  display: flex;
-  justify-content: center;
+.profile .body input[type=submit] {
+  width: 100%;
 }
