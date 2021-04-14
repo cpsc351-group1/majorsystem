@@ -2,48 +2,70 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <?php include 'databaseconnect.php'?>
+    <link rel="stylesheet" href="css/profile.css" type="text/css">
+    <?php include 'databaseconnect.php';
 
-    <title>CNU User Details — </title>
+      $user_id = intval($_GET['user']);
+      $sql = "SELECT * FROM User WHERE CNU_ID='$user_id';";
+
+      $user = $conn->query($sql)->fetch_assoc();
+    ?>
+
+    <title>CNU — <?php echo $user['Fname'].$user['Lname']; ?></title>
   </head>
   <body>
-    <title>CNU Committees — User Details</title>
-  </head>
-  <body>
+
+    <!-- TODO: Create PHP script to generate this page for all
+               users in a report    -->
+
     <div class="wrapper">
       <h2>User Details</h2>
-      <form id="profile" action="user_details" method="post">
-        <div id="info">
+      <div class="profile">
+
+        <!-- TODO: Add user photo and committee memberships -->
+
+        <div class="body">
           <div class="column">
             <div class="block">
-              <h3>Personal Info</h3>
-              <?php echo "First Name: ".$_GET['fname']; ?>
+              <span class="subheading">Personal Info</span>
+              <span class="label">First Name:</span>
+              <span><?php echo $user['Fname'];?></span>
 
-              <?php echo "Last Name: ".$_GET['lname']; ?>
+              <span class="label">Last Name:</span>
+              <span><?php echo $user['Lname'];?></span>
 
-              <?php echo "Email: ".$_GET['email']; ?>
+              <span class="label">Email:</span>
+              <span><?php echo $user['Email'];?></span>
 
-              <?php echo "Birthday: ".$_GET['birthday']; ?>
-
+              <span class="label">Birthday:</span>
+              <span><?php echo $user['Birthday'];?></span>
             </div>
+          </div>
           <div class="column">
             <div class="block">
-              <h3>Employment</h3>
-              <?php echo "College: ".$_GET['college']; ?>
+              <span class="subheading">Employment</span>
+              <span class="label">College:</span>
+              <span><?php echo $user['Department'];?></span>
 
-              <?php echo "Position: ".$_GET['position']; ?>
+              <span class="label">Position:</span>
+              <span><?php echo $user['Position'];?></span>
 
-              <?php echo "Date of Hiring: ".$_GET['date_of_hiring']; ?>
+              <span class="label">Date of Hiring:</span>
+              <span><?php echo $user['Date_of_Hiring'];?></span>
             </div>
+          </div>
+          <div class="column">
             <div class="block">
-              <h3>Other</h3>
-              <?php echo "Race: ".$_GET['race']; ?>
+              <span class="subheading">Other</span>
+              <span class="label">Race:</span>
+              <span><?php echo $user['Race'];?></span>
 
-              <?php echo "Gender: ".$_GET['gender']; ?>
+              <span class="label">Gender:</span>
+              <span><?php echo $user['Gender'];?></span>
             </div>
           </div>
         </div>
-      </form>
+      </div>
     </div>
     <?php $conn->close(); ?>
   </body>
