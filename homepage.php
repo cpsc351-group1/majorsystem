@@ -29,7 +29,10 @@
       <div class="session_details">
         Logged in as <b><?php echo $full_name; ?></b>
         <hr>
-        <button><a href="index.php" style="color: white">Sign out</a></button>
+        <form action="index.php" method="post">
+          <input type="hidden" name="logout" value="set">
+          <input type="submit" name="logout" value="Sign out">
+        </form>
       </div>
       <div class="block">
         Welcome to the<br>

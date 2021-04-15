@@ -3,6 +3,16 @@
 <html lang="en">
 <head>
   <?php
+    # erase current session if coming from logout
+    if (isset($_POST['logout'])) {
+      session_unset();
+    }
+
+    # if session variable already set, redirect to homepage
+    if (isset($_SESSION['user'])) {
+      header('Location: homepage.php');
+    }
+
     # connect to database
     include 'databaseconnect.php';
 
@@ -42,8 +52,6 @@
             } else {
                 echo "<hr><div class='error'>Invalid credentials entered.</div>";
             }
-        } else {
-            session_unset();
         }
         ?>
         <hr>
