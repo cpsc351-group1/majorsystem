@@ -34,10 +34,10 @@
     <div id="innerbox">
       What are you looking for, [User Name]?
     </div><br>
-    <button><a href="MajorInterfaceProfile.html" style="color: white">View Profile</a></button>
-    <button><a href="MajorInterfaceCommittees.html" style="color: white">Committees</a></button>
-    <button><a href="MajorInterfaceElections.html" style="color: white">Elections</a></button>
-    <button><a href="MajorInterfaceNotifications.html" style="color: white">Notifications</a></button>
+    <button><a href="user_details.php?user=<?php echo $user_id;?>" style="color: white">View Profile</a></button>
+    <button><a href="committee_selection.php" style="color: white">Committees</a></button>
+    <button><a href="election_selection.php" style="color: white">Elections</a></button>
+    <button><a href="notifications.php" style="color: white">Notifications</a></button>
   </div>
 </body>
 

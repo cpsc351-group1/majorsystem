@@ -22,12 +22,24 @@ button { background-color: #2F4F4F;
 }
 
 
-#box { background-color: #D3D3D3;
+.wrapper { background-color: #D3D3D3;
 	   padding: 5px 20px;
 	   width: 250px;
 	   margin-left: auto;
 	   margin-right: auto;
 	   border: 3px solid #999999;
+}
+
+.wrapper .credentials {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  align-items: center;
+  margin: 0.5em;
+}
+
+label {
+  color: #000000;
+  text-align: left;
 }
 
 #homebox { background-color: #D3D3D3;
@@ -56,24 +68,17 @@ button { background-color: #2F4F4F;
 	   border: 3px solid #999999;
 }
 
-input[type=text], input[type=password] { background-color: #C0C0C0;
-				   padding-bottom: 5px;
-				   border-top-left-radius: 5px;
-				   border-bottom-left-radius: 5px;
-				   border-top-right-radius: 5px;
-				   border-bottom-right-radius: 5px;
-				   padding-top: .4em;
-				   padding-bottom: .4em;
 
+input[type=text], input[type=password] { background-color: #C0C0C0;
+           padding: .4em .25em .4em .25em;
+           border-radius: 5px;
 }
 
 input[type=submit] { background-color: #2F4F4F;
 					 color: #FFFFFF;
 					 border: 1px solid #999999;
-					 padding-left: 1em;
-					 padding-right: 1em;
-					 padding-top: .25em;
-					 padding-bottom: .25em;
+           padding: .25em 1em .25em 1em;
+           margin: 0.5em;
 					 font-size: 120%;
 }
 

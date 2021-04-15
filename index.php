@@ -39,19 +39,20 @@
 </h1>
 
 <body>
-  <div id="box">
+  <div class="wrapper">
     <br>
     <form action="index.php" method="post">
-      <label for="cnu_id"></label>
-      <input type="text" name="cnu_id" placeholder="CNU ID">
-      <br><br>
-      <label for="pass"></label>
-      <input type="password" name="pass" placeholder="Password">
-      <p>
-        <input type="submit" name="login" value="Login">
-      <footer>
-        <a href="user_registration.html" style="color: gray"><b>Create Account</b></a>
-      </footer>
+      <div class="credentials">
+        <label for="cnu_id">CNU ID</label>
+        <input type="text" name="cnu_id" placeholder="CNU ID">
+        <label for="pass">Password</label>
+        <input type="password" name="pass" placeholder="Password">
+      </div>
+      <input type="submit" name="login" value="Login">
+    </form>
+    <footer>
+      <a href="user_registration.html" style="color: gray"><b>Create Account</b></a>
+    </footer>
   </div>
 </body>
 
