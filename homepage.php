@@ -16,30 +16,35 @@
 
   $user = $result->fetch_assoc();
 
+  $full_name = $user['Fname']." ".$user['Lname'];
+
 ?>
   <title>CNU Committee Database</title>
   <link href="css/main.css" rel="stylesheet">
 </head>
 
 <body>
-  <div id="homebox">
-    Logged in as <?php echo $user['Fname']." ".$user['Lname']; ?> ------------------------------
-    <button><a href="index.php" style="color: white">Sign out</a></button>
-  </div>
-  <div id="outerbox"><br>
-    <div id="innerbox">
-      Welcome to the<br>
-      UFOC Comittee Database
+  <div class="wrapper">
+    <div class="body">
+      <div class="session_details">
+        Logged in as <b><?php echo $full_name; ?></b>
+        <hr>
+        <button><a href="index.php" style="color: white">Sign out</a></button>
+      </div>
+      <div class="block">
+        Welcome to the<br>
+        <b>UFOC Committee Database</b>
+        <br><br>
+        What are you looking for, <?php echo $full_name; ?>?
+      </div>
+      <div class="tiles">
+        <a href="user_details.php?user=<?php echo $user_id;?>" style="color: white"><button>View Profile</button></a>
+        <a href="committee_selection.php" style="color: white"><button>Committees</button></a>
+        <a href="election_selection.php" style="color: white"><button>Elections</button></a>
+        <a href="notifications.php" style="color: white"><button>Notifications</button></a>
+      </div>
     </div>
-    <div id="innerbox">
-      What are you looking for, [User Name]?
-    </div><br>
-    <button><a href="user_details.php?user=<?php echo $user_id;?>" style="color: white">View Profile</a></button>
-    <button><a href="committee_selection.php" style="color: white">Committees</a></button>
-    <button><a href="election_selection.php" style="color: white">Elections</a></button>
-    <button><a href="notifications.php" style="color: white">Notifications</a></button>
   </div>
 </body>
-
-
+<?php $conn->close(); ?>
 </html>
