@@ -1,13 +1,22 @@
+/* basic layout stuff */
+
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
   padding: 0;
   height: 100vh;
+
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
 }
 
 .wrapper {
   width: 80%;
-  height: 600px;
+  height: 85%;
   margin: 0 auto;
 }
 
