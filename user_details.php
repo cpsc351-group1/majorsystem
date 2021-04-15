@@ -12,10 +12,9 @@
       $user = $conn->query($sql)->fetch_assoc();
     ?>
 
-  <title>CNU — <?php echo $user['Fname'].$user['Lname']; ?></title>
-</head>
-
-<body>
+    <title>CNU — <?php echo $user['Fname']." ".$user['Lname']; ?></title>
+  </head>
+  <body>
 
   <!-- TODO: Create PHP script to generate this page for all
                users in a report    -->

@@ -68,9 +68,8 @@
                 echo "<div class='block'>";
                 echo $is_chair ? "<span class='heading'>Committee Chair</span><br>" : "";
                 echo "<span class='sub heading'>".$user['Fname']." ".$user['Lname']."</span><br>"
-                      .$user['Department']     .", "   .$user['Position']                ."<br>"
-                      .$seat['Starting_Term']  ." - "  .$ending_term;
-
+                      .$user['Department'].", ".$user['Position']."<br>"
+                      .$seat['Starting_Term']." - ".$ending_term;
                 echo "</div>";
               }
             ?>
