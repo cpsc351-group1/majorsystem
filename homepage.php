@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <title>CNU Committee Database</title>
-<link href="MajorInterface.css" rel="stylesheet">
+<link href="css/main.css" rel="stylesheet">
 </head>
 <body>
 <div id="homebox">
