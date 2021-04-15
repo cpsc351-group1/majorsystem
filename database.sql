@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`User` (
   `Fname` VARCHAR(45) NOT NULL,
   `Lname` VARCHAR(45) NOT NULL,
   `Email` VARCHAR(72) NOT NULL,
-  `Department` VARCHAR(45) NOT NULL,
+  `Department` VARCHAR(45),
   `Position` VARCHAR(45) NOT NULL,
   `Birthday` DATE NOT NULL,
   `Date_of_Hiring` DATE NOT NULL,
