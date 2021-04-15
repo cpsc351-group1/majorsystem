@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="css/selection.css">
-    <?php include 'databaseconnect.php'?>
 
-    <title>CNU Committees - Committees</title>
-  </head>
-  <body>
-    <div class="wrapper">
-      <h2>Committees</h2>
-      <div id="users">
-        <div class="results">
-            <?php
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="css/selection.css">
+  <?php include 'databaseconnect.php'?>
+
+  <title>CNU Committees - Committees</title>
+</head>
+
+<body>
+  <div class="wrapper">
+    <h2>Committees</h2>
+    <div id="users">
+      <div class="results">
+        <?php
 
             // Pull user details to generate checklist
             $sql = "SELECT * FROM Committee";
@@ -45,33 +47,35 @@
             }
 
             ?>
-        </div>
-        <form id="options" action="    'x'    " method="post"> <!--TODO: add report generation href-->
-        <!--TODO: add functionality to search options-->
-          <h4>Options</h4>
-          <!-- Search Bar -->
-          <div class='searchbar'>
-            <input type="text" name="search" placeholder="Search...">
-          </div>
-
-          <hr>
-          <!-- Selection Options -->
-          <div>
-            <button type="button" name="select_all">Select All</button>
-            <button type="button" name="deselect_all">Deselect All</button>
-          </div>
-
-          <hr>
-          <!-- Administrative Options
-               TODO: convert reporting into an input submit, create hyperlink for add user button-->
-          <div class="emphasis">
-            <button class="emphasis" type="button" name="add_user">Add Committee</button>
-            <button class="emphasis" type="button" name="generate_user_report">Generate Report on Selected</button>
-          </div>
-        </form>
       </div>
-    </div>
+      <form id="options" action="    'x'    " method="post">
+        <!--TODO: add report generation href-->
+        <!--TODO: add functionality to search options-->
+        <h4>Options</h4>
+        <!-- Search Bar -->
+        <div class='searchbar'>
+          <input type="text" name="search" placeholder="Search...">
+        </div>
 
-    <?php $conn->close(); ?>
-  </body>
+        <hr>
+        <!-- Selection Options -->
+        <div>
+          <button type="button" name="select_all">Select All</button>
+          <button type="button" name="deselect_all">Deselect All</button>
+        </div>
+
+        <hr>
+        <!-- Administrative Options
+               TODO: convert reporting into an input submit, create hyperlink for add user button-->
+        <div class="emphasis">
+          <button class="emphasis" type="button" name="add_user">Add Committee</button>
+          <button class="emphasis" type="button" name="generate_user_report">Generate Report on Selected</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <?php $conn->close(); ?>
+</body>
+
 </html>
