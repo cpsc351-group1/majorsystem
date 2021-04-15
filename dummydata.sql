@@ -5,8 +5,8 @@ DELETE FROM `user`;
 
 /*    USERS   */
 
-INSERT INTO  `user`
-  VALUES ('admin', 'admin', 'Test', 'Admin', 'admin@cnu.edu', NULL, 'Administrator', '2000-01-01', '2020-01-01', 'Non-binary', 'None', NULL)
+INSERT INTO `user`
+  VALUES (1, 'admin', 'Test', 'Admin', 'admin@cnu.edu', 'All', 'Administrator', '2000-01-01', '2020-01-01', 'Non-binary', 'None', NULL);
 
 INSERT INTO `user`
   VALUES (00998877, 'testpass1', 'John', 'Doe', 'johndoe@cnu.edu', 'Molecular Biology and Chemistry', 'Associate Professor', '1979-01-01', '2020-01-01', 'Male', 'White', NULL);
