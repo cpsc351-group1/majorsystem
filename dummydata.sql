@@ -2,8 +2,10 @@ DELETE FROM `chairman`;
 DELETE FROM `committee seat`;
 DELETE FROM `committee`;
 DELETE FROM `user`;
+DELETE FROM `election`;
 
 /*    USERS   */
+/*    CNU_ID, Password, Fname, Lname, Email, Department, Position, Birthday, Date_of_Hiring, Gender, Race, Photo    */
 
 INSERT INTO `user`
   VALUES (1, 'admin', 'Test', 'Admin', 'admin@cnu.edu', 'All', 'Administrator', '2000-01-01', '2020-01-01', 'Non-binary', 'None', NULL);
@@ -39,6 +41,7 @@ INSERT INTO `user`
   VALUES (00944004, 'testpass10', 'Onika', 'Maraj-Petty', 'onikamaraj@cnu.edu', 'Luter School of Business', 'Department Lead', '1982-12-08', '2000-09-15', 'Female', 'Black', NULL);
 
 /*    COMMITTEES    */
+/*    Name, Description    */
 
 INSERT INTO `committee` (Name, Description)
   VALUES ('Sustainability Committee', 'Committee that oversees sustainability.');
@@ -55,7 +58,8 @@ INSERT INTO `committee` (Name, Description)
 INSERT INTO `committee` (Name, Description)
   VALUES ('University Faculty on Committees', 'Committee that oversees committees.');
 
-/*  `committee seat`S   */
+/*    COMMITTEE SEATS    */
+/*    Committee_Seat_ID, Committee_Committee_ID, Starting_Term, Ending_Term, User_CNU_ID    */
 /* TODO: give some of these end_date values for testing archived seats */
 
 INSERT INTO `committee seat` (Committee_Committee_ID, Starting_Term, Ending_Term, User_CNU_ID)
@@ -89,13 +93,26 @@ INSERT INTO `committee seat` (Committee_Committee_ID, Starting_Term, Ending_Term
   VALUES (5, 'Fall 2020', NULL, 00944004);
 
 /*    CHAIRMAN    */
+/*    Committee_Committee_ID, User_CNU_ID   */
 
-INSERT INTO chairman VALUES (1, 00998877);
+INSERT INTO `chairman` VALUES (1, 00998877);
 
-INSERT INTO chairman VALUES (2, 00966678);
+INSERT INTO `chairman` VALUES (2, 00966678);
 
-INSERT INTO chairman VALUES (3, 00933833);
+INSERT INTO `chairman` VALUES (3, 00933833);
 
-INSERT INTO chairman VALUES (4, 00955259);
+INSERT INTO `chairman` VALUES (4, 00955259);
 
-INSERT INTO chairman VALUES (5, 00982429);
+INSERT INTO `chairman` VALUES (5, 00982429);
+
+/*    ELECTION    */
+/*    Election_ID, Committee_Committee_ID, Status, Number_Seats    */
+
+INSERT INTO `election` (Committee_Committee_ID, Status, Number_Seats)
+  VALUES (1, 'Nomination', 1);
+
+INSERT INTO `election` (Committee_Committee_ID, Status, Number_Seats)
+  VALUES (2, 'Voting', 5);
+
+INSERT INTO `election` (Committee_Committee_ID, Status, Number_Seats)
+  VALUES (3, 'Complete', 1);
