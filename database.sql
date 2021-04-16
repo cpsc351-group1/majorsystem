@@ -108,9 +108,9 @@ DROP TABLE IF EXISTS `mydb`.`Election` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`Election` (
   `Election_ID` INT NOT NULL AUTO_INCREMENT,
-  `Status` VARCHAR(45) NOT NULL,
-  `Term_ID` INT NOT NULL,
   `Committee_Committee_ID` INT NOT NULL,
+  `Status` VARCHAR(45) NOT NULL,
+  `Number_Seats` INT NOT NULL,
   PRIMARY KEY (`Election_ID`),
   INDEX `fk_Election_Committee1_idx` (`Committee_Committee_ID` ASC),
   CONSTRAINT `fk_Election_Committee1`
