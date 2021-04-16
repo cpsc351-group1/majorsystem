@@ -5,12 +5,17 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="css/profile.css" type="text/css">
-  <?php include 'databaseconnect.php';
+  <?php
+      include 'databaseconnect.php';
+      include 'commonfns.php';
 
       # query committee details
       $com_id = intval($_GET['committee']);
       $com_sql = "SELECT * FROM `Committee` WHERE Committee_ID='$com_id'";
       $com = $conn->query($com_sql)->fetch_assoc();
+
+      # redirect if committee doesn't exist
+      check_null($com);
 
       # query chairman
       $chair_sql = "SELECT User_CNU_ID FROM `Chairman` WHERE Committee_Committee_ID='$com_id'";

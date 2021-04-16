@@ -8,19 +8,24 @@
   <?php
 
       include 'databaseconnect.php';
+      include 'commonfns.php';
 
+      # get election details
       $election_id = intval($_GET['election']);
       $election_sql = "SELECT * FROM `Election` WHERE Election_ID='$election_id'";
       $election = $conn->query($election_sql)->fetch_assoc();
-      if (is_null($election)) {
-        header('Location: 404.php');
-      }
 
+      # redirect if election doesn't exist
+      check_null($election);
+
+      # get committee info
       $committee_id = intval($election['Committee_Committee_ID']);
       $committee_sql = "SELECT * FROM `Committee` WHERE Committee_ID='$committee_id'";
       $committee = $conn->query($committee_sql)->fetch_assoc();
 
+      # variables
       $status = $election['Status'];
+      $num_seats=$election['Number_Seats'];
     ?>
 
   <title>CNU — Election Details</title>
@@ -40,7 +45,7 @@
         <span class='major heading'><?php echo $committee['Name']; ?> Election</span>
         <hr>
         <div class="block">
-          <span class="emphasis"><?php $num_seats=$election['Number_Seats']; echo $num_seats." seat".($num_seats==1?'':'s'); ?> being elected</span>
+          <span class="emphasis"><?php echo $num_seats." seat".($num_seats==1?'':'s'); ?> being elected</span>
           Election Status: <?php echo $status; ?>
         </div>
       </div>

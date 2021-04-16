@@ -5,12 +5,16 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="css/profile.css" type="text/css">
-  <?php include 'databaseconnect.php';
+  <?php
+
+      include 'databaseconnect.php';
+      include 'commonfns.php';
 
       $user_id = intval($_GET['user']);
       $sql = "SELECT * FROM `User` WHERE CNU_ID='$user_id';";
-
       $user = $conn->query($sql)->fetch_assoc();
+
+      check_null($user);
     ?>
 
     <title>CNU — <?php echo $user['Fname']." ".$user['Lname']; ?></title>
