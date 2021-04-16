@@ -25,6 +25,11 @@ body {
   flex-flow: column nowrap;
 }
 
+.emphasis {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
 /* profile specific formatting */
 
 .body {
@@ -33,6 +38,12 @@ body {
   display: flex;
   justify-content: space-around;
   gap: 1em;
+}
+
+.body hr {
+  border: 1px solid #000000;
+  height: 0;
+  width: 100%;
 }
 
 .body .column {
