@@ -12,7 +12,9 @@
 
 <body>
   <div class="wrapper">
-    <h2>Committees</h2>
+    <header>
+      <h2>Committees</h2>
+    </header>
     <div id="users">
       <div class="results">
         <?php
@@ -69,8 +71,8 @@
         <!-- Administrative Options
                TODO: convert reporting into an input submit, create hyperlink for add user button-->
         <div class="emphasis">
-          <button class="emphasis" type="button" name="add_user">Add Committee</button>
-          <button class="emphasis" type="button" name="generate_user_report">Generate Report on Selected</button>
+          <a href="#"><button type="button" name="add_user">Add Committee</button></a> <!--TODO: implement this-->
+          <input type="submit" name="report" value="Generate Report on Selected">
         </div>
       </form>
     </div>

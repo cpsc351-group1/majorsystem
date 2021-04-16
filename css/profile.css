@@ -1,34 +1,4 @@
-/* basic layout stuff */
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-
-  display: flex;
-  flex-flow: column nowrap;
-  position: relative;
-}
-
-.wrapper {
-  width: 80%;
-  max-height: 85%;
-  position: absolute;
-  right: 10%;
-  left: 10%;
-
-  display: flex;
-  flex-flow: column nowrap;
-}
-
-.emphasis {
-  font-size: 1.2em;
-  font-weight: bold;
-}
+@import 'common.css';
 
 /* profile specific formatting */
 

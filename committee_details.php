@@ -39,7 +39,9 @@
                committees in a report    -->
 
   <div class="wrapper">
-    <h2>Committee Details</h2>
+    <header>
+      <h2>Committee Details</h2>
+    </header>
     <div class="body">
       <div class="column">
         <span class='major heading'><?php echo $com['Name'];?></span>

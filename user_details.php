@@ -25,7 +25,9 @@
                users in a report    -->
 
   <div class="wrapper">
-    <h2>User Details</h2>
+    <header>
+      <h2>User Details</h2>
+    </header>
     <div class="profile">
 
       <!-- TODO: Add user photo and committee memberships -->

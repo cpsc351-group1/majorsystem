@@ -37,9 +37,11 @@
                committees in a report    -->
 
   <div class="wrapper">
-    <h2>Election Details</h2>
-    <div class="body">
+    <header>
+      <h2>Election Details</h2>
+    </header>
 
+    <div class="body">
       <div class="column">
         <!-- Details -->
         <span class='major heading'><?php echo $committee['Name']; ?> Election</span>

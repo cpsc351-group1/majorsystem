@@ -16,7 +16,9 @@
 
 <body>
   <div class="wrapper">
-    <h2>Account Registration</h2>
+    <header>
+      <h2>Account Registration</h2>
+    </header>
     <form class="profile" action="account_registration" method="post">
       <div class="body">
         <div class="column">

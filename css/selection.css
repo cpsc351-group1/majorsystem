@@ -1,32 +1,16 @@
-/* basic layout stuff */
+@import 'common.css';
 
-* {
-  box-sizing: border-box;
+/* basics */
+
+a {
+  text-decoration: none;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-
-  display: flex;
-  flex-flow: column nowrap;
-  position: relative;
-}
-
-.wrapper {
-  width: 80%;
-  max-height: 85%;
-  position: absolute;
-  right: 10%;
-  left: 10%;
-}
+/* list formatting */
 
 h4 {
   text-align: center;
 }
-
-/* list formatting */
 
 #users {
   height: inherit;
@@ -94,10 +78,16 @@ h4 {
   flex-flow: column nowrap;
 }
 
-#options .emphasis * {
+#options a {
+  width: 100%;
+}
+
+#options a *, #options input[type='submit'] {
+  font-weight: bold;
   display: flex;
+  width: 100%;
   align-items: center;
   justify-content: center;
-  margin: 0.5em;
+  margin: 0.5em 0;
   height: 3em;
 }

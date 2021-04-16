@@ -10,7 +10,9 @@
   </head>
   <body>
     <div class="wrapper">
-      <h2>System Users</h2>
+      <header>
+        <h2>System Users</h2>
+      </header>
       <div id="users">
         <div class="results">
             <?php
@@ -67,8 +69,8 @@
           <!-- Administrative Options
                TODO: convert reporting into an input submit, create hyperlink for add user button-->
           <div class="emphasis">
-            <a href="account_registration.php"><button class="emphasis" type="button" name="add_user">Add User</button></a>
-            <button class="emphasis" type="button" name="generate_user_report">Generate Report on Selected</button>
+            <a href="account_registration.php"><button type="button" name="add_user">Add User</button></a>
+            <input type="submit" name="report" value="Generate Report on Selected">
           </div>
         </form>
       </div>
