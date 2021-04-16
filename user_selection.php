@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -66,7 +67,7 @@
           <!-- Administrative Options
                TODO: convert reporting into an input submit, create hyperlink for add user button-->
           <div class="emphasis">
-            <button class="emphasis" type="button" name="add_user">Add User</button>
+            <a href="account_registration.php"><button class="emphasis" type="button" name="add_user">Add User</button></a>
             <button class="emphasis" type="button" name="generate_user_report">Generate Report on Selected</button>
           </div>
         </form>

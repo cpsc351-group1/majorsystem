@@ -11,30 +11,31 @@ body {
 
   display: flex;
   flex-flow: column nowrap;
-  justify-content: center;
+  position: relative;
 }
 
 .wrapper {
   width: 80%;
-  height: 85%;
-  margin: 0 auto;
+  max-height: 85%;
+  position: absolute;
+  right: 10%;
+  left: 10%;
+
+  display: flex;
+  flex-flow: column nowrap;
 }
 
 /* profile specific formatting */
 
-.profile {
+.body {
   border: 1px solid black;
-}
-
-.profile .body {
   padding: 1em;
   display: flex;
-  flex-flow: row nowrap;
   justify-content: space-around;
   gap: 1em;
 }
 
-.profile .column {
+.body .column {
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
@@ -42,31 +43,31 @@ body {
   gap: 1em;
 }
 
-.profile .block {
-  grid-column: span 1;
-  grid-row: span 1;
+.body .block {
   display: grid;
   grid-auto-columns: 1fr 2fr;
 }
 
-.profile .block .space {
+.body .block .space {
   grid-column: 1 / 3;
   margin: 0.2em;
 }
 
-.profile .block input {
+.body .block input {
   padding: 0.3em;
 }
 
-.profile .tiles {
-  flex: 1;
+/*    tiled elements    */
+
+.body .tiles {
+  flex: fit-content;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
   justify-content: space-around;
   grid-gap: 1em;
 }
 
-.profile .tiles .block {
+.body .tiles .tile {
   display: block;
   padding: 0.5em;
   border: 1px solid black;
@@ -75,30 +76,26 @@ body {
 
 /*    profile headings and labels    */
 
-.profile .heading {
+.body .heading {
   font-weight: bold;
   grid-column: span 2;
-  margin-bottom: 0.5em;
 }
 
-.profile .heading.sub {
+.body .heading.sub {
   font-size: 1.1em;
 }
 
-.profile .heading.major {
+.body .heading.major {
   font-size: 1.5em;
-}
-
-.profile .body .label {
-  font-style: italic;
 }
 
 /*    profile inputs    */
 
-.profile .body input[type=submit] {
+.body .body input[type=submit] {
   width: 100%;
 }
 
-.profile button {
+.body a, .body a button {
   height: 100%;
+  width: 100%;
 }
