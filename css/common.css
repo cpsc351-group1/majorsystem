@@ -16,7 +16,7 @@ body {
 
 .wrapper {
   width: 80%;
-  max-height: 85%;
+  height: 75vh;
   position: absolute;
   top: 10%;
   right: 10%;
@@ -29,13 +29,14 @@ body {
 /* header */
 
 header {
-  width: 100%;
+  width: inherit;
   height: 10%;
   background-color: #FFFFFF;
   position: fixed;
   top: 0;
   display: flex;
   align-items: center;
+  border-bottom: 1px solid black;
 }
 
 header * {

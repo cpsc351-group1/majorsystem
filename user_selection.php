@@ -13,7 +13,7 @@
       <header>
         <h2>System Users</h2>
       </header>
-      <div id="users">
+      <div class="selection">
         <div class="results">
             <?php
 
@@ -36,21 +36,21 @@
                     // and checkbox/details options.
 
                     // Checkbox belongs to options form, placed here for visuals
-                    echo "<div> <label name='$id'><b>$name</b><br>$dept<br>$pos</label>
-                        <div class='resultChoices'>
-                          <input type='checkbox' name='$id' form='options'></input><br>
+                    echo "<div class='data' id='$id'> <label name='$id'><b>$name</b><br>$dept<br>$pos</label>
+                        <div class='result_choices'>
+                          <input type='checkbox' name='$id' form='options'></input>
                           <a href='user_details.php?user=$id'><button>Details</button></a>
                         </div>
                       </div>";
                 }
             } else {
                 // Display blank result if no search results
-                echo "<h5>No results found for current search settings.</h5>";
+                echo "<div class='center'>No results found for current search settings.</div>";
             }
 
             ?>
         </div>
-        <form id="options" action="    'x'    " method="post"> <!--TODO: add report generation href-->
+        <form class="options" action="    'x'    " method="post"> <!--TODO: add report generation href-->
         <!--TODO: add functionality to search options-->
           <h4>Options</h4>
           <!-- Search Bar -->
