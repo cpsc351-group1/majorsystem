@@ -49,10 +49,17 @@
 }
 
 .body .tiles .tile {
-  display: block;
+  display: flex;
+  flex-flow: column nowrap;
   padding: 0.5em;
-  border: 1px solid black;
+  border: 1px solid #000000;
   min-height: 150px;
+}
+
+.center {
+  font-style: italic;
+  text-align: center;
+  justify-content: center;
 }
 
 /*    profile headings and labels    */

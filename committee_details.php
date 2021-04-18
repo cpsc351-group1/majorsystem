@@ -101,7 +101,7 @@
               }
 
               for ($i=0; $i < $election['Number_Seats']; $i++) {
-                  echo "<div class='tile'><span class='centered'>Seat up for election</span></div>";
+                  echo "<div class='tile center'>(Seat up for election.)</div>";
               }
             ?>
       </div>
