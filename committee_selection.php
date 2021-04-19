@@ -53,9 +53,10 @@
       </div>
       <form class="options" action="    'x'    " method="post">
         <!--TODO: add report generation href-->
-        <!--TODO: add functionality to search options-->
+        
         <h4>Options</h4>
         <!-- Search Bar -->
+        <!--TODO: add functionality to search options-->
         <div class='searchbar'>
           <input type="text" name="search" placeholder="Search...">
         </div>
@@ -63,16 +64,19 @@
         <hr>
         <!-- Selection Options -->
         <div>
+          <!-- TODO: implement these -->
           <button type="button" name="select_all">Select All</button>
           <button type="button" name="deselect_all">Deselect All</button>
         </div>
 
         <hr>
-        <!-- Administrative Options
-               TODO: convert reporting into an input submit, create hyperlink for add user button-->
+        <!-- Administrative Options -->
+
         <div class="emphasis">
-          <a href="#"><button type="button" name="add_user">Add Committee</button></a> <!--TODO: implement this-->
+          <a href="#"><button type="button" name="add_user">Add Committee</button></a>
+          <!--TODO: implement this-->
           <input type="submit" name="report" value="Generate Report on Selected">
+          <!--TODO: implement this -->
         </div>
       </form>
     </div>

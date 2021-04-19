@@ -9,15 +9,15 @@
       include 'databaseconnect.php';
 
       if (isset($_POST['appoint'])) {
-        $committee_id = $_POST['committee_id'];
-        $user = $_POST['user'];
+          $committee_id = $_POST['committee_id'];
+          $user = $_POST['user'];
 
-        $insert_sql = "INSERT INTO `Committee Seat` (Committee_Committee_ID, Starting_Term, Ending_Term, User_CNU_ID)
+          $insert_sql = "INSERT INTO `Committee Seat` (Committee_Committee_ID, Starting_Term, Ending_Term, User_CNU_ID)
                       SELECT $committee_id, 'Spring 2021', NULL, $user
                       WHERE $user NOT IN(
                           SELECT User_CNU_ID FROM `Committee Seat`
                           WHERE Committee_Committee_ID = '$committee_id')";
-        $conn->query($insert_sql);
+          $conn->query($insert_sql);
       }
 
       # pull posted committee variable
@@ -57,10 +57,6 @@
 </head>
 
 <body>
-
-  <!-- TODO: Create PHP script to generate this page for all
-               committees in a report    -->
-
   <div class="wrapper">
     <header>
       <h2>Committee Details</h2>
@@ -76,13 +72,20 @@
 
             if (is_null($election)) {
 
-              # TODO: make this functional
+                # Administrative Option (create election)
+                # TODO: make this functional
 
                 echo "<a href='#'><button type='button'>Start Election</button></a>";
             } else {
+
+                # View election, if exists
+
                 $election_id = $election['Election_ID'];
                 echo "<form action='election_details.php' method='get'><button name='election' value='$election_id'>View Election</button></form>";
             }
+
+            # Administrative Option
+            # Add user directly to committee
 
             echo "<form action='committee_appoint_user.php' method='get'><button name='committee' value='$committee_id'>Appoint User to Seat</button></form>";
 
@@ -116,12 +119,16 @@
 
                   # generate block of data for each user
                   echo "<div class='tile'>";
+                  // displays if user is committee chair
                   echo $is_chair ? "<span class='heading'>Committee Chair</span><br>" : "";
+                  // name and employment details
                   echo "<span class='sub heading'>".$user['Fname']." ".$user['Lname']."</span><br>"
                       .$user['Department'].", ".$user['Position']."<br>"
                       .$seat['Starting_Term']." - ".$ending_term;
                   echo "</div>";
               }
+
+              # Render blank tiles for every seat currently up for election
 
               for ($i=0; $i < $election['Number_Seats']; $i++) {
                   echo "<div class='tile center'>(Seat up for election.)</div>";

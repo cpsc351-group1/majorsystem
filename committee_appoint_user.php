@@ -30,6 +30,12 @@
     # return to selection page if invalid id thrown
     validate_inputs(is_null($committee_id), 0, 'committee_selection.php');
 
+    # pull all nominee details
+    $members_sql = "SELECT * FROM `User` WHERE CNU_ID NOT IN(
+                      SELECT User_CNU_ID FROM `Committee Seat`
+                      WHERE Committee_Committee_ID=$committee_id)";
+    $members = $conn->query($members_sql);
+
     ?>
   <title>CNU Committees - Appoint User</title>
 </head>
@@ -45,43 +51,34 @@
     </header>
     <div class="selection">
       <div class="results">
-        <?php
-
-            # pull nominee details
-            $members_sql = "SELECT * FROM `User` WHERE CNU_ID NOT IN(
-                              SELECT User_CNU_ID FROM `Committee Seat`
-                              WHERE Committee_Committee_ID=$committee_id)";
-            $members = $conn->query($members_sql);
-
-            if ($members->num_rows > 0) {
-                # Iterate through all users
-                while ($row = $members->fetch_assoc()) {
-                    $id = $row['CNU_ID'];
-                    $name = $row['Fname'].' '.$row['Lname'];
-                    $dept = $row['Department'];
-                    $pos = $row['Position']; ?>
         <form id="appointment" action="committee_details.php?committee=<?php echo $committee_id; ?>" method="post">
           <input type="hidden" name="committee_id" value="<?php echo $committee_id;?>">
           <?php
-                    # Checkbox belongs to options form, placed here for visuals
-                    echo "<div class='data'> <label for='$id'><b>$name</b><br>$dept<br>$pos</label>
-                        <div class='result_choices'>
-                          <input type='radio' name='user' id='$id' value='$id' required>
-                        </div>
-                      </div>";
-                }
-            } else {
-                # Display blank result if no search results
-                echo "<div class='center'>No results found for current search settings.</div>";
-            }
+          if ($members->num_rows > 0) {
+              # Iterate through all selected users
+              while ($row = $members->fetch_assoc()) {
+                  // Store user data
+                  $id = $row['CNU_ID'];
+                  $name = $row['Fname'].' '.$row['Lname'];
+                  $dept = $row['Department'];
+                  $pos = $row['Position'];
 
-            ?>
+                  # Generate tiles for each available user
+                  # Radio belongs to options form, placed here for visuals
+                  echo "<div class='data'> <label for='$id'><b>$name</b><br>$dept<br>$pos</label>
+                          <div class='result_choices'>
+                            <input type='radio' name='user' id='$id' value='$id' required>
+                          </div>
+                        </div>";
+              }
+          } else {
+              # Display blank result if no search results
+              echo "<div class='center'>No results found for current search settings.</div>";
+          }
+          ?>
         </form>
       </div>
       <div class='options'>
-      <?php
-        options:
-        ?>
         <!--TODO: add functionality to search options-->
         <h4>Options</h4>
         <!-- Search Bar -->

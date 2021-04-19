@@ -48,7 +48,6 @@
         <hr>
         <div class="profile">
 
-          <!-- TODO: Add user photo and committee memberships -->
             <div class="wrap_profile">
               <div class="block">
                 <span class="sub heading">Personal Info</span>
@@ -95,14 +94,12 @@
         <hr>
         <span class="heading major">Committee Membership</span>
         <div class="profile">
-          
+          <!-- TODO: dynamically insert committee memberships -->
         </div>
       </div>
-
     </div>
   </div>
 
   <?php $conn->close(); ?>
 </body>
-
 </html>

@@ -32,9 +32,26 @@
 
     validate_inputs($status, 'Voting', 'election_selection.php');
 
+    # get committee info
     $com_sql = "SELECT Name FROM `Committee` WHERE Committee_ID='$committee_id'";
     $com = $conn->query($com_sql)->fetch_assoc();
+
     $com_name = $com['Name'];
+
+    # pull vote information for current user
+    $voter_id = $_SESSION['user'];
+
+    $votes_sql = "SELECT Votee_CNU_ID FROM `Vote`
+                    WHERE Election_Election_ID=$election_id
+                    AND Voter_CNU_ID=$voter_id";
+    // store nominee previously voted for
+    $previous = $conn->query($votes_sql)->fetch_assoc()['Votee_CNU_ID'];
+
+    # pull all nominee details
+    $nominations_sql = "SELECT * FROM `User` WHERE CNU_ID IN(
+                          SELECT Nominee_CNU_ID FROM `Nomination` WHERE
+                          Election_Election_ID='$election_id')";
+    $nominations = $conn->query($nominations_sql);
 
     ?>
   <title>CNU Committees - Vote for User</title>
@@ -54,18 +71,6 @@
         <form id="vote" action="election_details.php?election=<?php echo $election_id; ?>" method="post">
           <input type="hidden" name="election_id" value="<?php echo $election_id; ?>">
           <?php
-              $voter_id = $_SESSION['user'];
-
-              $votes_sql = "SELECT Votee_CNU_ID FROM `Vote`
-                              WHERE Election_Election_ID=$election_id
-                              AND Voter_CNU_ID=$voter_id";
-              $previous = $conn->query($votes_sql)->fetch_assoc()['Votee_CNU_ID'];
-
-              # pull nominee details
-              $nominations_sql = "SELECT * FROM `User` WHERE CNU_ID IN(
-                                    SELECT Nominee_CNU_ID FROM `Nomination` WHERE
-                                    Election_Election_ID='$election_id')";
-              $nominations = $conn->query($nominations_sql);
 
               if ($nominations->num_rows > 0) {
                   # Iterate through all users
@@ -78,7 +83,8 @@
                       # Detect if user is same as previously voted
                       $checked = $id == $previous;
 
-                      # Checkbox belongs to options form, placed here for visuals
+                      # Render all nominees for current election
+                      # Radio buttons belong to options form, placed here for visuals
                       echo "<div class='data'> <label for='$id'><b>$name</b><br>$dept<br>$pos</label>
                               <div class='result_choices'>
                                 <input type='radio' name='vote' id='$id' value='$id' required".($checked?' checked':'').">
@@ -104,7 +110,7 @@
           </div>
 
           <hr>
-          <!-- Administrative Options -->
+          <!-- Submission Options -->
           <div class="emphasis">
             <input type="submit" name="submit_vote" value="Vote for User" form="vote">
           </div>

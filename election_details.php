@@ -9,11 +9,14 @@
 
       include 'databaseconnect.php';
 
+      # INSERT SQL FOR SUBMITTING NOMINATIONS
       if (isset($_POST['submit_nomination'])) {
+        # pull posted information
         $election_id = $_POST['election_id'];
         $nominator_id = $_SESSION['user'];
         $nominee_id = $_POST['nominee'];
 
+        # insert nomination if not exists
         $insert_sql = "INSERT INTO `Nomination`
                       SELECT $election_id, $nominator_id, $nominee_id
                       WHERE $nominee_id NOT IN(
@@ -22,17 +25,20 @@
         $conn->query($insert_sql);
       }
 
+      # INSERT SQL FOR SUBMITTING VOTES
       if (isset($_POST['submit_vote'])) {
-
+        # pull posted information
         $election_id = $_POST['election_id'];
         $voter_id = $_SESSION['user'];
         $vote_id = $_POST['vote'];
 
+        # delete current user vote in current election
         $delete_sql = "DELETE FROM `Vote` WHERE
                         Voter_CNU_ID = $voter_id AND
                         Election_Election_ID = $election_id";
         $conn->query($delete_sql);
 
+        # insert updated vote if not exists
         $insert_sql = "INSERT INTO `Vote`
                       SELECT $election_id, $voter_id, $vote_id
                       WHERE $vote_id NOT IN(
@@ -156,22 +162,25 @@
         <span class='major heading'><?php echo $committee['Name']; ?> Election</span>
         <hr>
         <div class="block">
-          <span class="emphasis"><?php echo $num_seats." seat".($num_seats==1?'':'s'); ?> being elected</span>
-          Election Status: <?php echo $status; ?>
+          <div class="heading sub"><?php echo $num_seats." seat".($num_seats==1?'':'s'); ?> being elected</div>
+          <div> Election Status: <?php echo $status; ?></div>
         </div>
       </div>
       <div class="column">
         <!-- Standard User Options -->
         <?php
-
+            # different options render based on status
             switch ($status) {
               case 'Nomination':
+                // nominate user option
                 echo "<form action='election_nominate_user.php' method='get'><button name='election' value='$election_id'>Nominate User</button></form>";
                 break;
               case 'Voting':
+                // vote in election option
                 echo "<form action='election_vote_user.php' method='get'><button name='election' value='$election_id'>Vote in Election</button></form>";
                 break;
               case 'Complete':
+                // election complete (no option)
                 echo "<span class='center'>This election has been completed.</span>";
                 break;
             }
