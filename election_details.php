@@ -133,13 +133,12 @@
                   }
 
                   echo "<span class='heading sub'>$user_name</span>";
-
+                  echo "<div class='list'>";
                   // user information
                   foreach ($user_info as $label => $detail) {
-                      echo "<span><i>$label</i></span> <span>$detail</span>";
+                      echo "<div>$label</div> <div>$detail</div>";
                   }
-
-                  echo "</div>";
+                  echo "</div></div>";
               }
           }
       }

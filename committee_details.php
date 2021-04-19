@@ -119,12 +119,12 @@
 
                   # generate block of data for each user
                   echo "<div class='tile'>";
-                  // displays if user is committee chair
-                  echo $is_chair ? "<span class='heading'>Committee Chair</span><br>" : "";
                   // name and employment details
-                  echo "<span class='sub heading'>".$user['Fname']." ".$user['Lname']."</span><br>"
-                      .$user['Department'].", ".$user['Position']."<br>"
-                      .$seat['Starting_Term']." - ".$ending_term;
+                  echo "<span class='sub heading'>".$user['Fname']." ".$user['Lname']."</span><br>";
+                  // displays if user is committee chair
+                  echo ($is_chair ? "<span class='heading'>Committee Chair</span><br>" : "")
+                       .$user['Department'].", ".$user['Position']."<br>"
+                       .$seat['Starting_Term']." - ".$ending_term;
                   echo "</div>";
               }
 

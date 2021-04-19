@@ -36,36 +36,40 @@
 
 /*    tiled elements    */
 .tiles {
-  flex: fit-content;
-  display: grid;
   width: 100%;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-auto-rows: 1fr;
   grid-gap: 1em;
 }
 
 .tiles .tile {
   position: relative;
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  justify-content: space-around;
+  display: flex;
+  flex-flow: column nowrap;
   padding: 0.5em;
   outline: 1px solid #000000;
-  min-height: 150px;
 }
 
 .tile input:disabled {
   position: absolute;
-  right: 0.5em;
-  bottom: 1em;
-  width: 2em;
-  height: 2em;
+  right: 0.3em;
+  top: 0.5em;
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.tile.center {
+  justify-content: center;
 }
 
 /*    heading    */
-.body .heading {
+.block .heading {
   grid-column: 1 / -1;
-  grid-row: 1 / 2;
+}
+
+.tile .heading {
+  margin-bottom: 0.3em;
 }
 
 /*    body inputs    */
@@ -86,13 +90,6 @@
 }
 
 /* profile specifics */
-.profile .block {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-content: flex-start;
-  padding: 1em;
-  border: 1px solid black;
-}
 
 .profile {
   display: flex;
@@ -100,20 +97,23 @@
   flex-flow: row nowrap;
 }
 
-.wrap_profile {
+.list {
+  height: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  padding: 0.5em;
-  grid-gap: 0.5em;
-  flex: 3;
+  grid-template-columns: 1fr 2fr;
+  grid-auto-rows: 1fr;
 }
 
-.right {
-  flex: 1;
+.list * {
+  padding: .2em;
+}
+
+.list div:nth-child(4n+1), .list div:nth-child(4n-2) {
+  background-color: #DDDDDD;
 }
 
 .body .image {
-  margin: 1em auto;
+  margin: 1em 2em;
   width: 12em;
   height: 12em;
   border: #111111;

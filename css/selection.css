@@ -13,15 +13,14 @@ h4 {
 }
 
 .selection {
-  height: inherit;
+  height: 100%;
   display: grid;
   grid-template-columns: 3fr 2fr;
   outline: 1px solid black;
-  overflow: hidden;
 }
 
 .results {
-  height: inherit;
+  height: 100%;
   overflow-y: scroll;
   display: flex;
   flex-flow: column nowrap;
