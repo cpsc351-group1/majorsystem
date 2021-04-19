@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+<?php session_start(); ini_set('display_errors', 1); ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -9,6 +9,19 @@
 
       include 'databaseconnect.php';
       include 'commonfns.php';
+
+      if (isset($_POST['nominate'])) {
+        $election_id = $_POST['election_id'];
+        $nominator_id = $_SESSION['user'];
+        $nominee_id = $_POST['nominee'];
+
+        $insert_sql = "INSERT INTO `Nomination`
+                      SELECT $election_id, $nominator_id, $nominee_id
+                      WHERE $nominee_id NOT IN(
+                          SELECT Nominee_CNU_ID FROM `Nomination`
+                          WHERE Election_Election_ID = '$election_id')";
+        $conn->query($insert_sql);
+      }
 
       # get entered election id
       $submitted_id = $_GET['election'];
@@ -28,6 +41,57 @@
       # get committee info
       $committee_sql = "SELECT * FROM `Committee` WHERE Committee_ID='$committee_id'";
       $committee = $conn->query($committee_sql)->fetch_assoc();
+
+      # functions
+
+      # pulls a user's details based on a given ID. returns the user assoc
+      function pull_user(int $user_id)
+      {
+          global $conn;
+
+          $user_sql = "SELECT * FROM `User` WHERE CNU_ID='$user_id'";
+          $user = $conn->query($user_sql)->fetch_assoc();
+          return $user;
+      }
+
+      # prints nominee tiles or an error message if there are none.
+      function print_nominees()
+      {
+          global $conn;
+          global $election_id;
+
+          # pull nomination information for given election
+          $noms_sql = "SELECT * FROM `Nomination` WHERE Election_Election_ID = $election_id";
+          $noms = $conn->query($noms_sql);
+
+          # error message if there are no nominees
+          if ($noms->num_rows < 1) {
+              echo "<div class='center'>No nominations have been submitted for this election.</div>";
+          } else {
+              # for each nominee ...
+              while ($row = $noms->fetch_assoc()) {
+                  # get nominee information ...
+                  $nominee_id = $row['Nominee_CNU_ID'];
+                  $user = pull_user($nominee_id);
+
+                  $user_name = $user['Fname']." ".$user['Lname'];
+
+                  $user_info = array(
+                              'Department'=>$user['Department'],
+                              'Position'=>$user['Position'],
+                              'Race'=>$user['Race'],
+                              'Gender'=>$user['Gender']);
+
+                  # ... and print tiles
+                  echo "<div class='tile'>";
+                  echo "<span class='heading sub'>$user_name</span>";
+                  foreach ($user_info as $label => $detail) {
+                      echo "<span><i>$label</i>: $detail</span>";
+                  }
+                  echo "</div>";
+              }
+          }
+      }
 
     ?>
 
@@ -65,7 +129,7 @@
 
             switch ($status) {
               case 'Nomination':
-                echo "<a><button type='button' name='nomination'>Nominate User</button></a>";
+                echo "<form action='election_nominate_user.php' method='get'><button name='election' value='$election_id'>Nominate User</button></form>";
                 break;
               case 'Voting':
                 echo "<a><button type='button' name='vote'>Vote in Election</button></a>";
@@ -79,53 +143,14 @@
       </div>
     </div>
     <div class="body">
-      <div class="tiles">
-        <?php
-            function pull_users()
-            {
-                $users_sql = "SELECT * FROM `Users`";
-                $users = $conn->query($users_sql);
-                return $users;
-            }
-
-            function print_nominees($election_id)
-            {
-                global $conn;
-
-                $noms_sql = "SELECT * FROM `Nomination` WHERE Election_Election_ID = $election_id";
-                $noms = $conn->query($noms_sql);
-
-                if ($noms->num_rows == 0) {
-                    echo "<div class='center'>No nominations have been submitted for this election.</div>";
-                } else {
-                    $users = pull_users();
-
-
-                    while ($row = $noms->fetch_assoc()) {
-                        $user = $users[$row['Nominee_CNU_ID']];
-
-                        $user_info = array(
-                                    'Name'=>$user['Name'],
-                                    'Department'=>$user['Department'],
-                                    'Position'=>$user['Position'],
-                                    'Race'=>$user['Race'],
-                                    'Gender'=>$user['Gender']);
-
-                        echo "<div class='tile'>";
-                        foreach ($user_info as $label => $detail) {
-                            echo "<span>$label: $detail</span>";
-                        }
-                        echo "</div>";
-                    }
-                }
-            }
-
-            switch ($status) {
-              case 'Nomination':
-                print_nominees($election_id);
-                break;
-            }
-        ?>
+      <div class="column">
+        <span class="major heading">Nominees</span>
+        <hr>
+        <div class="tiles">
+          <?php
+            print_nominees();
+          ?>
+        </div>
       </div>
     </div>
     <?php

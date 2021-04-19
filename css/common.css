@@ -30,6 +30,7 @@ body {
 
 header {
   width: inherit;
+  margin: 0;
   height: 10%;
   background-color: #FFFFFF;
   position: fixed;
@@ -37,6 +38,10 @@ header {
   display: flex;
   align-items: center;
   border-bottom: 1px solid black;
+}
+
+.wrapper>div {
+  margin: 1em 0;
 }
 
 header * {
@@ -49,4 +54,22 @@ header * {
 .emphasis {
   font-size: 1.2em;
   font-weight: bold;
+}
+
+.center {
+  font-style: italic;
+  text-align: center;
+  justify-content: center;
+}
+
+.heading {
+  font-weight: bold;
+}
+
+.heading.sub {
+  font-size: 1.1em;
+}
+
+.heading.major {
+  font-size: 1.5em;
 }

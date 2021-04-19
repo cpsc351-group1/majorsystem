@@ -51,7 +51,7 @@ h4 {
   align-items: center;
 }
 
-.result_choices input[type=checkbox] {
+.result_choices input {
   width: 1.5em;
   height: 1.5em;
   flex: none;

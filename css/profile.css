@@ -4,6 +4,7 @@
 
 .body {
   outline: 1px solid #000000;
+  outline-offset: -1px;
   padding: 1em;
   display: flex;
   justify-content: space-around;
@@ -19,7 +20,7 @@
 .body .column {
   display: flex;
   flex-flow: column nowrap;
-  justify-content: space-between;
+  justify-content: space-around;
   flex: 1;
   gap: 1em;
 }
@@ -43,6 +44,7 @@
 .body .tiles {
   flex: fit-content;
   display: grid;
+  width: 100%;
   grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
   justify-content: space-around;
   grid-gap: 1em;
@@ -52,29 +54,14 @@
   display: flex;
   flex-flow: column nowrap;
   padding: 0.5em;
-  border: 1px solid #000000;
+  outline: 1px solid #000000;
   min-height: 150px;
-}
-
-.center {
-  font-style: italic;
-  text-align: center;
-  justify-content: center;
 }
 
 /*    profile headings and labels    */
 
 .body .heading {
-  font-weight: bold;
   grid-column: span 2;
-}
-
-.body .heading.sub {
-  font-size: 1.1em;
-}
-
-.body .heading.major {
-  font-size: 1.5em;
 }
 
 /*    profile inputs    */
@@ -83,7 +70,13 @@
   width: 100%;
 }
 
-.body a, .body a button {
-  height: 100%;
-  width: 100%;
+.body form {
+  display: flex;
+  height: 80%;
+  align-content: center;
+  justify-content: center;
+}
+
+.body form button {
+  width: 80%;
 }
