@@ -19,68 +19,65 @@
     <header>
       <h2>Account Registration</h2>
     </header>
-    <form class="profile" action="account_registration" method="post">
+    <form action="account_registration.php" method="post">
       <div class="body">
         <div class="column">
-          <div class="block">
-            <span class="sub heading">Personal Info</span>
-            <label for='fname'>First Name</label>
-            <input id='fname' type="text" name="fname" placeholder="First Name" rquired>
+              <span class="sub heading">Personal Info</span>
+              <div class="list">
+                <label for='fname'>First Name</label>
+                <input id='fname' type="text" name="fname" placeholder="First Name" rquired>
 
-            <label for='lname'>Last Name</label>
-            <input id='lname' type="text" name="lname" placeholder="Last Name" required>
+                <label for='lname'>Last Name</label>
+                <input id='lname' type="text" name="lname" placeholder="Last Name" required>
 
-            <label for='email'>Email</label>
-            <input id='email' type="email" name="email" placeholder="Email" required>
+                <label for='bday'>Birthday</label>
+                <input id='bday' type="date" name="bday" required>
+              </div>
+              <span class="sub heading">Password</span>
+              <div class="list">
+                <label for="pass">Password</label>
+                <input id='pass' type="password" name="pass" placeholder="Password" required>
 
-            <label for='bday'>Birthday</label>
-            <input id='bday' type="date" name="bday" required>
+                <label for='cpass'>Confirm</label>
+                <input id='cpass' type="password" name="cpass" placeholder="Confirm Password" required>
+              </div>
+              <span class="sub heading">Employment</span>
+              <!-- TODO: turn into dropdown menus where appropriate-->
+              <div class="list">
+                <label for='college'>College</label>
+                <input id='college' type="text" name="college" placeholder="College" required>
 
-          </div>
-          <div class="block">
-            <span class="sub heading">Password</span>
-            <!-- TODO: turn this into an actual password field lol -->
-            <label for="pass">Password</label>
-            <input id='pass' type="text" name="pass" placeholder="Password" required>
+                <label for='position'>Position</label>
+                <input id='position' type="text" name="position" placeholder="Position" required>
 
-            <label for='cpass'>Confirm</label>
-            <input id='cpass' type="text" name="cpass" placeholder="Confirm Password" required>
-          </div>
-        </div>
-        <div class="column">
-          <div class="block">
-            <span class="sub heading">Employment</span>
-            <!-- TODO: turn into dropdown menus where appropriate-->
-            <label for='college'>College</label>
-            <input id='college' type="text" name="college" placeholder="College" required>
+                <label for='term_hiring'>Hiring Term</label>
+                <input id='term_hiring' type="date" name="term_hiring" required>
+              </div>
+              <span class="sub heading">Other</span>
+              <!-- TODO: turn these into dropdown menus -->
+              <div class="list">
+                <label for='race'>Race</label>
+                <input id='race' type="text" name="race" placeholder="Race" required>
 
-            <label for='position'>Position</label>
-            <input id='position' type="text" name="position" placeholder="Position" required>
-
-            <label for='term_hiring'>Hiring Term</label>
-            <input id='term_hiring' type="date" name="term_hiring" required>
-          </div>
-          <div class="block">
-            <span class="sub heading">Other</span>
-            <!-- TODO: turn these into dropdown menus -->
-            <label for='race'>Race</label>
-            <input id='race' type="text" name="race" placeholder="Race" required>
-
-            <label for='gender'>Gender</label>
-            <input id='gender' type="text" name="gender" placeholder="Gender" required>
-          </div>
-        </div>
-        <div class="column">
-          <div class="block submit">
-            <!-- TODO: add photo uploading capability -->
-            <form action="/action_page.php">
-              <label for="img">Select image:</label>
-              <input type="file" id="img" name="img" accept="image/*">
-              <input type="submit">
-            </form>
-            <input id='submit' type="submit" value="Create Account">
+                <label for='gender'>Gender</label>
+                <input id='gender' type="text" name="gender" placeholder="Gender" required>
+              </div>
+            </div>
+            <div class="column tiles">
+              <div class="tile submit center">
+                <!-- TODO: add photo uploading capability -->
+                <form action="/action_page.php">
+                  <label for="img">Select user account image:</label>
+                  <div class="image"></div>
+                  <input type="file" id="img" name="img" accept="image/*">
+                </form>
+              </div>
+              <div class="tile">
+                <input id='submit' type="submit" value="Create Account">
+              </div>
           </div>
         </div>
+
       </div>
     </form>
   </div>

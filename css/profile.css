@@ -51,6 +51,10 @@
   outline: 1px solid #000000;
 }
 
+.tile input {
+  padding: 0.5em;
+}
+
 .tile input:disabled {
   position: absolute;
   right: 0.3em;
@@ -61,6 +65,7 @@
 
 .tile.center {
   justify-content: center;
+  align-items: center;
 }
 
 /*    heading    */
@@ -104,7 +109,7 @@
   grid-auto-rows: 1fr;
 }
 
-.list * {
+.list input {
   padding: .2em;
 }
 
@@ -112,10 +117,15 @@
   background-color: #DDDDDD;
 }
 
+.body input[type=file] {
+  outline: 1px solid black;
+  padding: 0.2em;
+}
+
 .body .image {
   margin: 1em 2em;
   width: 12em;
   height: 12em;
-  border: #111111;
-  background-color: #444444;
+  border: #111111 1px solid;
+  background-color: #666666;
 }

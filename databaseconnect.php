@@ -15,7 +15,12 @@ if ($conn->connect_error) {
     die("Oh no! Connection failed: " . $conn->connect_error);
 }
 
-if (basename($_SERVER['SCRIPT_FILENAME']) != "index.php" and is_null($_SESSION['user'])) {
+$no_session_pages = array(
+  "index.php",
+  "user_registration.php"
+);
+
+if (!in_array(basename($_SERVER['SCRIPT_FILENAME']), $no_session_pages) and is_null($_SESSION['user'])) {
     header("Location: index.php");
 }
 
