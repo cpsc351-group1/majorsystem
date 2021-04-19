@@ -1,4 +1,4 @@
-<?php session_start(); ini_set('display_errors', 1); ?>
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -8,7 +8,6 @@
   <?php
 
       include 'databaseconnect.php';
-      include 'commonfns.php';
 
       if (isset($_POST['nominate'])) {
         $election_id = $_POST['election_id'];
@@ -24,19 +23,24 @@
       }
 
       # get entered election id
-      $submitted_id = $_GET['election'];
+      $entered_id = $_GET['election'];
 
+      # pull election information using $_GET
+      $election_sql = "SELECT * FROM `Election` WHERE Election_ID=?";
       # prepare statement (this is done to prevent sql injection)
-      $election = $conn->prepare("SELECT * FROM `Election` WHERE Election_ID=?");
+      $election = $conn->prepare($election_sql);
       # bind parameter to int
-      $election->bind_param('i', $submitted_id);
+      $election->bind_param('i', $entered_id);
       # execute statement
       $election->execute();
       # bind results to variables
       $election->bind_result($election_id, $committee_id, $status, $num_seats);
-      # fetch row and close connection
+      # fetch row and close
       $election->fetch();
       $election->close();
+
+      # return to selection page if invalid id thrown
+      validate_inputs(is_null($election_id), 0, 'election_selection.php');
 
       # get committee info
       $committee_sql = "SELECT * FROM `Committee` WHERE Committee_ID='$committee_id'";
@@ -106,14 +110,6 @@
     </header>
 
     <div class="body">
-      <?php
-        if (is_null($election_id)) {
-            # No election found error message.
-
-            echo "<div class='center'>No election found with entered ID.</div></div>";
-            goto no_election;
-        }
-      ?>
       <div class="column">
         <!-- Details -->
         <span class='major heading'><?php echo $committee['Name']; ?> Election</span>

@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+<?php session_start(); ini_set('display_errors', 1)?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -8,13 +8,25 @@
   <?php
 
       include 'databaseconnect.php';
-      include 'commonfns.php';
 
-      $user_id = intval($_GET['user']);
-      $sql = "SELECT * FROM `User` WHERE CNU_ID='$user_id';";
-      $user = $conn->query($sql)->fetch_assoc();
+      // $user_id = intval($_GET['user']);
+      // $sql = "SELECT * FROM `User` WHERE CNU_ID='$user_id';";
+      // $user = $conn->query($sql)->fetch_assoc();
 
-      check_null($user);
+      # pull posted user id variable
+      $entered_id = $_GET['user'];
+
+      # prepare statement (this is done to prevent sql injection)
+      $election = $conn->prepare("SELECT * FROM `User` WHERE CNU_ID=?");
+      # bind parameter to int
+      $election->bind_param('i', $entered_id);
+      # execute statement
+      $election->execute();
+      # obtain results object
+      $user = $election->get_result()->fetch_assoc();
+      # close connection
+      $election->close();
+
     ?>
 
     <title>CNU — <?php echo $user['Fname']." ".$user['Lname']; ?></title>

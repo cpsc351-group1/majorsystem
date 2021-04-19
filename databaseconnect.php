@@ -16,10 +16,15 @@ if ($conn->connect_error) {
 }
 
 if (basename($_SERVER['SCRIPT_FILENAME']) != "index.php" and is_null($_SESSION['user'])) {
-  header("Location: index.php");
+    header("Location: index.php");
+}
+
+function validate_inputs($input, $expected, $location)
+{
+    if (!($input == $expected)) {
+        header("Location: $location");
+    }
 }
 
 // Boolean to track if already in database
 // $found = FALSE:
-
-?>

@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+<?php session_start(); ini_set('display_errors, 1'); ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -7,30 +7,53 @@
   <link rel="stylesheet" href="css/profile.css" type="text/css">
   <?php
       include 'databaseconnect.php';
-      include 'commonfns.php';
 
-      # query committee details
-      $com_id = intval($_GET['committee']);
-      $com_sql = "SELECT * FROM `Committee` WHERE Committee_ID='$com_id'";
-      $com = $conn->query($com_sql)->fetch_assoc();
+      if (isset($_POST['appoint'])) {
+        $committee_id = $_POST['committee_id'];
+        $user = $_POST['user'];
 
-      # redirect if committee doesn't exist
-      check_null($com);
+        $insert_sql = "INSERT INTO `Committee Seat` (Committee_Committee_ID, Starting_Term, Ending_Term, User_CNU_ID)
+                      SELECT $committee_id, 'Spring 2021', NULL, $user
+                      WHERE $user NOT IN(
+                          SELECT User_CNU_ID FROM `Committee Seat`
+                          WHERE Committee_Committee_ID = '$committee_id')";
+        $conn->query($insert_sql);
+      }
+
+      # pull posted committee variable
+      $entered_id = $_GET['committee'];
+
+      # pull committee information using $_GET
+      $com_sql = "SELECT * FROM `Committee` WHERE Committee_ID=?";
+      # prepare statement (to prevent mysql injection)
+      $com_stmt = $conn->prepare($com_sql);
+      # bind inputs
+      $com_stmt->bind_param('i', $entered_id);
+      # execute statement
+      $com_stmt->execute();
+      # bind results to variables
+      $com_stmt->bind_result($committee_id, $committee_name, $committee_description);
+      # fetch row and close
+      $com_stmt->fetch();
+      $com_stmt->close();
+
+      # return to selection page if invalid id thrown
+      validate_inputs(is_null($committee_id), 0, 'committee_selection.php');
 
       # query chairman
-      $chair_sql = "SELECT User_CNU_ID FROM `Chairman` WHERE Committee_Committee_ID='$com_id'";
+      $chair_sql = "SELECT User_CNU_ID FROM `Chairman` WHERE Committee_Committee_ID='$committee_id'";
       $chair_id = $conn->query($chair_sql)->fetch_assoc()['User_CNU_ID'];
 
       # query committee seats info
-      $com_seats_sql = "SELECT * FROM `Committee Seat` WHERE Committee_Committee_ID='$com_id'";
-      $com_seats = $conn->query($com_seats_sql);
+      $committee_seats_sql = "SELECT * FROM `Committee Seat` WHERE Committee_Committee_ID='$committee_id'";
+      $committee_seats = $conn->query($committee_seats_sql);
 
       # query any running elections
-      $election_sql = "SELECT * FROM `Election` WHERE Committee_Committee_ID='$com_id' AND NOT Status='Complete'";
+      $election_sql = "SELECT * FROM `Election` WHERE Committee_Committee_ID='$committee_id' AND NOT Status='Complete'";
       $election = $conn->query($election_sql)->fetch_assoc();
     ?>
 
-  <title>CNU — <?php echo $com['Name'];?></title>
+  <title>CNU — <?php echo $committee_name;?></title>
 </head>
 
 <body>
@@ -44,8 +67,8 @@
     </header>
     <div class="body">
       <div class="column">
-        <span class='major heading'><?php echo $com['Name'];?></span>
-        <div class="block"><?php echo $com['Description'];?></div>
+        <span class='major heading'><?php echo $committee_name;?></span>
+        <div class="block"><?php echo $committee_description;?></div>
       </div>
       <div class="column">
 
@@ -57,24 +80,24 @@
 
                 echo "<a href='#'><button type='button'>Start Election</button></a>";
             } else {
-                echo "<a href='election_details.php?election=".$election['Election_ID']."'><button type='button'>View Election</button></a>";
+                $election_id = $election['Election_ID'];
+                echo "<form action='election_details.php' method='get'><button name='election' value='$election_id'>View Election</button></form>";
             }
+
+            echo "<form action='committee_appoint_user.php' method='get'><button name='committee' value='$committee_id'>Appoint User to Seat</button></form>";
 
           ?>
 
-        <!-- TODO: make this functional -->
-
-        <a href="#"><button type="button">Appoint User to New Seat</button></a>
       </div>
     </div>
     <div class="body">
       <div class="column">
-      <span class='major heading'>Committee Seats</span>
-      <hr>
-      <div class="tiles">
-        <?php
+        <span class='major heading'>Committee Seats</span>
+        <hr>
+        <div class="tiles">
+          <?php
               # for each seat
-              while ($seat = $com_seats->fetch_assoc()) {
+              while ($seat = $committee_seats->fetch_assoc()) {
 
                 # get seatholder ID
                   $user_id = intval($seat['User_CNU_ID']);
@@ -104,9 +127,9 @@
                   echo "<div class='tile center'>(Seat up for election.)</div>";
               }
             ?>
-      </div>
+        </div>
 
-    </div>
+      </div>
     </div>
   </div>
   </div>
