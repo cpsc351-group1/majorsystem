@@ -20,7 +20,7 @@
 .body .column {
   display: flex;
   flex-flow: column nowrap;
-  justify-content: space-around;
+  justify-content: space-between;
   flex: 1;
   gap: 1em;
 }
@@ -107,10 +107,11 @@
   display: grid;
   grid-template-columns: 1fr 2fr;
   grid-auto-rows: 1fr;
+  align-items: center;
 }
 
 .list input {
-  padding: .2em;
+  height: 2em;
 }
 
 .list div:nth-child(4n+1), .list div:nth-child(4n-2) {
@@ -126,6 +127,6 @@
   margin: 1em 2em;
   width: 12em;
   height: 12em;
-  border: #111111 1px solid;
+  border: 1px solid #222222;
   background-color: #666666;
 }

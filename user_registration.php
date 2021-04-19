@@ -64,13 +64,11 @@
               </div>
             </div>
             <div class="column tiles">
-              <div class="tile submit center">
+              <div class="tile center">
                 <!-- TODO: add photo uploading capability -->
-                <form action="/action_page.php">
                   <label for="img">Select user account image:</label>
                   <div class="image"></div>
                   <input type="file" id="img" name="img" accept="image/*">
-                </form>
               </div>
               <div class="tile">
                 <input id='submit' type="submit" value="Create Account">
