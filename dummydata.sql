@@ -1,8 +1,9 @@
+DELETE FROM `nomination`;
+DELETE FROM `election`;
 DELETE FROM `chairman`;
 DELETE FROM `committee seat`;
 DELETE FROM `committee`;
 DELETE FROM `user`;
-DELETE FROM `election`;
 
 /*    USERS   */
 /*    CNU_ID, Password, Fname, Lname, Email, Department, Position, Birthday, Date_of_Hiring, Gender, Race, Photo    */
@@ -41,56 +42,56 @@ INSERT INTO `user`
   VALUES (00944004, 'testpass10', 'Onika', 'Maraj-Petty', 'onikamaraj@cnu.edu', 'Luter School of Business', 'Department Lead', '1982-12-08', '2000-09-15', 'Female', 'Black', NULL);
 
 /*    COMMITTEES    */
-/*    Name, Description    */
+/*    Committee_ID, Name, Description    */
 
-INSERT INTO `committee` (Name, Description)
-  VALUES ('Sustainability Committee', 'Committee that oversees sustainability.');
+INSERT INTO `committee`
+  VALUES (1, 'Sustainability Committee', 'Committee that oversees sustainability.');
 
-INSERT INTO `committee` (Name, Description)
-  VALUES ('Fun Committee', 'Committee that oversees fun activities.');
+INSERT INTO `committee`
+  VALUES (2, 'Fun Committee', 'Committee that oversees fun activities.');
 
-INSERT INTO `committee` (Name, Description)
-  VALUES ('Grass Committee', 'Committee that oversees the Great Lawn.');
+INSERT INTO `committee`
+  VALUES (3, 'Grass Committee', 'Committee that oversees the Great Lawn.');
 
-INSERT INTO `committee` (Name, Description)
-  VALUES ('Money Committee', 'Committee that oversees financials.');
+INSERT INTO `committee`
+  VALUES (4, 'Money Committee', 'Committee that oversees financials.');
 
-INSERT INTO `committee` (Name, Description)
-  VALUES ('University Faculty on Committees', 'Committee that oversees committees.');
+INSERT INTO `committee`
+  VALUES (5, 'University Faculty on Committees', 'Committee that oversees committees.');
 
 /*    COMMITTEE SEATS    */
 /*    Committee_Seat_ID, Committee_Committee_ID, Starting_Term, Ending_Term, User_CNU_ID    */
 /* TODO: give some of these end_date values for testing archived seats */
 
-INSERT INTO `committee seat` (Committee_Committee_ID, Starting_Term, Ending_Term, User_CNU_ID)
-  VALUES (1, 'Fall 2019', NULL, 00998877);
+INSERT INTO `committee seat`
+  VALUES (1, 1, 'Fall 2019', NULL, 00998877);
 
-INSERT INTO `committee seat` (Committee_Committee_ID, Starting_Term, Ending_Term, User_CNU_ID)
-  VALUES (1, 'Spring 2020', NULL, 00987987);
+INSERT INTO `committee seat`
+  VALUES (2, 1, 'Spring 2020', NULL, 00987987);
 
-INSERT INTO `committee seat` (Committee_Committee_ID, Starting_Term, Ending_Term, User_CNU_ID)
-  VALUES (1, 'Fall 2020', NULL, 00978879);
+INSERT INTO `committee seat`
+  VALUES (3, 1, 'Fall 2020', NULL, 00978879);
 
-INSERT INTO `committee seat` (Committee_Committee_ID, Starting_Term, Ending_Term, User_CNU_ID)
-  VALUES (2, 'Spring 2021', NULL, 00966678);
+INSERT INTO `committee seat`
+  VALUES (4, 2, 'Spring 2021', NULL, 00966678);
 
-INSERT INTO `committee seat` (Committee_Committee_ID, Starting_Term, Ending_Term, User_CNU_ID)
-  VALUES (2, 'Fall 2020', NULL, 00942069);
+INSERT INTO `committee seat`
+  VALUES (5, 2, 'Fall 2020', NULL, 00942069);
 
-INSERT INTO `committee seat` (Committee_Committee_ID, Starting_Term, Ending_Term, User_CNU_ID)
-  VALUES (3, 'Spring 2021', NULL, 00933833);
+INSERT INTO `committee seat`
+  VALUES (6, 3, 'Spring 2021', NULL, 00933833);
 
-INSERT INTO `committee seat` (Committee_Committee_ID, Starting_Term, Ending_Term, User_CNU_ID)
-  VALUES (3, 'Fall 2019', NULL, 00999919);
+INSERT INTO `committee seat`
+  VALUES (7, 3, 'Fall 2019', NULL, 00999919);
 
-INSERT INTO `committee seat` (Committee_Committee_ID, Starting_Term, Ending_Term, User_CNU_ID)
-  VALUES (4, 'Spring 2021', NULL, 00955259);
+INSERT INTO `committee seat`
+  VALUES (8, 4, 'Spring 2021', NULL, 00955259);
 
-INSERT INTO `committee seat` (Committee_Committee_ID, Starting_Term, Ending_Term, User_CNU_ID)
-  VALUES (5, 'Spring 2020', NULL, 00982429);
+INSERT INTO `committee seat`
+  VALUES (9, 5, 'Spring 2020', NULL, 00982429);
 
-INSERT INTO `committee seat` (Committee_Committee_ID, Starting_Term, Ending_Term, User_CNU_ID)
-  VALUES (5, 'Fall 2020', NULL, 00944004);
+INSERT INTO `committee seat`
+  VALUES (10, 5, 'Fall 2020', NULL, 00944004);
 
 /*    CHAIRMAN    */
 /*    Committee_Committee_ID, User_CNU_ID   */
@@ -108,11 +109,26 @@ INSERT INTO `chairman` VALUES (5, 00982429);
 /*    ELECTION    */
 /*    Election_ID, Committee_Committee_ID, Status, Number_Seats    */
 
-INSERT INTO `election` (Committee_Committee_ID, Status, Number_Seats)
-  VALUES (1, 'Nomination', 1);
+INSERT INTO `election`
+  VALUES (1, 1, 'Nomination', 1);
 
-INSERT INTO `election` (Committee_Committee_ID, Status, Number_Seats)
-  VALUES (2, 'Voting', 5);
+INSERT INTO `election`
+  VALUES (2, 2, 'Voting', 5);
 
-INSERT INTO `election` (Committee_Committee_ID, Status, Number_Seats)
-  VALUES (3, 'Complete', 1);
+INSERT INTO `election`
+  VALUES (3, 3, 'Complete', 1);
+
+/*  NOMINATIONS   */
+/*  Election_Election_ID, Nominator_CNU_ID, Nominee_CNU_ID    */
+
+INSERT INTO `nomination`
+  VALUES (1, 1, 1);
+
+INSERT INTO `nomination`
+  VALUES (1, 00998877, 00987987);
+
+INSERT INTO `nomination`
+  VALUES (1, 00998877, 00978879);
+
+INSERT INTO `nomination`
+  VALUES (2, 1, 00998877);
