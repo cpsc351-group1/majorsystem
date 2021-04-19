@@ -17,6 +17,7 @@ h4 {
   display: grid;
   grid-template-columns: 3fr 2fr;
   outline: 1px solid black;
+  overflow: hidden;
 }
 
 .results {
@@ -64,6 +65,7 @@ h4 {
 /* options menu style */
 
 .options {
+  height: inherit;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
@@ -90,6 +92,7 @@ h4 {
 }
 
 .options .emphasis {
+  height: inherit;
   display: flex;
   width: 100%;
   flex-flow: column nowrap;

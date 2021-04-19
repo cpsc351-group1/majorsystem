@@ -11,6 +11,7 @@
 }
 
 .body hr {
+  grid-column: 1 / -1;
   border: 1px solid #000000;
   height: 0;
   width: 100%;
@@ -22,11 +23,6 @@
   justify-content: space-around;
   flex: 1;
   gap: 1em;
-}
-
-.body .block {
-  display: grid;
-  grid-auto-columns: 1fr 2fr;
 }
 
 .body .block .space {
@@ -60,30 +56,66 @@
 
 .tile input:disabled {
   position: absolute;
-  border-color: red;
   right: 0.5em;
   bottom: 1em;
   width: 2em;
   height: 2em;
 }
 
-/*    profile headings and labels    */
+/*    heading    */
 .body .heading {
-  grid-column: span 2;
+  grid-column: 1 / -1;
+  grid-row: 1 / 2;
 }
 
-/*    profile inputs    */
+/*    body inputs    */
 .body .body input[type=submit] {
   width: 100%;
 }
 
 .body form {
   display: flex;
-  height: 80%;
+  height: inherit;
   align-content: center;
   justify-content: center;
 }
 
 .body form button {
   width: 80%;
+  padding: 1em;
+}
+
+/* profile specifics */
+.profile .block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-content: flex-start;
+  padding: 1em;
+  border: 1px solid black;
+}
+
+.profile {
+  display: flex;
+  width: 100%;
+  flex-flow: row nowrap;
+}
+
+.wrap_profile {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  padding: 0.5em;
+  grid-gap: 0.5em;
+  flex: 3;
+}
+
+.right {
+  flex: 1;
+}
+
+.body .image {
+  margin: 1em auto;
+  width: 12em;
+  height: 12em;
+  border: #111111;
+  background-color: #444444;
 }
