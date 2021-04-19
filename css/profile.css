@@ -1,7 +1,6 @@
 @import 'common.css';
 
 /* profile specific formatting */
-
 .body {
   outline: 1px solid #000000;
   outline-offset: -1px;
@@ -40,32 +39,40 @@
 }
 
 /*    tiled elements    */
-
-.body .tiles {
+.tiles {
   flex: fit-content;
   display: grid;
   width: 100%;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
   justify-content: space-around;
   grid-gap: 1em;
 }
 
-.body .tiles .tile {
-  display: flex;
-  flex-flow: column nowrap;
+.tiles .tile {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  justify-content: space-around;
   padding: 0.5em;
   outline: 1px solid #000000;
   min-height: 150px;
 }
 
-/*    profile headings and labels    */
+.tile input:disabled {
+  position: absolute;
+  border-color: red;
+  right: 0.5em;
+  bottom: 1em;
+  width: 2em;
+  height: 2em;
+}
 
+/*    profile headings and labels    */
 .body .heading {
   grid-column: span 2;
 }
 
 /*    profile inputs    */
-
 .body .body input[type=submit] {
   width: 100%;
 }

@@ -9,7 +9,7 @@
 
       include 'databaseconnect.php';
 
-      if (isset($_POST['nominate'])) {
+      if (isset($_POST['submit_nomination'])) {
         $election_id = $_POST['election_id'];
         $nominator_id = $_SESSION['user'];
         $nominee_id = $_POST['nominee'];
@@ -18,6 +18,25 @@
                       SELECT $election_id, $nominator_id, $nominee_id
                       WHERE $nominee_id NOT IN(
                           SELECT Nominee_CNU_ID FROM `Nomination`
+                          WHERE Election_Election_ID = '$election_id')";
+        $conn->query($insert_sql);
+      }
+
+      if (isset($_POST['submit_vote'])) {
+
+        $election_id = $_POST['election_id'];
+        $voter_id = $_SESSION['user'];
+        $vote_id = $_POST['vote'];
+
+        $delete_sql = "DELETE FROM `Vote` WHERE
+                        Voter_CNU_ID = $voter_id AND
+                        Election_Election_ID = $election_id";
+        $conn->query($delete_sql);
+
+        $insert_sql = "INSERT INTO `Vote`
+                      SELECT $election_id, $voter_id, $vote_id
+                      WHERE $vote_id NOT IN(
+                          SELECT Votee_CNU_ID FROM `Vote`
                           WHERE Election_Election_ID = '$election_id')";
         $conn->query($insert_sql);
       }
@@ -63,10 +82,20 @@
       {
           global $conn;
           global $election_id;
+          global $status;
 
           # pull nomination information for given election
           $noms_sql = "SELECT * FROM `Nomination` WHERE Election_Election_ID = $election_id";
           $noms = $conn->query($noms_sql);
+
+          # username
+          $voter_id = $_SESSION['user'];
+
+          # pull previous vote in this election
+          $votes_sql = "SELECT Votee_CNU_ID FROM `Vote`
+                          WHERE Election_Election_ID=$election_id
+                          AND Voter_CNU_ID=$voter_id";
+          $previous = $conn->query($votes_sql)->fetch_assoc()['Votee_CNU_ID'];
 
           # error message if there are no nominees
           if ($noms->num_rows < 1) {
@@ -88,10 +117,22 @@
 
                   # ... and print tiles
                   echo "<div class='tile'>";
-                  echo "<span class='heading sub'>$user_name</span>";
-                  foreach ($user_info as $label => $detail) {
-                      echo "<span><i>$label</i>: $detail</span>";
+
+                  // voter status, if applicable (in voting status)
+                  // detect if user is same as previously voted
+                  $checked = $nominee_id == $previous;
+                  // render disabled radio badges to show vote
+                  if ($status=='Voting') {
+                      echo "<input type='radio' disabled='disabled' ".($checked?'checked':'').">";
                   }
+
+                  echo "<span class='heading sub'>$user_name</span>";
+
+                  // user information
+                  foreach ($user_info as $label => $detail) {
+                      echo "<span><i>$label</i></span> <span>$detail</span>";
+                  }
+
                   echo "</div>";
               }
           }
@@ -128,10 +169,10 @@
                 echo "<form action='election_nominate_user.php' method='get'><button name='election' value='$election_id'>Nominate User</button></form>";
                 break;
               case 'Voting':
-                echo "<a><button type='button' name='vote'>Vote in Election</button></a>";
+                echo "<form action='election_vote_user.php' method='get'><button name='election' value='$election_id'>Vote in Election</button></form>";
                 break;
               case 'Complete':
-                echo "<span class='centered'>This election has been completed.</span>";
+                echo "<span class='center'>This election has been completed.</span>";
                 break;
             }
           ?>

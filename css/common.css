@@ -30,14 +30,18 @@ body {
 
 header {
   width: inherit;
-  margin: 0;
+
   height: 10%;
+
   background-color: #FFFFFF;
+
+  margin: 0;
   position: fixed;
   top: 0;
   display: flex;
   align-items: center;
   border-bottom: 1px solid black;
+  z-index: 99999;
 }
 
 .wrapper>div {

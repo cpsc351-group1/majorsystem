@@ -64,7 +64,7 @@
           <input type="hidden" name="committee_id" value="<?php echo $committee_id;?>">
           <?php
                     # Checkbox belongs to options form, placed here for visuals
-                    echo "<div class='data'> <label name='$id'><b>$name</b><br>$dept<br>$pos</label>
+                    echo "<div class='data'> <label for='$id'><b>$name</b><br>$dept<br>$pos</label>
                         <div class='result_choices'>
                           <input type='radio' name='user' id='$id' value='$id' required>
                         </div>
