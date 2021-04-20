@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`User` (
   `Hiring_Year` YEAR(4) NOT NULL,
   `Gender` VARCHAR(45) NOT NULL,
   `Race` VARCHAR(45) NOT NULL,
+  `Permisions` VARCHAR(45) NOT NULL DEFAULT 'User',
   `Photo` Blob,
   PRIMARY KEY (`CNU_ID`))
 ENGINE = InnoDB;
