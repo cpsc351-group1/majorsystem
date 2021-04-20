@@ -6,40 +6,40 @@ DELETE FROM `committee`;
 DELETE FROM `user`;
 
 /*    USERS   */
-/*    CNU_ID, Password, Fname, Lname, Email, Department, Position, Birthday, Date_of_Hiring, Gender, Race, Photo    */
+/*    CNU_ID, Password, Fname, Lname, Email, Department, Position, Birthday, Hiring_Year, Gender, Race, Photo    */
 
 INSERT INTO `user`
-  VALUES (1, 'admin', 'Test', 'Admin', 'admin@cnu.edu', 'All', 'Administrator', '2000-01-01', '2020-01-01', 'Non-binary', 'None', NULL);
+  VALUES (1, 'admin', 'Test', 'Admin', 'admin@cnu.edu', 'All', 'Administrator', '2000-01-01', '2020', 'Non-binary', 'None', NULL);
 
 INSERT INTO `user`
-  VALUES (00998877, 'testpass1', 'John', 'Doe', 'johndoe@cnu.edu', 'Molecular Biology and Chemistry', 'Associate Professor', '1979-01-01', '2020-01-01', 'Male', 'White', NULL);
+  VALUES (00998877, 'testpass1', 'John', 'Doe', 'johndoe@cnu.edu', 'Molecular Biology and Chemistry', 'Associate Professor', '1979-01-01', '2020', 'Male', 'White', NULL);
 
 INSERT INTO `user`
-  VALUES (00987987, 'testpass2', 'Jill', 'Doe', 'jilldoe@cnu.edu', 'English', 'Professor', '1975-01-01', '2015-01-01', 'Female', 'Black', NULL);
+  VALUES (00987987, 'testpass2', 'Jill', 'Doe', 'jilldoe@cnu.edu', 'English', 'Professor', '1975-01-01', '2015', 'Female', 'Black', NULL);
 
 INSERT INTO `user`
-  VALUES (00978879, 'testpass3', 'Beyoncé', 'Knowles-Carter', 'beyonceknowles@cnu.edu', 'Music', 'Department Lead', '1981-09-04', '2008-05-03', 'Female', 'Black', NULL);
+  VALUES (00978879, 'testpass3', 'Beyoncé', 'Knowles-Carter', 'beyonceknowles@cnu.edu', 'Music', 'Department Lead', '1981-09-04', '2008', 'Female', 'Black', NULL);
 
 INSERT INTO `user`
-  VALUES (00966678, 'testpass4', 'Claire', 'Boucher', 'claireboucher@cnu.edu', 'Graphic Design', 'Associate Professor', '1988-03-17', '2018-01-04', 'Non-binary', 'White', NULL);
+  VALUES (00966678, 'testpass4', 'Claire', 'Boucher', 'claireboucher@cnu.edu', 'Graphic Design', 'Associate Professor', '1988-03-17', '2018', 'Non-binary', 'White', NULL);
 
 INSERT INTO `user`
-  VALUES (00942069, 'testpass5', 'Elizabeth', 'Grant', 'elizabethgrant@cnu.edu', 'Philosophy and Religion', 'Professor', '1985-06-21', '2005-04-09', 'Female', 'White', NULL);
+  VALUES (00942069, 'testpass5', 'Elizabeth', 'Grant', 'elizabethgrant@cnu.edu', 'Philosophy and Religion', 'Professor', '1985-06-21', '2005', 'Female', 'White', NULL);
 
 INSERT INTO `user`
-  VALUES (00933833, 'testpass6', 'Azealia', 'Banks', 'azealiabanks@cnu.edu', 'Communications', 'Adjunct', '1991-05-31', '2020-02-27', 'Female', 'Black', NULL);
+  VALUES (00933833, 'testpass6', 'Azealia', 'Banks', 'azealiabanks@cnu.edu', 'Communications', 'Adjunct', '1991-05-31', '2020', 'Female', 'Black', NULL);
 
 INSERT INTO `user`
-  VALUES (00999919, 'testpass7', 'Kurt', 'Cobain', 'kurtcobain@cnu.edu', 'Economics', 'Associate Professor', '1967-02-20', '2018-12-20', 'Male', 'White', NULL);
+  VALUES (00999919, 'testpass7', 'Kurt', 'Cobain', 'kurtcobain@cnu.edu', 'Economics', 'Associate Professor', '1967-02-20', '2018', 'Male', 'White', NULL);
 
 INSERT INTO `user`
-  VALUES (00955259, 'testpass8', 'Dolly', 'Parton', 'dollyparton@cnu.edu', 'Molecular Biology and Chemistry', 'Department Lead', '1946-01-19', '1998-04-30', 'Female', 'White', NULL);
+  VALUES (00955259, 'testpass8', 'Dolly', 'Parton', 'dollyparton@cnu.edu', 'Molecular Biology and Chemistry', 'Department Lead', '1946-01-19', '1998', 'Female', 'White', NULL);
 
 INSERT INTO `user`
-  VALUES (00982429, 'testpass9', 'Mike', 'Lapke', 'mikelapke@cnu.edu', 'Physics, Computer Science and Engineering', 'Associate Professor', '1960-02-03', '2020-06-30', 'Male', 'White', NULL);
+  VALUES (00982429, 'testpass9', 'Mike', 'Lapke', 'mikelapke@cnu.edu', 'Physics, Computer Science and Engineering', 'Associate Professor', '1960-02-03', '2020', 'Male', 'White', NULL);
 
 INSERT INTO `user`
-  VALUES (00944004, 'testpass10', 'Onika', 'Maraj-Petty', 'onikamaraj@cnu.edu', 'Luter School of Business', 'Department Lead', '1982-12-08', '2000-09-15', 'Female', 'Black', NULL);
+  VALUES (00944004, 'testpass10', 'Onika', 'Maraj-Petty', 'onikamaraj@cnu.edu', 'Luter School of Business', 'Department Lead', '1982-12-08', '2000', 'Female', 'Black', NULL);
 
 /*    COMMITTEES    */
 /*    Committee_ID, Name, Description    */
