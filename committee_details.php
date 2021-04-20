@@ -8,7 +8,6 @@
   <?php
       include 'databaseconnect.php';
 
-          $insert_sql = "INSERT INTO `Committee Seat` (Committee_Committee_ID, Starting_Term, Ending_Term, User_CNU_ID)
       # pull posted committee variable
       $entered_id = $_GET['committee'];
 
