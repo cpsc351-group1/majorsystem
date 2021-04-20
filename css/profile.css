@@ -88,6 +88,23 @@
 .member_options form {
   height: 1em !important;
   margin: 0 0.2em;
+  position: relative;
+}
+
+.member_options form .tip {
+  background-color: #333333;
+  color: #FFFFFF;
+  visibility: hidden;
+  position: absolute;
+  border-radius: 5px;
+  padding: 5px;
+  text-align: center;
+  top: 2em;
+}
+
+.member_options form:hover .tip {
+  visibility: visible;
+  z-index: 99999;
 }
 
 .member_options button{

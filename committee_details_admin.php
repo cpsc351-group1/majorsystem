@@ -137,8 +137,8 @@
                   echo "<div class='tile'>";
                   // TODO: remove/chair options
                   echo "<div class='member_options'>"
-                          .($is_chair ? "" : "<form action='committee_details_admin.php?committee=$committee_id' method='post'><button name='chair' value='$user_id'>★</button></form>
-                                              <form action='committee_details_admin.php?committee=$committee_id' method='post'><button name='delete' value='$user_id'>X</button></form>");
+                          .($is_chair ? "" : "<form action='committee_details_admin.php?committee=$committee_id' method='post'><span class='tip'>Appoint as Chairman</span><button name='chair' value='$user_id'>★</button></form>
+                                              <form action='committee_details_admin.php?committee=$committee_id' method='post'><span class='tip'>Delete User</span><button name='delete' value='$user_id'>X</button></form>");
                   echo "</div>";
                   // name and employment details
                   echo "<span class='sub heading'>".$user['Fname']." ".$user['Lname']."</span><br>";
