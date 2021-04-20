@@ -11,6 +11,8 @@
   <?php include 'databaseconnect.php';
 
       # if session variable already set, redirect to homepage
+      //TODO: Either update this so the admin can access the page
+      //      or make identical, new page specifically for admin (add new user option)
       if (isset($_SESSION['user'])) {
         header('Location: homepage.php');
       }
@@ -140,38 +142,26 @@
       var pointer = $('#pass_validation');
 
       var blank_style = "border: 0; background-color: #DEDEDE;";
-
       var valid_style = "border: 1px solid #007D22; background-color: #2CBD0f;";
-
       var invalid_style = "border: 1px solid #780A00; background-color: #DE5021;";
 
       $('#create').prop('disabled', true);
 
       if (pass.length == 0 || cpass.length == 0) {
-
         pointer.html('');
         pointer.prop('style', blank_style);
-
       } else if (pass == cpass) {
-
         if (pass.length >= 8) {
-
           pointer.html('Password valid');
           pointer.prop('style', valid_style);
           $('#create').prop('disabled', false);
-
         } else {
-
           pointer.html('Password shorter than 8 digits');
           pointer.prop('style', invalid_style);
-
         }
-
       } else {
-
         pointer.html('Passwords do not match');
         pointer.prop('style', invalid_style);
-
       }
     }
 

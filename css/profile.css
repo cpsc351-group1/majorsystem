@@ -77,6 +77,28 @@
   margin-bottom: 0.3em;
 }
 
+.member_options {
+  display: flex;
+  position: absolute;
+  top: 0.3em;
+  right: 0.2em;
+  width: auto;
+}
+
+.member_options form {
+  height: 1em !important;
+  margin: 0 0.2em;
+}
+
+.member_options button{
+  width: 1em !important;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+}
+
 /*    body inputs    */
 .body .body input[type=submit] {
   width: 100%;

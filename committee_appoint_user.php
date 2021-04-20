@@ -28,7 +28,7 @@
     $com_stmt->close();
 
     # return to selection page if invalid id thrown
-    validate_inputs(is_null($committee_id), 0, 'committee_selection.php');
+    validate_inputs(is_null($committee_id), 0, 'committee_selection_admin.php');
 
     # pull all nominee details
     $members_sql = "SELECT * FROM `User` WHERE CNU_ID NOT IN(
@@ -51,7 +51,7 @@
     </header>
     <div class="selection">
       <div class="results">
-        <form id="appointment" action="committee_details.php?committee=<?php echo $committee_id; ?>" method="post">
+        <form id="appointment" action="committee_details_admin.php?committee=<?php echo $committee_id; ?>" method="post">
           <input type="hidden" name="committee_id" value="<?php echo $committee_id;?>">
           <?php
           if ($members->num_rows > 0) {

@@ -8,7 +8,6 @@
   <?php
       include 'databaseconnect.php';
 
-          $insert_sql = "INSERT INTO `Committee Seat` (Committee_Committee_ID, Starting_Term, Ending_Term, User_CNU_ID)
       # pull posted committee variable
       $entered_id = $_GET['committee'];
 
@@ -25,6 +24,34 @@
       # fetch row and close
       $com_stmt->fetch();
       $com_stmt->close();
+
+      if (isset($_POST['appoint'])) {
+          $user = $_POST['user'];
+
+          $insert_sql = "INSERT INTO `Committee Seat` (Committee_Committee_ID, Starting_Term, Ending_Term, User_CNU_ID)
+                      SELECT $committee_id, 'Spring 2021', NULL, $user
+                      WHERE $user NOT IN(
+                          SELECT User_CNU_ID FROM `Committee Seat`
+                          WHERE Committee_Committee_ID = '$committee_id')";
+          $conn->query($insert_sql);
+      }
+
+      if (isset($_POST['chair'])) {
+          $user = intval($_POST['chair']);
+
+          $chair_sql = "UPDATE `Chairman`
+                        SET User_CNU_ID = $user
+                        WHERE Committee_Committee_ID = $committee_id";
+          $conn->query($chair_sql);
+      }
+
+      if (isset($_POST['delete'])) {
+          $user = intval($_POST['delete']);
+
+          $delete_sql = "DELETE FROM `Committee Seat`
+                         WHERE User_CNU_ID = $user";
+          $conn->query($delete_sql) or die(mysqli_error($conn));
+      }
 
       # return to selection page if invalid id thrown
       validate_inputs(is_null($committee_id), 0, 'committee_selection.php');
@@ -59,14 +86,27 @@
 
         <?php
 
-            if (!is_null($election)) {
+            if (is_null($election)) {
+
+                # Administrative Option (create election)
+                # TODO: make this functional
+
+                echo "<a href='#'><button type='button'>Start Election</button></a>";
+            } else {
 
                 # View election, if exists
 
                 $election_id = $election['Election_ID'];
-                echo "<form action='election_details.php' method='get'><button name='election' value='$election_id'>View Election</button></form>";
+                echo "<form action='election_details_admin.php' method='get'><button name='election' value='$election_id'>View Election</button></form>";
             }
-        ?>
+
+            # Administrative Option
+            # Add user directly to committee
+
+            echo "<form action='committee_appoint_user.php' method='get'><button name='committee' value='$committee_id'>Appoint User to Seat</button></form>";
+
+          ?>
+
       </div>
     </div>
     <div class="body">
@@ -95,6 +135,11 @@
 
                   # generate block of data for each user
                   echo "<div class='tile'>";
+                  // TODO: remove/chair options
+                  echo "<div class='member_options'>"
+                          .($is_chair ? "" : "<form action='committee_details_admin.php?committee=$committee_id' method='post'><button name='chair' value='$user_id'>★</button></form>
+                                              <form action='committee_details_admin.php?committee=$committee_id' method='post'><button name='delete' value='$user_id'>X</button></form>");
+                  echo "</div>";
                   // name and employment details
                   echo "<span class='sub heading'>".$user['Fname']." ".$user['Lname']."</span><br>";
                   // displays if user is committee chair
