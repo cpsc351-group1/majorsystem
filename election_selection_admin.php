@@ -71,6 +71,11 @@
         </div>
 
         <hr>
+        <!-- Administrative Options -->
+        <div class="emphasis">
+          <a href="#"><button type="button" name="add_user">Start Election</button></a>
+          <!--TODO: implement this-->
+        </div>
       </div>
     </div>
   </div>

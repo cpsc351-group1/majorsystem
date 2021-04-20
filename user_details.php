@@ -82,7 +82,7 @@
             <div class="tile">
               <span class="sub heading">Employment</span>
               <div class="list">
-                <span class="label">College:</span>
+                <span class="label">Department:</span>
                 <span><?php echo $user['Department'];?></span>
 
                 <span class="label">Position:</span>
