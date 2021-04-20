@@ -5,12 +5,12 @@
   <?php
     # erase current session if coming from logout
     if (isset($_POST['logout'])) {
-      session_unset();
+        session_unset();
     }
 
     # if session variable already set, redirect to homepage
     if (isset($_SESSION['user'])) {
-      header('Location: homepage.php');
+        header('Location: homepage.php');
     }
 
     # connect to database
@@ -23,6 +23,45 @@
     # sql query for matching user pass
     $sql = "SELECT * FROM `User` WHERE CNU_ID=$entered_user";
     $result = $conn->query($sql);
+
+    if (isset($_POST['create'])) {
+        $posted_data = array(
+          $_POST['cnu_id'],
+          $_POST['pass'],
+          $_POST['fname'],
+          $_POST['lname'],
+          $_POST['email'],
+          $_POST['department'],
+          $_POST['position'],
+          $_POST['bday'],
+          $_POST['hiring_year'],
+          $_POST['gender'],
+          $_POST['race'],
+          $_POST['img']
+        );
+
+        $posted_id = $_POST['cnu_id'];
+
+        $insert_sql = "INSERT INTO `User`
+                      SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+                      WHERE $posted_id NOT IN(SELECT CNU_ID FROM `User`)";
+        # input explicit data types
+        $types='isssssssisss';
+        # prepare statement
+        $stmt = $conn->prepare($insert_sql);
+        # bind statement inputs from array
+        $stmt->bind_param($types, ...$posted_data);
+        // call_user_func_array(array($stmt, 'bind_param'), array_merge($types, $posted_data));
+        # execute statement
+        if ($stmt->execute()) {
+            $stmt->close();
+            $_SESSION['user']=$posted_id;
+            header("Location:user_details.php?user=$posted_id");
+        } else {
+            #TODO: echo insert fail message
+        }
+        $stmt->close();
+    }
 
   ?>
   <title>CNU Committee Database</title>

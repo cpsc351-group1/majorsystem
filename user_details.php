@@ -88,8 +88,8 @@
                 <span class="label">Position:</span>
                 <span><?php echo $user['Position'];?></span>
 
-                <span class="label">Date of Hiring:</span>
-                <span><?php echo $user['Date_of_Hiring'];?></span>
+                <span class="label">Year of Hiring:</span>
+                <span><?php echo $user['Hiring_Year'];?></span>
               </div>
             </div>
           </div>

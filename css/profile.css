@@ -55,7 +55,7 @@
   padding: 0.5em;
 }
 
-.tile input:disabled {
+.tile input[type=radio]:disabled {
   position: absolute;
   right: 0.3em;
   top: 0.5em;
@@ -105,13 +105,24 @@
 .list {
   height: 100%;
   display: grid;
+  grid-row-gap: 0.2em;
   grid-template-columns: 1fr 2fr;
   grid-auto-rows: 1fr;
   align-items: center;
 }
 
-.list input {
+.list input, .list select {
+  width: 100%;
   height: 2em;
+}
+
+.list option {
+  width: inherit;
+}
+
+.required::after {
+  content:' *';
+  color: #FF0000;
 }
 
 .list div:nth-child(4n+1), .list div:nth-child(4n-2) {
@@ -129,4 +140,16 @@
   height: 12em;
   border: 1px solid #222222;
   background-color: #666666;
+}
+
+#pass_validation {
+  color: #ffffff;
+  height: 80%;
+  display: flex;
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+  grid-column: 2 / 3;
+  border-radius: 5px;
+  background-color: #DEDEDE;
 }
