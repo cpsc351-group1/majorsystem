@@ -24,14 +24,15 @@ USE `mydb` ;
 DROP TABLE IF EXISTS `mydb`.`User` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`User` (
-  `CNU_ID` INT NOT NULL,
+  `CNU_ID` INT NOT NULL AUTO_INCREMENT,
+  `Password` VARCHAR(24) NOT NULL,
   `Fname` VARCHAR(45) NOT NULL,
   `Lname` VARCHAR(45) NOT NULL,
   `Email` VARCHAR(72) NOT NULL,
-  `Department` VARCHAR(45) NOT NULL,
-  `Position` VARCHAR(45) NOT NULL,
+  `Department` VARCHAR(45),
+  `Position` VARCHAR(45),
   `Birthday` DATE NOT NULL,
-  `Date_of_Hiring` DATE NOT NULL,
+  `Hiring_Year` YEAR(4) NOT NULL,
   `Gender` VARCHAR(45) NOT NULL,
   `Race` VARCHAR(45) NOT NULL,
   `Photo` Blob,
@@ -107,9 +108,9 @@ DROP TABLE IF EXISTS `mydb`.`Election` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`Election` (
   `Election_ID` INT NOT NULL AUTO_INCREMENT,
-  `Status` VARCHAR(45) NOT NULL,
-  `Term_ID` INT NOT NULL,
   `Committee_Committee_ID` INT NOT NULL,
+  `Status` VARCHAR(45) NOT NULL,
+  `Number_Seats` INT NOT NULL,
   PRIMARY KEY (`Election_ID`),
   INDEX `fk_Election_Committee1_idx` (`Committee_Committee_ID` ASC),
   CONSTRAINT `fk_Election_Committee1`

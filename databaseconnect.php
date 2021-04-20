@@ -15,7 +15,21 @@ if ($conn->connect_error) {
     die("Oh no! Connection failed: " . $conn->connect_error);
 }
 
+$no_session_pages = array(
+  "index.php",
+  "user_registration.php"
+);
+
+if (!in_array(basename($_SERVER['SCRIPT_FILENAME']), $no_session_pages) and is_null($_SESSION['user'])) {
+    header("Location: index.php");
+}
+
+function validate_inputs($input, $expected, $location)
+{
+    if (!($input == $expected)) {
+        header("Location: $location");
+    }
+}
+
 // Boolean to track if already in database
 // $found = FALSE:
-
-?>

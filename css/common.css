@@ -1,0 +1,82 @@
+/* basic layout stuff */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+
+  display: flex;
+  flex-flow: column nowrap;
+  position: relative;
+}
+
+.wrapper {
+  width: 80%;
+  height: 75vh;
+  position: absolute;
+  top: 10%;
+  right: 10%;
+  left: 10%;
+
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+/* header */
+
+header {
+  width: inherit;
+
+  height: 10%;
+
+  background-color: #FFFFFF;
+
+  margin: 0;
+  position: fixed;
+  top: 0;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid black;
+  z-index: 99999;
+}
+
+.wrapper>div {
+  margin: 1em 0;
+}
+
+header * {
+  padding: 0;
+  margin: 0;
+}
+
+/* details */
+
+.emphasis {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.center {
+  display: flex;
+  flex-flow: column nowrap;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.heading {
+  font-weight: bold;
+}
+
+.heading.sub {
+  font-size: 1.1em;
+}
+
+.heading.major {
+  font-size: 1.5em;
+}

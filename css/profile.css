@@ -1,30 +1,23 @@
-
-body {
-  margin: 0;
-  padding: 0;
-}
-
-.wrapper {
-  width: 90%;
-  height: 600px;
-  margin: 0 auto;
-}
+@import 'common.css';
 
 /* profile specific formatting */
-
-.profile {
-  border: 1px solid black;
-}
-
-.profile .body {
+.body {
+  outline: 1px solid #000000;
+  outline-offset: -1px;
   padding: 1em;
   display: flex;
-  flex-flow: row nowrap;
   justify-content: space-around;
   gap: 1em;
 }
 
-.profile .column {
+.body hr {
+  grid-column: 1 / -1;
+  border: 1px solid #000000;
+  height: 0;
+  width: 100%;
+}
+
+.body .column {
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
@@ -32,53 +25,131 @@ body {
   gap: 1em;
 }
 
-.profile .block {
-  grid-column: span 1;
-  grid-row: span 1;
-  display: grid;
-  grid-auto-columns: 1fr 2fr;
+.body .block .space {
+  grid-column: 1 / 3;
+  margin: 0.2em;
 }
 
-.profile .tiles {
-  flex: 1;
+.body .block input {
+  padding: 0.3em;
+}
+
+/*    tiled elements    */
+.tiles {
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
-  justify-content: space-around;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-auto-rows: 1fr;
   grid-gap: 1em;
 }
 
-.profile .tiles .block {
-  display: block;
+.tiles .tile {
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
   padding: 0.5em;
-  border: 1px solid black;
-  min-height: 150px;
+  outline: 1px solid #000000;
 }
 
-/*    profile headings and labels    */
-
-.profile .heading {
-  font-weight: bold;
-  grid-column: span 2;
+.tile input {
+  padding: 0.5em;
 }
 
-.profile .heading.sub {
-  font-size: 1.1em;
+.tile input[type=radio]:disabled {
+  position: absolute;
+  right: 0.3em;
+  top: 0.5em;
+  width: 1.5em;
+  height: 1.5em;
 }
 
-.profile .heading.major {
-  font-size: 1.5em;
+.tile.center {
+  justify-content: center;
+  align-items: center;
 }
 
-.profile .body .label {
-  font-style: italic;
+/*    heading    */
+.block .heading {
+  grid-column: 1 / -1;
 }
 
-/*    profile inputs    */
+.tile .heading {
+  margin-bottom: 0.3em;
+}
 
-.profile .body input[type=submit] {
+/*    body inputs    */
+.body .body input[type=submit] {
   width: 100%;
 }
 
-.profile button {
+.body form {
+  display: flex;
+  height: inherit;
+  align-content: center;
+  justify-content: center;
+}
+
+.body form button {
+  width: 80%;
+  padding: 1em;
+}
+
+/* profile specifics */
+
+.profile {
+  display: flex;
+  width: 100%;
+  flex-flow: row nowrap;
+}
+
+.list {
   height: 100%;
+  display: grid;
+  grid-row-gap: 0.2em;
+  grid-template-columns: 1fr 2fr;
+  grid-auto-rows: 1fr;
+  align-items: center;
+}
+
+.list input, .list select {
+  width: 100%;
+  height: 2em;
+}
+
+.list option {
+  width: inherit;
+}
+
+.required::after {
+  content:' *';
+  color: #FF0000;
+}
+
+.list div:nth-child(4n+1), .list div:nth-child(4n-2) {
+  background-color: #DDDDDD;
+}
+
+.body input[type=file] {
+  outline: 1px solid black;
+  padding: 0.2em;
+}
+
+.body .image {
+  margin: 1em 2em;
+  width: 12em;
+  height: 12em;
+  border: 1px solid #222222;
+  background-color: #666666;
+}
+
+#pass_validation {
+  color: #ffffff;
+  height: 80%;
+  display: flex;
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+  grid-column: 2 / 3;
+  border-radius: 5px;
+  background-color: #DEDEDE;
 }
