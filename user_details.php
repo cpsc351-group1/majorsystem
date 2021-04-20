@@ -82,7 +82,7 @@
             <div class="tile">
               <span class="sub heading">Employment</span>
               <div class="list">
-                <span class="label">College:</span>
+                <span class="label">Department:</span>
                 <span><?php echo $user['Department'];?></span>
 
                 <span class="label">Position:</span>
@@ -96,6 +96,9 @@
           <div class="right">
             <div class="image">
               <!-- TODO: dynamically insert image -->
+              <?php
+                echo '<img src="data:image/jpeg;base64,'.base64_encode($user['Photo']).'"/>';
+              ?>
             </div>
             <?php
               $user_id = $user['CNU_ID'];

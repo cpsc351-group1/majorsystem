@@ -70,6 +70,14 @@
         </div>
 
         <hr>
+        <!-- Administrative Options -->
+
+        <div class="emphasis">
+          <a href="#"><button type="button" name="add_user">Add Committee</button></a>
+          <!--TODO: implement this-->
+          <input type="submit" name="report" value="Generate Report on Selected">
+          <!--TODO: implement this -->
+        </div>
       </form>
     </div>
   </div>
