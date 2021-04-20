@@ -96,6 +96,9 @@
           <div class="right">
             <div class="image">
               <!-- TODO: dynamically insert image -->
+              <?php
+                echo '<img src="data:image/jpeg;base64,'.base64_encode($user['Photo']).'"/>';
+              ?>
             </div>
             <?php
               $user_id = $user['CNU_ID'];
