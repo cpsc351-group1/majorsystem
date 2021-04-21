@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+<?php session_start(); ini_set('display_errors', true)?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,14 +15,41 @@
 
     # connect to database
     include 'databaseconnect.php';
+    # nullify login error
+    $login_error = false;
 
-    # pull data from post
-    $entered_user = intval($_POST['cnu_id']);
-    $entered_pass = $_POST['pass'];
+    if (isset($_POST['login'])) {
+      # pull data from post
+      $entered_user = intval($_POST['cnu_id']);
+      $entered_pass = $_POST['pass'];
 
-    # sql query for matching user pass
-    $sql = "SELECT * FROM `User` WHERE CNU_ID=$entered_user";
-    $result = $conn->query($sql);
+      # sql query for matching user pass
+      $login_sql = "SELECT `CNU_ID`, `Password`, `Permissions` FROM `User` WHERE CNU_ID=?";
+      $stmt = $conn->prepare($login_sql);
+      
+      # bind inputs, execute, bind outputs and close
+      $stmt->bind_param("i",$entered_user);
+      $stmt->execute();
+      $stmt->bind_result($username, $password, $permissions);
+      $stmt->fetch();
+      $stmt->close();
+
+      #set login_error
+      $login_error = true;
+
+      # if user exists        and passwords match
+      if (!is_null($username) and $entered_pass == $password) {
+        open_session:
+
+        # open login session
+        $_SESSION['user'] = $username;
+        $_SESSION['permissions'] = $permissions;
+        # redirect to homepage
+        header('Location: homepage.php');
+      }
+    }
+
+    # USER ACCOUNT CREATION
 
     if (isset($_POST['create'])) {
         $posted_data = array(
@@ -44,19 +71,17 @@
 
         $insert_sql = "INSERT INTO `User`
                       SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
-                      WHERE $posted_id NOT IN(SELECT CNU_ID FROM `User`)";
+                      WHERE $entered_ NOT IN(SELECT CNU_ID FROM `User`)";
         # input explicit data types
         $types='isssssssisss';
         # prepare statement
         $stmt = $conn->prepare($insert_sql);
         # bind statement inputs from array
         $stmt->bind_param($types, ...$posted_data);
-        // call_user_func_array(array($stmt, 'bind_param'), array_merge($types, $posted_data));
         # execute statement
         if ($stmt->execute()) {
             $stmt->close();
-            $_SESSION['user']=$posted_id;
-            header("Location:user_details.php?user=$posted_id");
+            goto open_session;
         } else {
             #TODO: echo insert fail message
         }
@@ -79,18 +104,10 @@
           <input type="password" name="pass" placeholder="Password">
         </div>
         <?php
-        # if submit button is set ...
-        if (isset($_POST['login'])) {
-            # check that username and password entered match
-            if ($result->num_rows > 0 and $result->fetch_assoc()['Password'] == $entered_pass) {
-                # open login session
-                $_SESSION['user'] = $entered_user;
-
-                # redirect to homepage
-                header('Location: homepage.php');
-            } else {
-                echo "<hr><div class='error'>Invalid credentials entered.</div>";
-            }
+        # if login error...
+        if ($login_error) {
+          # throw up error
+          echo "<hr><div class='error'>Invalid credentials entered.</div>";
         }
         ?>
         <hr>

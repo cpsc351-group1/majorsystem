@@ -6,8 +6,7 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="css/profile.css" type="text/css">
   <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
-
-  </script>
+  
   <?php include 'databaseconnect.php';
 
       # if session variable already set, redirect to homepage

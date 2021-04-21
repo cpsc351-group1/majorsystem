@@ -102,7 +102,7 @@
             </div>
             <?php
               $user_id = $user['CNU_ID'];
-              echo "<form action='user_details_update.php' method='get'><button name='user' value='$user_id'>Modify Profile</button></form>";
+              echo "<form action='user_modify.php' method='get'><button name='user' value='$user_id'>Modify Profile</button></form>";
             ?>
           </div>
 

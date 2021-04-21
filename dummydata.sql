@@ -6,7 +6,7 @@ DELETE FROM `committee`;
 DELETE FROM `user`;
 
 /*    USERS   */
-/*    CNU_ID, Password, Fname, Lname, Email, Department, Position, Birthday, Hiring_Year, Gender, Race, Photo    */
+/*    CNU_ID, Password, Fname, Lname, Email, Department, Position, Birthday, Hiring_Year, Gender, Race, Permissions, Photo    */
 
 INSERT INTO `user`
   VALUES (1, 'admin', 'Test', 'Admin', 'admin@cnu.edu', 'All', 'Administrator', '2000-01-01', '2020', 'Non-binary', 'None', 'Admin', NULL);
