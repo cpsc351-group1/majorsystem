@@ -14,6 +14,7 @@
       //      or make identical, new page specifically for admin (add new user option)
       if (isset($_SESSION['user'])) {
         header('Location: homepage.php');
+        exit();
       }
 
     ?>

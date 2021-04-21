@@ -10,59 +10,57 @@
   <?php 
     include "databaseconnect.php";
 
+    // UPDATE USER INFORMATION
+
     if (isset($_POST['update'])) {
 
+      # array of user info
       $posted_data = array(
-        $_POST['pass'],
-        $_POST['fname'],
-        $_POST['lname'],
-        $_POST['email'],
-        $_POST['department'],
-        $_POST['position'],
-        $_POST['bday'],
-        $_POST['hiring_year'],
-        $_POST['gender'],
-        $_POST['race'],
-        $_POST['img']
+        "Password" => $_POST['pass'],
+        "Fname" => $_POST['fname'],
+        "Lname" => $_POST['lname'],
+        "Email" => $_POST['email'],
+        "Department" => $_POST['department'],
+        "Position" => $_POST['position'],
+        "Birthday" => $_POST['bday'],
+        "Hiring_Year" => $_POST['hiring_year'],
+        "Gender" => $_POST['gender'],
+        "Race" => $_POST['race'],
+        "Photo" => $_POST['img']
       );
 
-      $posted_id = intval($_POST['cnu_id']);
+      $update_id = $_POST['cnu_id'];
 
-      $insert_sql = "UPDATE `User`
-                    SET `Password` = ?,
-                    `Fname` = ?,
-                    `Lname` = ?,
-                    `Email` = ?,
-                    `Department` = ?,
-                    `Position` = ?,
-                    `Birthday` = ?,
-                    `Hiring_Year` = ?,
-                    `Gender` = ?,
-                    `Race` = ?,
-                    `Photo` = ?
-                    WHERE `CNU_ID` = '$posted_id' ";
-
+      # prepare insert sql string
+      $insert_sql =     "UPDATE `User`
+                        SET ".implode( '=? , ', array_keys($posted_data)).
+                        "=? WHERE CNU_ID = $update_id";
       # input explicit data types
       $types='sssssssisss';
       # prepare statement
       $stmt = $conn->prepare($insert_sql);
-      if (!$stmt) {
-        die('prepare() failed: ' . htmlspecialchars($conn->error));
-      }
       # bind statement inputs from array
-      $stmt->bind_param($types, ...$posted_data);
+      $posted_values = array_values($posted_data);
+      $stmt->bind_param($types, ...$posted_values);
       # execute statement
       if ($stmt->execute()) {
-          $stmt->close();
-          header("Location: user_details.php?user=$posted_id");
+          # redirect to new user details page
+          header("Location: user_details.php?user=$update_id");
+          exit();
       } else {
           #TODO: echo insert fail message
       }
+
       $stmt->close();
+
     }
 
+      // GET
+
     $entered_id = $_GET['user'];
-    
+
+    //  PULL USER INFO
+
     # select all info from relevant user
     $user_sql = "SELECT * FROM `User` WHERE CNU_ID = ?";
     $stmt = $conn->prepare($user_sql);
@@ -76,6 +74,8 @@
     $stmt->fetch();
     $stmt->close();
 
+    validate_inputs(is_null($CNU_ID), false, 'user_selection.php');
+
     function print_value($desired_value) {
       echo "value='$desired_value'";
     }
@@ -88,8 +88,8 @@
         echo ($option == "Please select..." ? " disabled hidden" : "");
         echo ">$option</option>";
       }
-    }
-
+     }
+    
   ?>
 
   <title>CNU Committees — Update Account</title>

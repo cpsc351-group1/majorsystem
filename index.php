@@ -11,14 +11,15 @@
     # if session variable already set, redirect to homepage
     if (isset($_SESSION['user'])) {
         header('Location: homepage.php');
+        exit();
     }
 
     # connect to database
     include 'databaseconnect.php';
     # nullify login error
-    $login_error = false;
 
     if (isset($_POST['login'])) {
+      
       # pull data from post
       $entered_user = intval($_POST['cnu_id']);
       $entered_pass = $_POST['pass'];
@@ -34,18 +35,17 @@
       $stmt->fetch();
       $stmt->close();
 
-      #set login_error
-      $login_error = true;
-
       # if user exists        and passwords match
       if (!is_null($username) and $entered_pass == $password) {
-        open_session:
-
         # open login session
         $_SESSION['user'] = $username;
         $_SESSION['permissions'] = $permissions;
         # redirect to homepage
         header('Location: homepage.php');
+        exit();
+      } else {
+        $login_error = true;
+        $_POST = array();
       }
     }
 
@@ -67,24 +67,21 @@
           $_POST['img']
         );
 
-        $posted_id = $_POST['cnu_id'];
+        $entered_user = $_POST['cnu_id'];
 
-        $insert_sql = "INSERT INTO `User`
+        $insert_sql = "INSERT INTO `User` (`CNU_ID`, `Password`, `Fname`, `Lname`, `Email`, `Department`, `Position`, `Birthday`, `Hiring_Year`, `Gender`, `Race`, `Photo`)
                       SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
-                      WHERE $entered_ NOT IN(SELECT CNU_ID FROM `User`)";
+                      WHERE $entered_user NOT IN(SELECT CNU_ID FROM `User`)";
         # input explicit data types
         $types='isssssssisss';
         # prepare statement
         $stmt = $conn->prepare($insert_sql);
+        
         # bind statement inputs from array
         $stmt->bind_param($types, ...$posted_data);
+        
         # execute statement
-        if ($stmt->execute()) {
-            $stmt->close();
-            goto open_session;
-        } else {
-            #TODO: echo insert fail message
-        }
+        $stmt->execute();
         $stmt->close();
     }
 
@@ -105,7 +102,7 @@
         </div>
         <?php
         # if login error...
-        if ($login_error) {
+        if (isset($login_error)) {
           # throw up error
           echo "<hr><div class='error'>Invalid credentials entered.</div>";
         }
@@ -113,7 +110,7 @@
         <hr>
         <div class="credentials">
           <a href="user_registration.php"><b>Create Account</b></a>
-          <input type="submit" name="login" value="Login">
+          <button type="submit" name="login">Login</button>
         </div>
       </form>
     </div>

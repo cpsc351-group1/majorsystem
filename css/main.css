@@ -76,7 +76,7 @@ button {
   border-radius: 5px;
 }
 
-.wrapper input[type=submit] {
+.wrapper button {
   cursor: pointer;
   background-color: #2F4F4F;
   color: #FFFFFF;
