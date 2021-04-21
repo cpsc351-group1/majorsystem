@@ -14,7 +14,7 @@
 
       //  PERMISSIONS REDIRECTS
       # pulled from databaseconnect.php
-      admin_redirect($_SESSION['permissions'], "committee_details_admin.php?user=$entered_id");
+      admin_redirect($_SESSION['permissions'], "committee_details_admin.php?committee=$entered_id");
 
       // SELECT COMMITTEE INFO
       # pull committee information using $_GET

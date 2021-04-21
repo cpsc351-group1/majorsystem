@@ -5,7 +5,15 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="css/selection.css">
-  <?php include 'databaseconnect.php'?>
+  <?php
+  
+  include 'databaseconnect.php';
+  
+  //  PERMISSIONS REDIRECTS
+  # pulled from databaseconnect.php
+  admin_redirect($_SESSION['permissions'], "election_selection_admin.php");
+  
+  ?>
 
   <title>CNU Committees - Elections</title>
 </head>

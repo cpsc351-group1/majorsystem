@@ -164,6 +164,10 @@
   color: #FF0000;
 }
 
+.list div {
+  height: 100%;
+}
+
 .list div:nth-child(4n+1), .list div:nth-child(4n-2) {
   background-color: #DDDDDD;
 }

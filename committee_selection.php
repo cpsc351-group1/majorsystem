@@ -1,11 +1,18 @@
-<?php session_start(); ?>
+<?php session_start();?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="css/selection.css">
-  <?php include 'databaseconnect.php'?>
+  <?php
+  include 'databaseconnect.php';
+  
+  //  PERMISSIONS REDIRECTS
+  # pulled from databaseconnect.php
+  admin_redirect($_SESSION['permissions'], "committee_selection_admin.php");
+  
+  ?>
 
   <title>CNU Committees - Committees</title>
 </head>
