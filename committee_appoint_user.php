@@ -10,6 +10,7 @@
 
     require 'databaseconnect.php';
 
+
     # pull posted committee variable
     $entered_id = $_GET['committee'];
 

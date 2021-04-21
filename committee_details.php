@@ -8,9 +8,15 @@
   <?php
       include 'databaseconnect.php';
 
+      //  GET
       # pull posted committee variable
       $entered_id = $_GET['committee'];
 
+      //  PERMISSIONS REDIRECTS
+      # pulled from databaseconnect.php
+      admin_redirect($_SESSION['permissions'], "committee_details_admin.php?user=$entered_id");
+
+      // SELECT COMMITTEE INFO
       # pull committee information using $_GET
       $com_sql = "SELECT * FROM `Committee` WHERE Committee_ID=?";
       # prepare statement (to prevent mysql injection)

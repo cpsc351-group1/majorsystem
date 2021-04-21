@@ -16,7 +16,6 @@
 
       # array of user info
       $posted_data = array(
-        "Password" => $_POST['pass'],
         "Fname" => $_POST['fname'],
         "Lname" => $_POST['lname'],
         "Email" => $_POST['email'],
@@ -28,6 +27,11 @@
         "Race" => $_POST['race'],
         "Photo" => $_POST['img']
       );
+
+      # check if password updated
+      if ($_POST['pass'] != '') {
+        $posted_data["Password"] = $_POST['pass'];
+      }
 
       $update_id = $_POST['cnu_id'];
 

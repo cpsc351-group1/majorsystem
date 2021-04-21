@@ -28,6 +28,14 @@ function validate_inputs($input, $expected, $location)
 {
     if (!($input == $expected)) {
         header("Location: $location");
+        exit();
+    }
+}
+
+function admin_redirect($user_permissions, $location) {
+    if ($user_permissions == 'Admin') {
+        header("Location: $location");
+        exit();
     }
 }
 
