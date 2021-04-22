@@ -1,4 +1,4 @@
-<?php session_start(); ini_set('display_errors, 1'); ?>
+<?php session_start(); ini_set('display_errors', true); ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -6,7 +6,8 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="css/profile.css" type="text/css">
   <?php
-      include 'databaseconnect.php';
+      require 'databaseconnect.php';
+      require 'committee_functions.php';
 
       //  GET
       # pull posted committee variable
@@ -17,34 +18,19 @@
       admin_redirect($_SESSION['permissions'], "committee_details_admin.php?committee=$entered_id");
 
       // SELECT COMMITTEE INFO
-      # pull committee information using $_GET
-      $com_sql = "SELECT * FROM `Committee` WHERE Committee_ID=?";
-      # prepare statement (to prevent mysql injection)
-      $com_stmt = $conn->prepare($com_sql);
-      # bind inputs
-      $com_stmt->bind_param('i', $entered_id);
-      # execute statement
-      $com_stmt->execute();
-      # bind results to variables
-      $com_stmt->bind_result($committee_id, $committee_name, $committee_description);
-      # fetch row and close
-      $com_stmt->fetch();
-      $com_stmt->close();
+      query_committee($conn, $entered_id);
 
       # return to selection page if invalid id thrown
       validate_inputs(is_null($committee_id), 0, 'committee_selection.php');
 
       # query chairman
-      $chair_sql = "SELECT User_CNU_ID FROM `Chairman` WHERE Committee_Committee_ID='$committee_id'";
-      $chair_id = $conn->query($chair_sql)->fetch_assoc()['User_CNU_ID'];
+      $chair_id = query_committee_chair($conn, $committee_id);
 
       # query committee seats info
-      $committee_seats_sql = "SELECT * FROM `Committee Seat` WHERE Committee_Committee_ID='$committee_id'";
-      $committee_seats = $conn->query($committee_seats_sql);
+      $committee_seats = query_committee_seats($conn, $committee_id); 
 
       # query any running elections
-      $election_sql = "SELECT * FROM `Election` WHERE Committee_Committee_ID='$committee_id' AND NOT Status='Complete'";
-      $election = $conn->query($election_sql)->fetch_assoc();
+      $election = query_committee_election($conn, $committee_id);
     ?>
 
   <title>CNU — <?php echo $committee_name;?></title>

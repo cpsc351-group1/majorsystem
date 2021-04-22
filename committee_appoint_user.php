@@ -9,33 +9,19 @@
   <?php
 
     require 'databaseconnect.php';
+    require 'committee_functions.php';
 
-
-    # pull posted committee variable
+    //  GET
     $entered_id = $_GET['committee'];
 
-    # pull committee information using $_GET
-    $com_sql = "SELECT * FROM `Committee` WHERE Committee_ID=?";
-    # prepare statement (to prevent mysql injection)
-    $com_stmt = $conn->prepare($com_sql);
-    # bind inputs
-    $com_stmt->bind_param('i', $entered_id);
-    # execute statement
-    $com_stmt->execute();
-    # bind results to variables
-    $com_stmt->bind_result($committee_id, $committee_name, $committee_description);
-    # fetch row and close
-    $com_stmt->fetch();
-    $com_stmt->close();
+    //  SELECT COMMITTEE INFO
+    $committee = query_committee($conn, $entered_id);
 
-    # return to selection page if invalid id thrown
+    //  INVALID ID REDIRECT
     validate_inputs(is_null($committee_id), 0, 'committee_selection_admin.php');
 
-    # pull all nominee details
-    $members_sql = "SELECT * FROM `User` WHERE CNU_ID NOT IN(
-                      SELECT User_CNU_ID FROM `Committee Seat`
-                      WHERE Committee_Committee_ID=$committee_id)";
-    $members = $conn->query($members_sql);
+    //  SELECT NOMINEE DETAILS
+    $members = query_election_members($conn, $entered_id);
 
     ?>
   <title>CNU Committees - Appoint User</title>

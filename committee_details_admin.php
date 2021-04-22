@@ -1,4 +1,4 @@
-<?php session_start(); ini_set('display_errors, 1'); ?>
+<?php session_start(); ini_set('display_errors', true); ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -6,25 +6,16 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="css/profile.css" type="text/css">
   <?php
-      include 'databaseconnect.php';
+      require 'databaseconnect.php';
+      require 'committee_functions.php';
 
-      # pull posted committee variable
+      //  GET
       $entered_id = $_GET['committee'];
 
-      # pull committee information using $_GET
-      $com_sql = "SELECT * FROM `Committee` WHERE Committee_ID=?";
-      # prepare statement (to prevent mysql injection)
-      $com_stmt = $conn->prepare($com_sql);
-      # bind inputs
-      $com_stmt->bind_param('i', $entered_id);
-      # execute statement
-      $com_stmt->execute();
-      # bind results to variables
-      $com_stmt->bind_result($committee_id, $committee_name, $committee_description);
-      # fetch row and close
-      $com_stmt->fetch();
-      $com_stmt->close();
+      //  SELECT COMMITTEE INFO
+      $committee = query_committee($conn, $entered_id);
 
+      //  MEMBER APPOINTMENT INSERT
       if (isset($_POST['appoint'])) {
           $user = $_POST['user'];
 
@@ -36,6 +27,7 @@
           $conn->query($insert_sql);
       }
 
+      //  CHAIR SELECTION INSERT
       if (isset($_POST['chair'])) {
           $user = intval($_POST['chair']);
 
@@ -45,6 +37,7 @@
           $conn->query($chair_sql);
       }
 
+      //  MEMBER REMOVAL INSERT
       if (isset($_POST['delete'])) {
           $user = intval($_POST['delete']);
 
@@ -57,16 +50,13 @@
       validate_inputs(is_null($committee_id), 0, 'committee_selection.php');
 
       # query chairman
-      $chair_sql = "SELECT User_CNU_ID FROM `Chairman` WHERE Committee_Committee_ID='$committee_id'";
-      $chair_id = $conn->query($chair_sql)->fetch_assoc()['User_CNU_ID'];
+      $chair_id = query_committee_chair($conn, $committee_id);
 
       # query committee seats info
-      $committee_seats_sql = "SELECT * FROM `Committee Seat` WHERE Committee_Committee_ID='$committee_id'";
-      $committee_seats = $conn->query($committee_seats_sql);
+      $committee_seats = query_committee_seats($conn, $committee_id);
 
       # query any running elections
-      $election_sql = "SELECT * FROM `Election` WHERE Committee_Committee_ID='$committee_id' AND NOT Status='Complete'";
-      $election = $conn->query($election_sql)->fetch_assoc();
+      $election = query_committee_election($conn, $committee_id);
     ?>
 
   <title>CNU — <?php echo $committee_name;?></title>
@@ -88,20 +78,18 @@
 
             if (is_null($election)) {
 
-                # Administrative Option (create election)
-                # TODO: make this functional
+                // CREATE ELECTION
 
                 echo "<form action='election_setup.php' method='get'><button name='committee' value='$committee_id'>Start Election</button></form>";
             } else {
 
-                # View election, if exists
+                // VIEW ELECTION
 
                 $election_id = $election['Election_ID'];
                 echo "<form action='election_details_admin.php' method='get'><button name='election' value='$election_id'>View Election</button></form>";
             }
 
-            # Administrative Option
-            # Add user directly to committee
+            // ADD USER TO COMMITTEE
 
             echo "<form action='committee_appoint_user.php' method='get'><button name='committee' value='$committee_id'>Appoint User to Seat</button></form>";
 
