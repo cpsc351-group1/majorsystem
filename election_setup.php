@@ -93,13 +93,13 @@
           <input type="text" name="search" placeholder="Search...">
         </div>
         <hr>
-        <div class='emphasis'>
+        <div class='details'>
             <label for="number_seats" class="required">Number of Seats to Elect</label>
             <input type="number" id="number_seats" name="number_seats" min=1 max=100 form="election" required>
         </div>
         <hr>
         <!-- Administrative Options -->
-        <div class="emphasis">
+        <div class="choices">
           <input type="submit" name="create" value="Create Election" form="election">
         </div>
       </div>

@@ -74,7 +74,7 @@
 
         <hr>
         <!-- Administrative Options -->
-        <div class="emphasis">
+        <div class="choices">
           <a href="election_setup.php"><button type="button" name="add_user">Start Election</button></a>
           <!--TODO: implement this-->
         </div>

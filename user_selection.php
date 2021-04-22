@@ -48,33 +48,35 @@
             }
             ?>
       </div>
-      <form class="options" action="user_report.php" method="post">
-        <!--TODO: add report generation href-->
+      <div class="options">
+        
+          <!--TODO: add report generation href-->
 
-        <h4>Options</h4>
-        <!-- Search Bar -->
-        <!--TODO: add functionality to search options-->
-        <div class='searchbar'>
-          <input type="text" name="search" placeholder="Search...">
-        </div>
+          <h4>Options</h4>
+          <!-- Search Bar -->
+          <!--TODO: add functionality to search options-->
+          <div class='searchbar'>
+            <input type="text" name="search" placeholder="Search...">
+          </div>
 
-        <hr>
-        <!-- Selection Options -->
-        <!-- TODO: implement these -->
-        <div>
-          <button type="button" name="select_all">Select All</button>
-          <button type="button" name="deselect_all">Deselect All</button>
-        </div>
+          <hr>
+          <!-- Selection Options -->
+          <!-- TODO: implement these -->
+          <div>
+            <button type="button" name="select_all">Select All</button>
+            <button type="button" name="deselect_all">Deselect All</button>
+          </div>
 
-        <hr>
-        <!-- Administrative Options -->
-        <div class="emphasis">
-          <a href="account_registration.php"><button type="button" name="add_user">Add User</button></a>
-          <!--TODO: Implement this -->
-          <input type="submit" name="report" value="Generate Report on Selected">
-          <!--TODO: Implement this -->
-        </div>
-      </form>
+          <hr>
+          <!-- Administrative Options -->
+          <div class="choices">
+            <a href="account_registration.php"><button type="button" name="add_user" form='options'>Add User</button></a>
+            <!--TODO: Implement this -->
+            <input type="submit" name="report" value="Generate Report on Selected" form='options'>
+            <!--TODO: Implement this -->
+          </div>
+          <form action="user_report.php" method="post"></form>
+      </div>
     </div>
   </div>
 

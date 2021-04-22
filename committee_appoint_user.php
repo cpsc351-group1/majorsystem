@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+<?php session_start(); ini_set('display_errors', true); ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -20,8 +20,26 @@
     //  INVALID ID REDIRECT
     validate_inputs(is_null($committee_id), 0, 'committee_selection_admin.php');
 
-    //  SELECT NOMINEE DETAILS
-    $members = query_election_members($conn, $entered_id);
+    //  SELECT AVAILABLE MEMBER DETAILS
+    # excludes users currently in the committee / currently in an election for the committee
+    $members_sql = "SELECT * FROM `User`
+                    WHERE CNU_ID NOT IN(
+                      SELECT `User_CNU_ID` FROM `Committee_Seat` WHERE `Committee_Committee_ID` = '$committee_id'
+                    )";
+
+    $election = query_committee_election($conn, $entered_id);
+    if ($election != NULL) {
+      $election_id = $election['Election_ID'];
+
+      $members_sql = "SELECT * FROM `User`
+                    WHERE NOT (CNU_ID IN(
+                      SELECT `User_CNU_ID` FROM `Committee Seat` WHERE `Committee_Committee_ID` = '$committee_id'
+                    ) OR CNU_ID IN(
+                      SELECT `Nominee_CNU_ID` FROM `Nomination` WHERE `Election_Election_ID` = '$election_id'
+                    ))";
+    }
+
+    $members = $conn->query($members_sql) or die($conn->error);
 
     ?>
   <title>CNU Committees - Appoint User</title>

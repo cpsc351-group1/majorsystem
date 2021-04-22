@@ -96,7 +96,7 @@
 
           <hr>
           <!-- Administrative Options -->
-          <div class="emphasis">
+          <div class="choices">
             <input type="submit" name="submit_nomination" value="Nominate User" form="nomination">
           </div>
       </div>

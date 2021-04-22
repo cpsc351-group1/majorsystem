@@ -12,6 +12,9 @@
       //  GET
       $entered_id = $_GET['committee'];
 
+      //  PERMISSIONS CHECK (ADMIN ONLY)
+      validate_inputs($_SESSION['permissions'], 'Admin', 'election_selection.php');
+
       //  SELECT COMMITTEE INFO
       $committee = query_committee($conn, $entered_id);
 
@@ -19,8 +22,8 @@
       if (isset($_POST['appoint'])) {
           $user = $_POST['user'];
 
-          $insert_sql = "INSERT INTO `Committee Seat` (Committee_Committee_ID, Starting_Term, Ending_Term, User_CNU_ID)
-                      SELECT $committee_id, 'Spring 2021', NULL, $user
+          $insert_sql = "INSERT INTO `Committee Seat` (Committee_Committee_ID, Starting_Term, User_CNU_ID)
+                      SELECT $committee_id, now(), $user
                       WHERE $user NOT IN(
                           SELECT User_CNU_ID FROM `Committee Seat`
                           WHERE Committee_Committee_ID = '$committee_id')";
@@ -41,21 +44,26 @@
       if (isset($_POST['delete'])) {
           $user = intval($_POST['delete']);
 
-          $delete_sql = "DELETE FROM `Committee Seat`
-                         WHERE User_CNU_ID = $user";
-          $conn->query($delete_sql) or die(mysqli_error($conn));
+          $archive_sql = "UPDATE `Committee Seat`
+                          SET `Ending_Term` = now()
+                          WHERE `User_CNU_ID` = $user
+                          AND `Ending_Term` IS NULL";
+          $conn->query($archive_sql) or die($user." -> ".$today." -> ".$archive_sql." -> ".mysqli_error($conn));
       }
 
-      # return to selection page if invalid id thrown
+      //  INVALID ID REDIRECT
       validate_inputs(is_null($committee_id), 0, 'committee_selection.php');
 
-      # query chairman
+      //  SELECT CHAIRMAN ID
       $chair_id = query_committee_chair($conn, $committee_id);
 
-      # query committee seats info
+      //  SELECT SEAT INFO
       $committee_seats = query_committee_seats($conn, $committee_id);
 
-      # query any running elections
+      //  SELECT ARCHIVED SEAT INFO
+      $archived_seats = query_archived_committee_seats($conn, $committee_id);
+
+      //  SELECT CURRENT ELECTION
       $election = query_committee_election($conn, $committee_id);
     ?>
 
@@ -110,8 +118,7 @@
                   $user_id = intval($seat['User_CNU_ID']);
 
                   # query seatholder information
-                  $user_sql = "SELECT CNU_ID, Fname, Lname, Department, Position, Photo FROM `User` WHERE CNU_ID='$user_id'";
-                  $user = $conn->query($user_sql)->fetch_assoc();
+                  $user = query_user($conn, $user_id);
 
                   # check if seatholder is the chair
                   $is_chair = $user['CNU_ID'] == $chair_id;
@@ -144,7 +151,28 @@
               }
             ?>
         </div>
+        <hr>
+        <?php if ($archived_seats->num_rows == 0) {goto skip_archived;}?>
+        <span class="sub heading">Archived Seats</span>
+        <div class="tiles">
+          <?php
+            while ($archived_seat = $archived_seats -> fetch_assoc()) {
+              $user_id = $archived_seat['User_CNU_ID'];
 
+              $user = query_user($conn, $user_id);
+
+              $user_name = $user['Fname']." ".$user['Lname'];
+              $user_department = $user['Department'];
+              $user_position = $user['Position'];
+              $user_start = $archived_seat['Starting_Term'];
+              $user_end = $archived_seat['Ending_Term'];
+
+              echo "<div class='tile'><b>$user_name</b><br>"
+                   ."$user_department, $user_position<br>$user_start — $user_end</div>";
+            }
+          ?>
+        </div>
+        <?php skip_archived: ?>
       </div>
     </div>
   </div>

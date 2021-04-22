@@ -106,7 +106,7 @@
 
           <hr>
           <!-- Submission Options -->
-          <div class="emphasis">
+          <div class="choices">
             <input type="submit" name="submit_vote" value="Vote for User" form="vote">
           </div>
       </div>

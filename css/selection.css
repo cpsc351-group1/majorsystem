@@ -87,12 +87,30 @@ h4 {
 }
 
 .options>div {
+  flex: row nowrap;
+  justify-content: center;
   padding: 0.5em;
   outline: 1px solid black;
   margin: 1em;
 }
 
-.options .emphasis {
+.options .details {
+  outline: 3px double #000;
+  display: flex;
+  flex-flow: column nowrap;
+  width: 90%;
+}
+
+.options .details * {
+  margin: 0.5em;
+  padding: 0.5em;
+}
+
+.options textarea {
+  height: 5em;
+}
+
+.options .choices {
   font-size: 1em;
   text-align: center;
   height: inherit;
@@ -103,16 +121,16 @@ h4 {
   flex-flow: column nowrap;
 }
 
-.options a {
-  width: 100%;
-}
-
-.options a *, .options input[type='submit'] {
+.choices * {
   font-weight: bold;
   display: flex;
-  width: 100%;
+  width: 90%;
   align-items: center;
   justify-content: center;
   margin: 0.5em 0;
   height: 3em;
+}
+
+.choices button {
+  width: 100%;
 }

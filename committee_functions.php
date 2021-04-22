@@ -17,7 +17,7 @@ function query_user($conn, int $user_id)
 function query_committee($conn, int $entered_id) {
     global $committee_id;
     global $committee_name;
-    global $committee_id;
+    global $committee_description;
 
     $com_sql = "SELECT * FROM `Committee` WHERE Committee_ID=?";
     # prepare statement (to prevent mysql injection)
@@ -44,7 +44,7 @@ function query_committee_chair($conn, int $committee_id) {
 //  SELECT COMMITTEE SEATS
 # pulls committee seat info for given committee -> mysqli query object
 function query_committee_seats($conn, int $committee_id) {
-    $committee_seats_sql = "SELECT * FROM `Committee Seat` WHERE Committee_Committee_ID='$committee_id'";
+    $committee_seats_sql = "SELECT * FROM `Committee Seat` WHERE Committee_Committee_ID = '$committee_id' AND Ending_Term IS NULL;";
     $committee_seats = $conn->query($committee_seats_sql);
     return $committee_seats;
 }
@@ -66,4 +66,12 @@ function query_committee_members($conn, int $committee_id) {
         WHERE Committee_Committee_ID=$committee_id)";
     $members = $conn->query($members_sql);
     return $members;
+}
+
+//  SELECT ARCHIVED COMMITTEE SEATS
+# pulls archived committee seat info for given committee -> mysqli query object
+function query_archived_committee_seats($conn, int $committee_id) {
+    $committee_seats_sql = "SELECT * FROM `Committee Seat` WHERE Committee_Committee_ID = '$committee_id' AND Ending_Term IS NOT NULL;";
+    $archived_seats = $conn->query($committee_seats_sql);
+    return $archived_seats;
 }
