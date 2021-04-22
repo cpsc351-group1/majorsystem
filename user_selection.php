@@ -48,7 +48,7 @@
             }
             ?>
       </div>
-      <form class="options" action="    'x'    " method="post">
+      <form class="options" action="user_report.php" method="post">
         <!--TODO: add report generation href-->
 
         <h4>Options</h4>
