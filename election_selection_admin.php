@@ -21,7 +21,8 @@
         <?php
 
             # Pull user details to generate checklist
-            $sql = "SELECT * FROM Election";
+            $sql = "SELECT * FROM Election
+                    ORDER BY `Status` DESC, `Election_ID` DESC";
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {

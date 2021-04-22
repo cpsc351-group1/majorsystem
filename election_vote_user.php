@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+<?php session_start(); ini_set('display_errors',true)?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -9,49 +9,40 @@
   <?php
 
     require 'databaseconnect.php';
+    include 'election_functions.php';
 
     # get entered election id
     $entered_id = $_GET['election'];
 
-    # pull election information using $_GET
-    $election_sql = "SELECT * FROM `Election` WHERE Election_ID=?";
-    # prepare statement (this is done to prevent sql injection)
-    $election = $conn->prepare($election_sql);
-    # bind parameter to int
-    $election->bind_param('i', $entered_id);
-    # execute statement
-    $election->execute();
-    # bind results to variables
-    $election->bind_result($election_id, $committee_id, $status, $num_seats);
-    # fetch row and close
-    $election->fetch();
-    $election->close();
+    //  SELECT ELECTION INFO
+    # defined in election_functions.php
+    query_election($entered_id);
 
+    //  ELECTION ID VALIDATION
+    # defined in databaseconnect.php
+    validate_inputs(is_null($election_id), false, 'election_selection.php');
+
+    //  STATUS VALIDATION
     #   Ensure that the election selected
     #   is actually in the voting status (and not null)
-
+    # defined in databaseconnect.php
     validate_inputs($status, 'Voting', 'election_selection.php');
 
-    # get committee info
-    $com_sql = "SELECT Name FROM `Committee` WHERE Committee_ID='$committee_id'";
-    $com = $conn->query($com_sql)->fetch_assoc();
+    //  SELECT COMMITTEE INFO
+    # defined in election_functions.php
+    query_committee($committee_id);
+    $committee_name = $committee['Name'];
 
-    $com_name = $com['Name'];
+    //  SELECT VOTE INFO
+    #defined in election_functions.php
+    query_election_votes($election_id);
 
-    # pull vote information for current user
-    $voter_id = $_SESSION['user'];
-
-    $votes_sql = "SELECT Votee_CNU_ID FROM `Vote`
-                    WHERE Election_Election_ID=$election_id
-                    AND Voter_CNU_ID=$voter_id";
-    // store nominee previously voted for
-    $previous = $conn->query($votes_sql)->fetch_assoc()['Votee_CNU_ID'];
-
-    # pull all nominee details
-    $nominations_sql = "SELECT * FROM `User` WHERE CNU_ID IN(
+    //  SELECT NOMINEE INFO
+    # pull all nominee details as users
+    $nom_sql = "SELECT * FROM `User` WHERE CNU_ID IN(
                           SELECT Nominee_CNU_ID FROM `Nomination` WHERE
                           Election_Election_ID='$election_id')";
-    $nominations = $conn->query($nominations_sql);
+    $noms = $conn->query($nom_sql);
 
     ?>
   <title>CNU Committees - Vote for User</title>
@@ -62,7 +53,7 @@
     <header>
       <h2>Vote for User</h2>
       <?php
-          echo "<div class='sub heading'>&nbsp;—&nbsp;Election for the $com_name</div>";
+          echo "<div class='sub heading'>&nbsp;—&nbsp;Election for the $committee_name</div>";
         ?>
 
     </header>
@@ -72,16 +63,20 @@
           <input type="hidden" name="election_id" value="<?php echo $election_id; ?>">
           <?php
 
-              if ($nominations->num_rows > 0) {
+              if ($noms->num_rows > 0) {
                   # Iterate through all users
-                  while ($row = $nominations->fetch_assoc()) {
+                  while ($row = $noms->fetch_assoc()) {
                       $id = $row['CNU_ID'];
                       $name = $row['Fname'].' '.$row['Lname'];
                       $dept = $row['Department'];
                       $pos = $row['Position'];
 
-                      # Detect if user is same as previously voted
-                      $checked = $id == $previous;
+                      # Detect if user is same as previously voted                      
+                      if (NULL != $previous) {
+                        $checked = $id == $previous;
+                      } else {
+                        $checked = False;
+                      }
 
                       # Render all nominees for current election
                       # Radio buttons belong to options form, placed here for visuals

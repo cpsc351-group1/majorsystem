@@ -13,21 +13,13 @@
       //  GET
       $entered_id = $_GET['election'];
 
-      //  POSTED STATUS UPDATE
-      # not sensitive to SQL injection
-      if (isset($_POST['status'])) {
-        $new_status = $_POST['status'];
-
-        $status_sql = "UPDATE `Election` SET `Status` = '$new_status' WHERE `Election_ID` = '$entered_id'";
-        $conn->query($status_sql);
-      }
-      
-      //  QUERY ENTERED
+      //  SELECT ELECTION INFO
       # defined in election_functions.php
       query_election($entered_id);
 
       //  VALIDATE GET INPUTS
       # return to selection page if invalid id thrown
+      # defined in databaseconnect.php
       validate_inputs(is_null($election_id), 0, 'election_selection.php');
 
       //  COMMITTEE INFO
@@ -35,6 +27,13 @@
       $committee_sql = "SELECT * FROM `Committee` WHERE Committee_ID='$committee_id'";
       $committee = $conn->query($committee_sql)->fetch_assoc();
 
+      // NOMINATIONS INFO
+      # defined in election_functions.php
+      query_election_nominees($election_id);
+
+      // PREVIOUS VOTE INFO
+      # defined in election_functions.php
+      query_election_votes($election_id);
     ?>
 
   <title>CNU — Election Details</title>
@@ -64,14 +63,24 @@
             switch ($status) {
               case 'Nomination':
                 // nominate user option
-                echo "<form action='election_nominate_user.php' method='get'><button name='election' value='$election_id'>Nominate User</button></form>";
-                echo "<form action='election_modify.php' method='get'><button name='election' value='$election_id'><b>Modify Election</b></button></form>";
+                $disabled = $noms_count < $num_seats;
+                echo "<form action='election_details_admin.php?election=$election_id' method='post'>"
+                        .($disabled ? "<div class='tip'>Less nominations than electable seats</div>" : "")
+                        ."<input type='hidden' name='election' value='$election_id'>"
+                        ."<button name='status' value='Voting'".($disabled ? 'disabled' : '').">End Nominations</button>
+                      </form>";
+                
                 break;
               case 'Voting':
                 // vote in election option
-                echo "<form action='election_vote_user.php' method='get'><button name='election' value='$election_id'>Vote in Election</button></form>";
-                echo "<form action='election_modify.php' method='get'><button name='election' value='$election_id'><b>Modify Election</b></button></form>";
+                $disabled = !($votes_count > $num_seats or $noms_count == $num_seats);
+                echo "<form action='election_details_admin.php?election=$election_id' method='post'>"
+                        .($disabled ? "<div class='tip'>Less votes submitted than electable seats</div>" : "")
+                        ."<input type='hidden' name='election' value='$election_id'>"
+                        ."<button name='status' value='Complete'".($disabled ? 'disabled' : '').">End Voting</button>
+                      </form>";
                 break;
+
               case 'Complete':
                 // election complete (no option)
                 echo "<span class='center'>This election has been completed.</span>";
