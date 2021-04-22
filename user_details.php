@@ -97,7 +97,7 @@
             <div class="image">
               <!-- TODO: dynamically insert image -->
               <?php
-                echo '<img src="data:image/jpeg;base64,'.base64_encode($user['Photo']).'"/>';
+                echo '<img src="data:image/png;base64,'.base64_encode($user['Photo']).'"/>';
               ?>
             </div>
             <?php

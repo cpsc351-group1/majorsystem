@@ -40,7 +40,7 @@
                         SET ".implode( '=? , ', array_keys($posted_data)).
                         "=? WHERE CNU_ID = $update_id";
       # input explicit data types
-      $types='sssssssisss';
+      $types='sssssssissb';
       # prepare statement
       $stmt = $conn->prepare($insert_sql);
       # bind statement inputs from array
@@ -217,7 +217,7 @@
             <!-- TODO: add photo uploading capability -->
             <label for="img">Select user account image:</label>
             <div class="image"></div>
-            <input type="file" id="img" name="img" value=NULL accept="image/*">
+            <input type="file" id="img" name="img" value=NULL accept="image/png">
           </div>
           <div class="tile">
             <input id='update' name='update' type="submit" value="Update Account">
