@@ -5,9 +5,17 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="css/selection.css">
-  <?php include 'databaseconnect.php'?>
+  <?php
+  
+  include 'databaseconnect.php';
+  
+  //  Send non-admin users back to election selection page
+  # Defined in databaseconnect.php
+  validate_inputs($_SESSION['permissions'], 'Admin', 'election_selection.php');
+  
+  ?>
 
-  <title>CNU Committees - Committees</title>
+  <title>CNU Committees - Election Setup</title>
 </head>
 
 <body>
@@ -22,27 +30,23 @@
             // Pull user details to generate checklist
             $sql = "SELECT * FROM Committee";
             $result = $conn->query($sql);
-
-            // Store user details to array
-            for ($a_result = array(); $row = $result->fetch_assoc(); $a_result[] = $row);
-
             if ($result->num_rows > 0) {
-                // Iterate through all users
-                foreach ($a_result as $row) {
-                    $id = $row['Committee_ID'];
-                    $name = $row['Name'];
-                    $dept = $row['Description'];
+                while ($row = $result->fetch_assoc()) {
+                  // Iterate through all committees
+                  $id = $row['Committee_ID'];
+                  $name = $row['Name'];
+                  $description = $row['Description'];
 
-                    // Create div populated with relevant information
-                    // and checkbox/details options.
+                  // Create div populated with relevant information
+                  // and checkbox/details options.
 
-                    // Checkbox belongs to options form, placed here for visuals
-                    echo "<div class='data'> <label for='$id'><b>$name</b><br>$dept<br>$pos</label>
-                        <div class='result_choices'>
-                          <input type='checkbox' name='$id' form='options'></input>
-                          <a href='committee_details.php?committee=$id'><button>Details</button></a>
-                        </div>
-                      </div>";
+                  // Checkbox belongs to options form, placed here for visuals
+                  echo "<div class='data'> <label for='$id'><b>$name</b><br>$description<br>$pos</label>
+                      <div class='result_choices'>
+                        <input type='checkbox' name='committee' value='$id' form='create'></input>
+                        <a href='committee_details.php?committee=$id'><button>Details</button></a>
+                      </div>
+                    </div>";
                 }
             } else {
                 // Display blank result if no search results

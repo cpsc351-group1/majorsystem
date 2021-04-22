@@ -159,10 +159,6 @@
   width: inherit;
 }
 
-.required::after {
-  content:' *';
-  color: #FF0000;
-}
 
 .list div {
   height: 100%;

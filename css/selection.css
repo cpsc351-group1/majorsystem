@@ -88,12 +88,18 @@ h4 {
 
 .options>div {
   padding: 0.5em;
+  outline: 1px solid black;
+  margin: 1em;
 }
 
 .options .emphasis {
+  font-size: 1em;
+  text-align: center;
   height: inherit;
+  width: 90%;
   display: flex;
-  width: 100%;
+  align-items: center;
+  justify-content: center;
   flex-flow: column nowrap;
 }
 

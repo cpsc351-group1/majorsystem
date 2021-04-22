@@ -91,7 +91,7 @@
                 # Administrative Option (create election)
                 # TODO: make this functional
 
-                echo "<a href='#'><button type='button'>Start Election</button></a>";
+                echo "<form action='election_setup.php' method='get'><button name='committee' value='$committee_id'>Start Election</button></form>";
             } else {
 
                 # View election, if exists

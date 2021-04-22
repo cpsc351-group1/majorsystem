@@ -12,10 +12,6 @@
       //  GET
       $entered_id = $_GET['election'];
 
-      //  PERMISSIONS REDIRECTS
-      # defined in databaseconnect.php
-      admin_redirect($_SESSION['permissions'], "election_details_admin.php?election=".$entered_id);
-
       # INSERT SQL FOR SUBMITTING NOMINATIONS
       if (isset($_POST['submit_nomination'])) {
         # pull posted information
