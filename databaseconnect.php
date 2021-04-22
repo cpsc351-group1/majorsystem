@@ -33,10 +33,11 @@ function validate_inputs($input, $expected, $location)
 }
 
 function admin_redirect($user_permissions, $location) {
-    if ($user_permissions == 'Admin') {
-        header("Location: $location");
-        exit();
-    }
+    validate_inputs($user_permissions=='Admin', false, $location);
+}
+
+function super_redirect($user_permissions, $location) {
+    validate_inputs($user_permissions=='Super', false, $location);
 }
 
 // Boolean to track if already in database
