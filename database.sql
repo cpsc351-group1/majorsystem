@@ -162,7 +162,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Vote` (
   `Election_Election_ID` INT NOT NULL,
   `Voter_CNU_ID` INT NOT NULL,
   `Votee_CNU_ID` INT NOT NULL,
-  PRIMARY KEY (`Election_Election_ID`, `Voter_CNU_ID`, `Votee_CNU_ID`),
+  PRIMARY KEY (`Election_Election_ID`, `Voter_CNU_ID`),
   INDEX `fk_Vote_Election1_idx` (`Election_Election_ID` ASC),
   INDEX `fk_Vote_User1_idx` (`Voter_CNU_ID` ASC),
   INDEX `fk_Vote_User2_idx` (`Votee_CNU_ID` ASC),
@@ -173,11 +173,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Vote` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Vote_User1`
     FOREIGN KEY (`Voter_CNU_ID`)
-    REFERENCES `mydb`.`User` (`CNU_ID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Vote_User2`
-    FOREIGN KEY (`Votee_CNU_ID`)
     REFERENCES `mydb`.`User` (`CNU_ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
