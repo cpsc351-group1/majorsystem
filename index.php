@@ -29,7 +29,7 @@
       $stmt = $conn->prepare($login_sql);
       
       # bind inputs, execute, bind outputs and close
-      $stmt->bind_param("i",$entered_user);
+      $stmt->bind_param('i',$entered_user);
       $stmt->execute();
       $stmt->bind_result($username, $password, $permissions);
       $stmt->fetch();
@@ -73,7 +73,7 @@
                       SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
                       WHERE $entered_user NOT IN(SELECT CNU_ID FROM `User`)";
         # input explicit data types
-        $types='isssssssisss';
+        $types='isssssssissb';
         # prepare statement
         $stmt = $conn->prepare($insert_sql);
         

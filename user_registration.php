@@ -124,7 +124,7 @@
             <!-- TODO: add photo uploading capability -->
             <label for="img">Select user account image:</label>
             <div class="image"></div>
-            <input type="file" id="img" name="img" value=NULL accept="image/*">
+            <input type="file" id="img" name="img" value=NULL accept="image/png">
           </div>
           <div class="tile">
             <input id='create' name='create' type="submit" value="Create Account" disabled>
