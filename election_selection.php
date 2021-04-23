@@ -19,6 +19,10 @@
 </head>
 
 <body>
+
+<!-- INCLUDE HAMBURGER MENU -->
+<?php include 'hamburger_menu.php'; ?>
+
   <div class="wrapper">
     <header>
       <h2>Elections</h2>

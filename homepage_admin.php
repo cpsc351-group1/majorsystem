@@ -4,12 +4,16 @@
 
 <head>
   <?php
+
+  # connect to database
+  include 'databaseconnect.php';
+
   # pull user id from session
   $user_id = intval($_SESSION['user']);
   $permissions = $_SESSION['permissions'];
 
-  # connect to database
-  include 'databaseconnect.php';
+  // PERMISSIONS VALIDATION
+  validate_inputs($permissions, true, "homepage.php");  
 
   # run query
   $sql = "SELECT * FROM `User` WHERE CNU_ID=$user_id";
@@ -25,12 +29,15 @@
 </head>
 
 <body>
+    <!-- INCLUDE HAMBURGER MENU -->
+  <?php include 'hamburger_menu.php'; ?>
+
   <div class="wrapper">
     <div class="body">
       <div class="session_details">
         Logged in as <b><?php echo $full_name; ?></b>
         <hr>
-        <form action="index.php" method="post">
+        <form action="homepage.php" method="post">
           <input type="hidden" name="logout" value="set">
           <input type="submit" name="logout" value="Sign out">
         </form>

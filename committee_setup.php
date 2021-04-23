@@ -56,6 +56,10 @@
 </head>
 
 <body>
+
+<!-- INCLUDE HAMBURGER MENU -->
+<?php include 'hamburger_menu.php'; ?>
+
   <div class="wrapper">
     <header>
       <h2>Setup Committee</h2>

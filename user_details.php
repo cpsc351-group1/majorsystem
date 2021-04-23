@@ -42,8 +42,8 @@
 
 <body>
 
-  <!-- TODO: Create PHP script to generate this page for all
-               users in a report    -->
+  <!-- INCLUDE HAMBURGER MENU -->
+  <?php include 'hamburger_menu.php'; ?>
 
   <div class="wrapper">
     <header>

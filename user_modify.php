@@ -27,34 +27,32 @@
         "Photo" => $_POST['img']
       );
 
+      $update_id = $_POST['cnu_id'];
+
+      # input explicit data types
+      $types='ssssssissb';
+
       # check if password updated
       if ($_POST['pass'] != '') {
         $posted_data["Password"] = $_POST['pass'];
+        $types .= 's';
       }
-
-      $update_id = $_POST['cnu_id'];
-
+      
       # prepare insert sql string
       $insert_sql =     "UPDATE `User`
                         SET ".implode( '=? , ', array_keys($posted_data)).
                         "=? WHERE CNU_ID = $update_id";
-      # input explicit data types
-      $types='sssssssissb';
+
       # prepare statement
       $stmt = $conn->prepare($insert_sql);
       # bind statement inputs from array
       $posted_values = array_values($posted_data);
       $stmt->bind_param($types, ...$posted_values);
       # execute statement
-      if ($stmt->execute()) {
-          # redirect to new user details page
-          header("Location: user_details.php?user=$update_id");
-          exit();
-      } else {
-          #TODO: echo insert fail message
-      }
-
+      $stmt->execute() or die($conn->error);
       $stmt->close();
+      header("Location: user_details.php?user=$update_id");
+      exit();
 
     }
 
@@ -97,6 +95,10 @@
 </head>
 
 <body>
+
+<!-- INCLUDE HAMBURGER MENU -->
+<?php include 'hamburger_menu.php'; ?>
+
   <div class="wrapper">
     <header>
       <h2>Account Update</h2>

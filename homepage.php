@@ -10,7 +10,7 @@
     session_unset();
   }
 
-  $user_id = intval($_SESSION['user']);
+  $user_id = $_SESSION['user'];
   $permissions = $_SESSION['permissions'];
 
   # connect to database
@@ -34,6 +34,9 @@
 </head>
 
 <body>
+  <!-- INCLUDE HAMBURGER MENU -->
+  <?php include 'hamburger_menu.php'; ?>
+
   <div class="wrapper">
     <div class="body">
       <div class="session_details">
@@ -58,7 +61,8 @@
       </div>
     </div>
   </div>
+  <?php
+    $conn->close();
+    ?>
 </body>
-<?php $conn->close(); ?>
-
 </html>

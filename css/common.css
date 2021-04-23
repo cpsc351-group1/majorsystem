@@ -1,3 +1,5 @@
+@import 'hamburger.css';
+
 /* basic layout stuff */
 
 * {
@@ -12,6 +14,7 @@ body {
   display: flex;
   flex-flow: column nowrap;
   position: relative;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .wrapper {
@@ -41,7 +44,7 @@ header {
   display: flex;
   align-items: center;
   border-bottom: 1px solid black;
-  z-index: 99999;
+  z-index: 999;
 }
 
 .wrapper>div {

@@ -62,6 +62,7 @@
 </head>
 
 <body>
+
   <div class="wrapper">
     <header>
       <h2>Account Registration</h2>
