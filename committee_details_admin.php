@@ -32,12 +32,11 @@
 
       //  CHAIR SELECTION INSERT
       if (isset($_POST['chair'])) {
-          $user = intval($_POST['chair']);
+          $user = $_POST['chair'];
 
-          $chair_sql = "UPDATE `Chairman`
-                        SET User_CNU_ID = $user
-                        WHERE Committee_Committee_ID = $committee_id";
-          $conn->query($chair_sql);
+          $chair_sql = "INSERT INTO `Chairman` (`Committee_Committee_ID`, `User_CNU_ID`) VALUES('$committee_id', '$user')
+                          ON DUPLICATE KEY UPDATE `User_CNU_ID` = VALUES(`User_CNU_ID`)";
+          $conn->query($chair_sql) or die($conn->error);
       }
 
       //  MEMBER REMOVAL INSERT
@@ -112,43 +111,50 @@
         <div class="tiles">
           <?php
               # for each seat
-              while ($seat = $committee_seats->fetch_assoc()) {
+              if ($committee_seats->num_rows > 0) {
+                while ($seat = $committee_seats->fetch_assoc()) {
 
-                # get seatholder ID
-                  $user_id = intval($seat['User_CNU_ID']);
-
-                  # query seatholder information
-                  $user = query_user($conn, $user_id);
-
-                  # check if seatholder is the chair
-                  $is_chair = $user['CNU_ID'] == $chair_id;
-
-                  # show ending term if any
-                  $ending_term = $seat['Ending_Term'] ?? 'Present';
-
-                  // TODO: add photos, if desired :)
-
-                  # generate block of data for each user
-                  echo "<div class='tile'>";
-                  // TODO: remove/chair options
-                  echo "<div class='member_options'>"
-                          .($is_chair ? "" : "<form action='committee_details_admin.php?committee=$committee_id' method='post'><span class='tip'>Appoint as Chairman</span><button name='chair' value='$user_id'>★</button></form>
-                                              <form action='committee_details_admin.php?committee=$committee_id' method='post'><span class='tip'>Delete User</span><button name='delete' value='$user_id'>X</button></form>");
-                  echo "</div>";
-                  // name and employment details
-                  echo "<span class='sub heading'>".$user['Fname']." ".$user['Lname']."</span><br>";
-                  // displays if user is committee chair
-                  echo ($is_chair ? "<span class='heading'>Committee Chair</span><br>" : "")
-                       .$user['Department'].", ".$user['Position']."<br>"
-                       .$seat['Starting_Term']." - ".$ending_term;
-                  echo "</div>";
+                  # get seatholder ID
+                    $user_id = intval($seat['User_CNU_ID']);
+  
+                    # query seatholder information
+                    $user = query_user($conn, $user_id);
+  
+                    # check if seatholder is the chair
+                    $is_chair = $user['CNU_ID'] == $chair_id;
+  
+                    # show ending term if any
+                    $ending_term = $seat['Ending_Term'] ?? 'Present';
+  
+                    // TODO: add photos, if desired :)
+  
+                    # generate block of data for each user
+                    echo "<div class='tile'>";
+                    // TODO: remove/chair options
+                    echo "<div class='member_options'>"
+                            .($is_chair ? "" : "<form action='committee_details_admin.php?committee=$committee_id' method='post'><span class='tip'>Appoint as Chairman</span><button name='chair' value='$user_id'>★</button></form>
+                                                <form action='committee_details_admin.php?committee=$committee_id' method='post'><span class='tip'>Archive Seat</span><button name='delete' value='$user_id'>X</button></form>");
+                    echo "</div>";
+                    // name and employment details
+                    echo "<span class='sub heading'>".$user['Fname']." ".$user['Lname']."</span><br>";
+                    // displays if user is committee chair
+                    echo ($is_chair ? "<span class='heading'>Committee Chair</span><br>" : "")
+                         .$user['Department'].", ".$user['Position']."<br>"
+                         .$seat['Starting_Term']." - ".$ending_term;
+                    echo "</div>";
+                }
+              } else {
+                echo "<div class='center'>No members currently appointed.</div>";
               }
+              
 
               # Render blank tiles for every seat currently up for election
-
-              for ($i=0; $i < $election['Number_Seats']; $i++) {
+              if ($election != NULL) {
+                for ($i=0; $i < $election['Number_Seats']; $i++) {
                   echo "<div class='tile center'>(Seat up for election.)</div>";
+                }
               }
+              
             ?>
         </div>
         <hr>

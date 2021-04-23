@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="css/selection.css">
-  <link rel="stylesheet" href="css/common.css">
+
   <?php
 
     require 'databaseconnect.php';
@@ -24,7 +24,7 @@
     # excludes users currently in the committee / currently in an election for the committee
     $members_sql = "SELECT * FROM `User`
                     WHERE CNU_ID NOT IN(
-                      SELECT `User_CNU_ID` FROM `Committee_Seat` WHERE `Committee_Committee_ID` = '$committee_id'
+                      SELECT `User_CNU_ID` FROM `Committee Seat` WHERE `Committee_Committee_ID` = '$committee_id'
                     )";
 
     $election = query_committee_election($conn, $entered_id);
@@ -93,7 +93,7 @@
 
         <hr>
         <!-- Administrative Options -->
-        <div class="emphasis">
+        <div class="choices">
           <input type="submit" name="appoint" value="Appoint User" form="appointment">
         </div>
       </div>

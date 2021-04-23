@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="css/selection.css">
-  <link rel="stylesheet" href="css/common.css">
+  
   <?php
 
     require 'databaseconnect.php';
@@ -23,14 +23,30 @@
       $name = $_POST['name'];
       $description = $_POST['description'];
 
-      $selected_users = $_POST['users'];
+      $insert_sql = "INSERT INTO `Committee` (`Name`, `Description`) VALUES(?, ?)";
+      $stmt = $conn->prepare($insert_sql);
+      $stmt->bind_param('ss', $name, $description);
+      $stmt->execute();
 
-      $insert_sql = "INSERT INTO `Committee` (Name, Description) SELECT $name, $description";
-      $conn->query($insert_sql);
-
+      // GET NEW COMMITTEE ID
       $new_committee_id = $conn->insert_id;
 
-      header("Location: committee_details_admin.php?election=".$new_committee_id);
+      // APPOINT SELECTED MEMBERS TO COMMITTEE
+
+      if (isset($_POST['selected_users'])) {
+
+        $appointed_users = $_POST['selected_users'];
+
+        $insert_sql = "";
+        foreach ($appointed_users as $user) {
+          echo $new_committee_id."   ".$user." / ";
+          $insert_sql = "INSERT INTO `Committee Seat` (`Committee_Committee_ID`, `Starting_Term`, `User_CNU_ID`) VALUES('$new_committee_id', now(), '$user')";
+          $conn->query($insert_sql) or die($conn->error);
+        }
+        
+      }
+
+      header("Location: committee_details_admin.php?committee=".$new_committee_id);
       exit;
     }
 
@@ -49,7 +65,7 @@
     </header>
     <div class="selection">
       <div class="results">
-        <form id="committee" action="election_setup.php" method="post">
+        <form id="committee" action="committee_setup.php" method="post">
           <div class='center emphasis'>Appoint Users</div>
           <hr>
           <?php
@@ -71,7 +87,7 @@
                   // Checkbox belongs to options form, placed here for visuals
                   echo "<div class='data' id='$id'> <label for='$id'><b>$name</b><br>$dept<br>$pos</label>
                       <div class='result_choices'>
-                        <input type='checkbox' name='selected_users' value='$id'></input>
+                        <input type='checkbox' name='selected_users[]' value='$id'></input>
                       </div>
                     </div>";
               }
@@ -92,9 +108,9 @@
         <hr>
         <div class='details'>
             <label for="name" class="required">Committee Name</label>
-            <input type="text" id="name" name="name" form="committee" required>
+            <input type="text" id="name" name="name" form="committee" maxlength=45 required>
             <label for="description" class="required">Committee Description</label>
-            <textarea id="description" name="description" form="committee" required></textarea>
+            <textarea id="description" name="description" form="committee" maxlength=100 required></textarea>
         </div>
         <hr>
         <!-- Administrative Options -->

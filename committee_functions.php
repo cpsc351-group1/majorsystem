@@ -37,7 +37,12 @@ function query_committee($conn, int $entered_id) {
 # pulls committee chair for given committee -> committee_chair ID
 function query_committee_chair($conn, int $committee_id) {
     $chair_sql = "SELECT User_CNU_ID FROM `Chairman` WHERE Committee_Committee_ID='$committee_id'";
-    $chair_id = $conn->query($chair_sql)->fetch_assoc()['User_CNU_ID'];
+    $chair = $conn->query($chair_sql);
+    if ($chair -> num_rows > 0) {
+        $chair_id = $chair->fetch_assoc()['User_CNU_ID'];
+    } else {
+        $chair_id = NULL;
+    }
     return $chair_id;
 }
 

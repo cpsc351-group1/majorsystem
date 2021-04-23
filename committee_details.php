@@ -67,38 +67,44 @@
         <div class="tiles">
           <?php
               # for each seat
-              while ($seat = $committee_seats->fetch_assoc()) {
+              if ($committee_seats->num_rows > 0) {
+                while ($seat = $committee_seats->fetch_assoc()) {
 
-                # get seatholder ID
-                  $user_id = intval($seat['User_CNU_ID']);
-
-                  # query seatholder information
-                  $user_sql = "SELECT CNU_ID, Fname, Lname, Department, Position, Photo FROM `User` WHERE CNU_ID='$user_id'";
-                  $user = $conn->query($user_sql)->fetch_assoc();
-
-                  # check if seatholder is the chair
-                  $is_chair = $user['CNU_ID'] == $chair_id;
-
-                  # show ending term if any
-                  $ending_term = $seat['Ending_Term'] ?? 'Present';
-
-                  // TODO: add photos, if desired :)
-
-                  # generate block of data for each user
-                  echo "<div class='tile'>";
-                  // name and employment details
-                  echo "<span class='sub heading'>".$user['Fname']." ".$user['Lname']."</span><br>";
-                  // displays if user is committee chair
-                  echo ($is_chair ? "<span class='heading'>Committee Chair</span><br>" : "")
-                       .$user['Department'].", ".$user['Position']."<br>"
-                       .$seat['Starting_Term']." - ".$ending_term;
-                  echo "</div>";
+                  # get seatholder ID
+                    $user_id = intval($seat['User_CNU_ID']);
+  
+                    # query seatholder information
+                    $user_sql = "SELECT CNU_ID, Fname, Lname, Department, Position, Photo FROM `User` WHERE CNU_ID='$user_id'";
+                    $user = $conn->query($user_sql)->fetch_assoc();
+  
+                    # check if seatholder is the chair
+                    $is_chair = $user['CNU_ID'] == $chair_id;
+  
+                    # show ending term if any
+                    $ending_term = $seat['Ending_Term'] ?? 'Present';
+  
+                    // TODO: add photos, if desired :)
+  
+                    # generate block of data for each user
+                    echo "<div class='tile'>";
+                    // name and employment details
+                    echo "<span class='sub heading'>".$user['Fname']." ".$user['Lname']."</span><br>";
+                    // displays if user is committee chair
+                    echo ($is_chair ? "<span class='heading'>Committee Chair</span><br>" : "")
+                         .$user['Department'].", ".$user['Position']."<br>"
+                         .$seat['Starting_Term']." - ".$ending_term;
+                    echo "</div>";
+                }
+              } else {
+                echo "<div class='center'>No members currently appointed.</div>";
               }
 
               # Render blank tiles for every seat currently up for election
 
-              for ($i=0; $i < $election['Number_Seats']; $i++) {
+              if ($election != NULL) {
+                for ($i=0; $i < $election['Number_Seats']; $i++) {
                   echo "<div class='tile center'>(Seat up for election.)</div>";
+                }
               }
             ?>
         </div>

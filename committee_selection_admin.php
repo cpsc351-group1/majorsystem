@@ -55,9 +55,8 @@
 
             ?>
       </div>
-      <form class="options" action="    'x'    " method="post">
         <!--TODO: add report generation href-->
-        
+      <form class="options" method="post" action="#">  
         <h4>Options</h4>
         <!-- Search Bar -->
         <!--TODO: add functionality to search options-->
@@ -81,7 +80,8 @@
           <input type="submit" name="report" value="Generate Report on Selected">
           <!--TODO: implement this -->
         </div>
-      </form>
+      </div>
+      
     </div>
   </div>
 
