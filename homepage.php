@@ -5,6 +5,11 @@
 <head>
   <?php
   # pull user id from session
+
+  if (isset($_POST['logout'])) {
+    session_unset();
+  }
+
   $user_id = intval($_SESSION['user']);
   $permissions = $_SESSION['permissions'];
 
@@ -34,7 +39,7 @@
       <div class="session_details">
         Logged in as <b><?php echo $full_name; ?></b>
         <hr>
-        <form action="index.php" method="post">
+        <form action="homepage.php" method="post">
           <input type="hidden" name="logout" value="set">
           <input type="submit" name="logout" value="Sign out">
         </form>

@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+<?php session_start(); ini_set('display_errors',true)?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -9,32 +9,54 @@
   <?php
 
     require 'databaseconnect.php';
+    require 'election_functions.php';
 
     # get entered election id
     $entered_id = $_GET['election'];
 
-    # pull election information using $_GET
-    $election_sql = "SELECT * FROM `Election` WHERE Election_ID=?";
-    # prepare statement (this is done to prevent sql injection)
-    $election = $conn->prepare($election_sql);
-    # bind parameter to int
-    $election->bind_param('i', $entered_id);
-    # execute statement
-    $election->execute();
-    # bind results to variables
-    $election->bind_result($election_id, $committee_id, $status, $num_seats);
-    # fetch row and close
-    $election->fetch();
-    $election->close();
+    //  GET ELECTION INFO
+    query_election($entered_id);
 
-    #   Ensure that the election selected
-    #   is actually in the nomination status (and not null)
+    //  VERIFY ENTERED ID
+    validate_inputs(isset($election_id), true, 'election_selection.php');
 
-    validate_inputs ($status, 'Nomination', 'election_selection.php');
 
-    $com_sql = "SELECT Name FROM `Committee` WHERE Committee_ID='$committee_id'";
-    $com = $conn->query($com_sql)->fetch_assoc();
-    $com_name = $com['Name'];
+    //  INSERT SQL FOR SUBMITTING NOMINATIONS   
+    if (isset($_POST['nominate'])) {
+      # pull posted information
+      $nominator_id = $_SESSION['user'];
+      $nominee_id = $_POST['nominee'];
+
+      # insert nomination if not exists
+      $insert_sql = "INSERT INTO `Nomination`
+                    SELECT $election_id, $nominator_id, $nominee_id
+                    WHERE $nominee_id NOT IN(
+                        SELECT Nominee_CNU_ID FROM `Nomination`
+                        WHERE Election_Election_ID = '$election_id')";
+      $conn->query($insert_sql);
+
+      header("Location: election_details.php?election=".$election_id);
+      exit();
+    }
+
+    //  VERIFY ELECTION STATUS
+    validate_inputs($status, 'Nomination', 'election_selection.php');
+
+    //  PULL COMMITTEE INFO
+    query_committee($committee_id);
+    $com_name = $committee['Name'];
+
+    //  SELECT AVAILABLE USER DETAILS
+    # excludes users currently in the committee / currently in an election for the committee
+
+    $acceptable_sql = "SELECT * FROM `User`
+                    WHERE NOT (CNU_ID IN(
+                      SELECT `User_CNU_ID` FROM `Committee Seat` WHERE (`Committee_Committee_ID` = '$committee_id') AND (`Ending_Term` IS NULL)
+                    ) OR CNU_ID IN(
+                      SELECT `Nominee_CNU_ID` FROM `Nomination` WHERE `Election_Election_ID` = '$election_id'
+                    ))";
+
+    $acceptable = $conn->query($acceptable_sql);
 
     ?>
   <title>CNU Committees - Nominate User</title>
@@ -51,30 +73,26 @@
     </header>
     <div class="selection">
       <div class="results">
-        <?php
-
-            # pull nominee details
-            $noms_sql = "SELECT * FROM `User` WHERE CNU_ID NOT IN(
-                              SELECT Nominee_CNU_ID FROM `Nomination`
-                              WHERE Election_Election_ID=$election_id)";
-            $noms = $conn->query($noms_sql);
-
-            if ($noms->num_rows > 0) {
-                # Iterate through all users
-                while ($row = $noms->fetch_assoc()) {
-                    $id = $row['CNU_ID'];
-                    $name = $row['Fname'].' '.$row['Lname'];
-                    $dept = $row['Department'];
-                    $pos = $row['Position']; ?>
-        <form id="nomination" action="election_details.php?election=<?php echo $election_id; ?>" method="post">
+        <form id="nomination" action="election_nominate_user.php?election=<?php echo $election_id; ?>" method="post">
           <input type="hidden" name="election_id" value="<?php echo $election_id; ?>">
           <?php
-                    # Checkbox belongs to options form, placed here for visuals
-                    echo "<div class='data'> <label for='$id'><b>$name</b><br>$dept<br>$pos</label>
-                        <div class='result_choices'>
-                          <input type='radio' name='nominee' id='$id' value='$id' required>
-                        </div>
-                      </div>";
+          # pull nominee details
+          
+
+          if ($acceptable->num_rows > 0) {
+              # Iterate through all users
+              while ($user = $acceptable->fetch_assoc()) {
+
+                $id = $user['CNU_ID'];
+                $name = $user['Fname'].' '.$user['Lname'];
+                $dept = $user['Department'];
+                $pos = $user['Position'];
+
+                echo "<div class='data'> <label for='$id'><b>$name</b><br>$dept<br>$pos</label>
+                    <div class='result_choices'>
+                      <input type='radio' name='nominee' id='$id' value='$id' required>
+                    </div>
+                  </div>";
                 }
             } else {
                 # Display blank result if no search results
@@ -97,7 +115,7 @@
           <hr>
           <!-- Administrative Options -->
           <div class="choices">
-            <input type="submit" name="submit_nomination" value="Nominate User" form="nomination">
+            <input type="submit" name="nominate" value="Nominate User" form="nomination">
           </div>
       </div>
     </div>

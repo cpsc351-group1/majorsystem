@@ -4,9 +4,6 @@
 <head>
   <?php
     # erase current session if coming from logout
-    if (isset($_POST['logout'])) {
-        session_unset();
-    }
 
     # if session variable already set, redirect to homepage
     if (isset($_SESSION['user'])) {
@@ -47,42 +44,6 @@
         $login_error = true;
         $_POST = array();
       }
-    }
-
-    # USER ACCOUNT CREATION
-
-    if (isset($_POST['create'])) {
-        $posted_data = array(
-          $_POST['cnu_id'],
-          $_POST['pass'],
-          $_POST['fname'],
-          $_POST['lname'],
-          $_POST['email'],
-          $_POST['department'],
-          $_POST['position'],
-          $_POST['bday'],
-          $_POST['hiring_year'],
-          $_POST['gender'],
-          $_POST['race'],
-          $_POST['img']
-        );
-
-        $entered_user = $_POST['cnu_id'];
-
-        $insert_sql = "INSERT INTO `User` (`CNU_ID`, `Password`, `Fname`, `Lname`, `Email`, `Department`, `Position`, `Birthday`, `Hiring_Year`, `Gender`, `Race`, `Photo`)
-                      SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
-                      WHERE $entered_user NOT IN(SELECT CNU_ID FROM `User`)";
-        # input explicit data types
-        $types='isssssssissb';
-        # prepare statement
-        $stmt = $conn->prepare($insert_sql);
-        
-        # bind statement inputs from array
-        $stmt->bind_param($types, ...$posted_data);
-        
-        # execute statement
-        $stmt->execute();
-        $stmt->close();
     }
 
   ?>

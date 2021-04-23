@@ -1,16 +1,6 @@
 <?php
 //  COMMITTEE FUNCTIONS
 
-//  SELECT USER DETAILS
-# pulls a user's details based on a given ID -> user assoc
-
-function query_user($conn, int $user_id)
-{
-    $user_sql = "SELECT * FROM `User` WHERE CNU_ID='$user_id'";
-    $user = $conn->query($user_sql)->fetch_assoc();
-    return $user;
-}
-
 //  SELECT COMMITTEE DETAILS
 # pulls a user's details based on a given ID -> committee assoc()
 

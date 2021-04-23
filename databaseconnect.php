@@ -2,7 +2,7 @@
 
 /*    CREDENTIALS   */
 
-$SRVR = "localhost:8889";
+$SRVR = "localhost:3308";
 $USER = "root";
 $PASS = "root";
 $TABL = "mydb";
@@ -24,6 +24,7 @@ if (!in_array(basename($_SERVER['SCRIPT_FILENAME']), $no_session_pages) and is_n
     header("Location: index.php");
 }
 
+// INPUT VALIDATION
 function validate_inputs($input, $expected, $location)
 {
     if (!($input == $expected)) {
@@ -32,12 +33,25 @@ function validate_inputs($input, $expected, $location)
     }
 }
 
+//  PERMISSIONS REDIRECTS
 function admin_redirect($user_permissions, $location) {
     validate_inputs($user_permissions=='Admin', false, $location);
 }
 
 function super_redirect($user_permissions, $location) {
     validate_inputs($user_permissions=='Super', false, $location);
+}
+
+
+//  SELECT USER DETAILS
+# pulls a user's details based on a given ID -> user assoc
+function query_user(int $user_id)
+{
+    global $conn;
+
+    $user_sql = "SELECT * FROM `User` WHERE CNU_ID='$user_id'";
+    $user = $conn->query($user_sql)->fetch_assoc();
+    return $user;
 }
 
 // Boolean to track if already in database

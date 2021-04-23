@@ -17,6 +17,45 @@
         exit();
       }
 
+      # USER ACCOUNT CREATION
+
+      if (isset($_POST['create'])) {
+        $posted_data = array(
+          $_POST['cnu_id'],
+          $_POST['pass'],
+          $_POST['fname'],
+          $_POST['lname'],
+          $_POST['email'],
+          $_POST['department'],
+          $_POST['position'],
+          $_POST['bday'],
+          $_POST['hiring_year'],
+          $_POST['gender'],
+          $_POST['race'],
+          $_POST['img']
+        );
+
+        $entered_user = $_POST['cnu_id'];
+
+        $insert_sql = "INSERT INTO `User` (`CNU_ID`, `Password`, `Fname`, `Lname`, `Email`, `Department`, `Position`, `Birthday`, `Hiring_Year`, `Gender`, `Race`, `Photo`)
+                      SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+                      WHERE $entered_user NOT IN(SELECT CNU_ID FROM `User`)";
+        # input explicit data types
+        $types='isssssssissb';
+        # prepare statement
+        $stmt = $conn->prepare($insert_sql);
+        
+        # bind statement inputs from array
+        $stmt->bind_param($types, ...$posted_data);
+        
+        # execute statement
+        $stmt->execute();
+        $stmt->close();
+
+        header("Location: index.php");
+        exit();
+      }
+
     ?>
 
   <title>CNU Committees — Registration</title>
@@ -27,7 +66,7 @@
     <header>
       <h2>Account Registration</h2>
     </header>
-    <form action="index.php" method="post">
+    <form action="user_registration.php" method="post">
       <div class="body">
         <div class="column">
           <span class="sub heading">Personal Info</span>

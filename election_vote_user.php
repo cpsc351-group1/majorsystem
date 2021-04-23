@@ -18,6 +18,22 @@
     # defined in election_functions.php
     query_election($entered_id);
 
+    // INSERT SQL FOR SUBMITTING VOTES
+
+    if (isset($_POST['submit_vote'])) {
+      # pull posted information
+      $voter_id = $_SESSION['user'];
+      $votee_id = $_POST['vote'];
+
+      $update_sql = "INSERT INTO `Vote`
+                     VALUES($election_id, $voter_id, $votee_id)
+                     ON DUPLICATE KEY UPDATE Votee_CNU_ID = $votee_id";
+      $conn->query($update_sql);
+
+      header("Location: election_details.php?election=".$election_id);
+      exit();
+    }
+
     //  ELECTION ID VALIDATION
     # defined in databaseconnect.php
     validate_inputs(is_null($election_id), false, 'election_selection.php');
@@ -59,7 +75,7 @@
     </header>
     <div class="selection">
       <div class="results">
-        <form id="vote" action="election_details.php?election=<?php echo $election_id; ?>" method="post">
+        <form id="vote" action="election_vote_user.php?election=<?php echo $election_id; ?>" method="post">
           <input type="hidden" name="election_id" value="<?php echo $election_id; ?>">
           <?php
 

@@ -17,6 +17,18 @@
       # defined in election_functions.php
       query_election($entered_id);
 
+      //  POSTED STATUS UPDATE
+      # not sensitive to SQL injection
+      if (isset($_POST['status'])) {
+        $new_status = $_POST['status'];
+
+        $status_sql = "UPDATE `Election` SET `Status` = '$new_status' WHERE `Election_ID` = '$entered_id'";
+        $conn->query($status_sql);
+
+        header("Location: election_details_admin.php?election=".$entered_id);
+        exit();
+      }
+
       //  VALIDATE GET INPUTS
       # return to selection page if invalid id thrown
       # defined in databaseconnect.php
@@ -64,7 +76,7 @@
               case 'Nomination':
                 // nominate user option
                 $disabled = $noms_count < $num_seats;
-                echo "<form action='election_details_admin.php?election=$election_id' method='post'>"
+                echo "<form action='election_modify.php?election=$election_id' method='post'>"
                         .($disabled ? "<div class='tip'>Less nominations than electable seats</div>" : "")
                         ."<input type='hidden' name='election' value='$election_id'>"
                         ."<button name='status' value='Voting'".($disabled ? 'disabled' : '').">End Nominations</button>
@@ -74,7 +86,7 @@
               case 'Voting':
                 // vote in election option
                 $disabled = !($votes_count > $num_seats or $noms_count == $num_seats);
-                echo "<form action='election_details_admin.php?election=$election_id' method='post'>"
+                echo "<form action='election_modify.php?election=$election_id' method='post'>"
                         .($disabled ? "<div class='tip'>Less votes submitted than electable seats</div>" : "")
                         ."<input type='hidden' name='election' value='$election_id'>"
                         ."<button name='status' value='Complete'".($disabled ? 'disabled' : '').">End Voting</button>

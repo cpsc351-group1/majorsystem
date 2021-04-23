@@ -13,37 +13,6 @@
       //  GET
       $entered_id = $_GET['election'];
 
-      // INSERT SQL FOR SUBMITTING NOMINATIONS
-      
-      if (isset($_POST['submit_nomination'])) {
-        # pull posted information
-        $election_id = $_POST['election_id'];
-        $nominator_id = $_SESSION['user'];
-        $nominee_id = $_POST['nominee'];
-
-        # insert nomination if not exists
-        $insert_sql = "INSERT INTO `Nomination`
-                      SELECT $election_id, $nominator_id, $nominee_id
-                      WHERE $nominee_id NOT IN(
-                          SELECT Nominee_CNU_ID FROM `Nomination`
-                          WHERE Election_Election_ID = '$election_id')";
-        $conn->query($insert_sql);
-      }
-
-      // INSERT SQL FOR SUBMITTING VOTES
-
-      if (isset($_POST['submit_vote'])) {
-        # pull posted information
-        $election_id = $_POST['election_id'];
-        $voter_id = $_SESSION['user'];
-        $votee_id = $_POST['vote'];
-
-        $update_sql = "INSERT INTO `Vote`
-                       VALUES($election_id, $voter_id, $votee_id)
-                       ON DUPLICATE KEY UPDATE Votee_CNU_ID = $votee_id";
-        $conn->query($update_sql);
-      }
-
       //  PERMISSIONS REDIRECTS
       # defined in databaseconnect.php
       admin_redirect($_SESSION['permissions'], "election_details_admin.php?election=".$entered_id);

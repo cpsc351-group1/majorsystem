@@ -24,17 +24,6 @@ function query_election(int $entered_id) {
     $election->close();
 }
 
-//  SELECT USER DETAILS
-# pulls a user's details based on a given ID. returns the user assoc
-function query_user(int $user_id)
-{
-    global $conn;
-
-    $user_sql = "SELECT * FROM `User` WHERE CNU_ID='$user_id'";
-    $user = $conn->query($user_sql)->fetch_assoc();
-    return $user;
-}
-
 function query_committee(int $committee_id) {
 
     global $conn;
@@ -44,7 +33,7 @@ function query_committee(int $committee_id) {
     $committee = $conn->query($committee_sql)->fetch_assoc();
 }
 
-//  GET NOMINEES INFO
+//  GET NOMINEES LIST
 # pulls the list of nominees for a given election
 function query_election_nominees(int $election_id) {
     global $conn;

@@ -18,6 +18,34 @@
       $user_sql = "SELECT * FROM `User`";
       $users = $conn->query($user_sql);
 
+    //  CREATE COMMITTEE INSERT
+    if (isset($_POST['create'])) {
+      $name = $_POST['name'];
+      $description = $_POST['description'];
+
+      $insert_sql = "INSERT INTO `Committee` (`Name`, `Description`) VALUES(?, ?)";
+      $stmt = $conn->prepare($insert_sql);
+      $stmt->bind_param('ss', $name, $description);
+      $stmt->execute();
+
+      // GET NEW COMMITTEE ID
+      $new_committee_id = $conn->insert_id;
+
+      // APPOINT SELECTED MEMBERS TO COMMITTEE
+      if (isset($_POST['selected_users'])) {
+
+        $appointed_users = $_POST['selected_users'];
+
+        $insert_sql = "";
+        foreach ($appointed_users as $user) {
+          echo $new_committee_id."   ".$user." / ";
+          $insert_sql = "INSERT INTO `Committee Seat` (`Committee_Committee_ID`, `Starting_Term`, `User_CNU_ID`) VALUES('$new_committee_id', now(), '$user')";
+          $conn->query($insert_sql) or die($conn->error);
+        }
+      }
+      header("Location: committee_details_admin.php?committee=".$new_committee_id);
+      exit();
+    }
 
     // PERMISSIONS CHECK - RETURN TO ELECTION_SELECTION IF NOT ADMIN
     # defined in databaseconnect.php
@@ -34,7 +62,7 @@
     </header>
     <div class="selection">
       <div class="results">
-        <form id="committee" action="committee_details_admin.php" method="post">
+        <form id="committee" action="committee_setup.php" method="post">
           <div class='center emphasis'>Appoint Users</div>
           <hr>
           <?php

@@ -12,15 +12,6 @@
 
       //  GET
       $entered_id = $_GET['election'];
-
-      //  POSTED STATUS UPDATE
-      # not sensitive to SQL injection
-      if (isset($_POST['status'])) {
-        $new_status = $_POST['status'];
-
-        $status_sql = "UPDATE `Election` SET `Status` = '$new_status' WHERE `Election_ID` = '$entered_id'";
-        $conn->query($status_sql);
-      }
       
       //  QUERY ENTERED
       # defined in election_functions.php

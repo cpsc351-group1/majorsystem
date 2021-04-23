@@ -25,7 +25,7 @@
       $new_election_id = $conn->insert_id;
 
       header("Location: election_details.php?election=".$new_election_id);
-      exit;
+      exit();
     }
 
     // GET

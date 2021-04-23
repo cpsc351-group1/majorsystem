@@ -12,20 +12,15 @@
       //  GET
       $entered_id = $_GET['committee'];
 
-      //  PERMISSIONS CHECK (ADMIN ONLY)
-      validate_inputs($_SESSION['permissions'], 'Admin', 'election_selection.php');
-
       //  SELECT COMMITTEE INFO
       $committee = query_committee($conn, $entered_id);
 
-      //  MEMBER APPOINTMENT INSERT
-      if (isset($_POST['appoint'])) {
-        $user = $_POST['user'];
+      //  INVALID ID REDIRECT
+      validate_inputs(is_null($committee_id), 0, 'committee_selection.php');
+      
+      //  PERMISSIONS CHECK (ADMIN ONLY)
+      validate_inputs($_SESSION['permissions'], 'Admin', 'election_selection.php');
 
-        $insert_sql = "INSERT IGNORE INTO `Committee Seat` (Committee_Committee_ID, Starting_Term, User_CNU_ID)
-                         VALUES ('$committee_id', now(), '$user')";
-        $conn->query($insert_sql);
-      }
 
       //  CHAIR SELECTION INSERT
       if (isset($_POST['chair'])) {
@@ -36,7 +31,7 @@
         $conn->query($chair_sql) or die($conn->error);
 
         header("Location: committee_details_admin.php?committee=".$committee_id);
-        exit;
+        exit();
       }
 
       //  MEMBER REMOVAL INSERT
@@ -51,43 +46,8 @@
         $conn->query($archive_sql) or die($user." -> ".$today." -> ".$archive_sql." -> ".mysqli_error($conn));
 
         header("Location: committee_details_admin.php?committee=".$committee_id);
-        exit;
+        exit();
       }
-      
-      //  CREATE COMMITTEE INSERT
-      if (isset($_POST['create'])) {
-        $name = $_POST['name'];
-        $description = $_POST['description'];
-
-        $insert_sql = "INSERT INTO `Committee` (`Name`, `Description`) VALUES(?, ?)";
-        $stmt = $conn->prepare($insert_sql);
-        $stmt->bind_param('ss', $name, $description);
-        $stmt->execute();
-
-        // GET NEW COMMITTEE ID
-        $new_committee_id = $conn->insert_id;
-
-        // APPOINT SELECTED MEMBERS TO COMMITTEE
-
-        if (isset($_POST['selected_users'])) {
-
-          $appointed_users = $_POST['selected_users'];
-
-          $insert_sql = "";
-          foreach ($appointed_users as $user) {
-            echo $new_committee_id."   ".$user." / ";
-            $insert_sql = "INSERT INTO `Committee Seat` (`Committee_Committee_ID`, `Starting_Term`, `User_CNU_ID`) VALUES('$new_committee_id', now(), '$user')";
-            $conn->query($insert_sql) or die($conn->error);
-          }
-          
-        }
-
-        header("Location: committee_details_admin.php?committee=".$new_committee_id);
-        exit;
-      }
-
-      //  INVALID ID REDIRECT
-      validate_inputs(is_null($committee_id), 0, 'committee_selection.php');
 
       //  SELECT CHAIRMAN ID
       $chair_id = query_committee_chair($conn, $committee_id);
@@ -154,7 +114,7 @@
                     $user_id = intval($seat['User_CNU_ID']);
   
                     # query seatholder information
-                    $user = query_user($conn, $user_id);
+                    $user = query_user($user_id);
   
                     # check if seatholder is the chair
                     $is_chair = $user['CNU_ID'] == $chair_id;
@@ -201,7 +161,7 @@
             while ($archived_seat = $archived_seats -> fetch_assoc()) {
               $user_id = $archived_seat['User_CNU_ID'];
 
-              $user = query_user($conn, $user_id);
+              $user = query_user($user_id);
 
               $user_name = $user['Fname']." ".$user['Lname'];
               $user_department = $user['Department'];

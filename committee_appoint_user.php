@@ -1,4 +1,4 @@
-<?php session_start(); ini_set('display_errors', true); ?>
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -7,40 +7,57 @@
   <link rel="stylesheet" href="css/selection.css">
 
   <?php
-
+  
     require 'databaseconnect.php';
     require 'committee_functions.php';
 
+    
     //  GET
     $entered_id = $_GET['committee'];
 
     //  SELECT COMMITTEE INFO
     $committee = query_committee($conn, $entered_id);
 
+    //  MEMBER APPOINTMENT INSERT
+    if (isset($_POST['appoint'])) {
+        $user = $_POST['user'];
+
+        $insert_sql = "INSERT IGNORE INTO `Committee Seat` (Committee_Committee_ID, Starting_Term, User_CNU_ID)
+                          VALUES ('$committee_id', now(), '$user')";
+
+        $conn->query($insert_sql);
+
+        header("Location: committee_details_admin.php?committee=".$committee_id);
+        exit();
+    }    
+
     //  INVALID ID REDIRECT
-    validate_inputs(is_null($committee_id), 0, 'committee_selection_admin.php');
+    validate_inputs(is_null($committee_id), false, 'committee_selection_admin.php');
 
     //  SELECT AVAILABLE MEMBER DETAILS
     # excludes users currently in the committee / currently in an election for the committee
     $members_sql = "SELECT * FROM `User`
                     WHERE CNU_ID NOT IN(
-                      SELECT `User_CNU_ID` FROM `Committee Seat` WHERE `Committee_Committee_ID` = '$committee_id'
+                      SELECT `User_CNU_ID` FROM `Committee Seat` WHERE (`Committee_Committee_ID` = '$committee_id') AND (`Ending_Term` IS NULL)
                     )";
+                    
 
+    //  SELECT ELECTION DETAILS
     $election = query_committee_election($conn, $entered_id);
+
     if ($election != NULL) {
       $election_id = $election['Election_ID'];
 
       $members_sql = "SELECT * FROM `User`
                     WHERE NOT (CNU_ID IN(
-                      SELECT `User_CNU_ID` FROM `Committee Seat` WHERE `Committee_Committee_ID` = '$committee_id'
+                      SELECT `User_CNU_ID` FROM `Committee Seat` WHERE (`Committee_Committee_ID` = '$committee_id') AND (`Ending_Term` IS NULL)
                     ) OR CNU_ID IN(
                       SELECT `Nominee_CNU_ID` FROM `Nomination` WHERE `Election_Election_ID` = '$election_id'
                     ))";
     }
 
-    $members = $conn->query($members_sql) or die($conn->error);
-
+    $members = $conn->query($members_sql);
+    
     ?>
   <title>CNU Committees - Appoint User</title>
 </head>
@@ -56,7 +73,7 @@
     </header>
     <div class="selection">
       <div class="results">
-        <form id="appointment" action="committee_details_admin.php?committee=<?php echo $committee_id; ?>" method="post">
+        <form id="appointment" action="committee_appoint_user.php?committee=<?php echo $committee_id; ?>" method="post">
           <input type="hidden" name="committee_id" value="<?php echo $committee_id;?>">
           <?php
           if ($members->num_rows > 0) {

@@ -11,7 +11,6 @@
     include "databaseconnect.php";
 
     // UPDATE USER INFORMATION
-
     if (isset($_POST['update'])) {
 
       # array of user info
@@ -59,12 +58,10 @@
 
     }
 
-      // GET
-
+    // GET
     $entered_id = $_GET['user'];
 
     //  PULL USER INFO
-
     # select all info from relevant user
     $user_sql = "SELECT * FROM `User` WHERE CNU_ID = ?";
     $stmt = $conn->prepare($user_sql);
