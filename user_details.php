@@ -59,6 +59,7 @@
           <div class="tiles">
             <div class="tile">
               <span class="sub heading">Personal Info</span>
+              <hr>
               <div class="list">
                 <span class="label">Email:</span>
                 <span><?php echo $user['Email'];?></span>
@@ -70,6 +71,7 @@
 
             <div class="tile">
               <span class="sub heading">Other</span>
+              <hr>
               <div class="list">
                 <span class="label">Race:</span>
                 <span><?php echo $user['Race'];?></span>
@@ -81,6 +83,7 @@
 
             <div class="tile">
               <span class="sub heading">Employment</span>
+              <hr>
               <div class="list">
                 <span class="label">Department:</span>
                 <span><?php echo $user['Department'];?></span>
@@ -104,6 +107,7 @@
               $user_id = $user['CNU_ID'];
               echo "<form action='user_modify.php' method='get'><button name='user' value='$user_id'>Modify Profile</button></form>";
             ?>
+            <form action="user_details.php" method="post"></form>
           </div>
 
         </div>

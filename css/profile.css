@@ -38,9 +38,10 @@
 .tiles {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-auto-rows: 1fr;
   grid-gap: 1em;
+  justify-content: center;
 }
 
 .tiles .tile {
@@ -138,8 +139,9 @@ form:hover .tip {
 
 .profile {
   display: flex;
+  justify-content: center;
   width: 100%;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
 }
 
 .list {
@@ -172,6 +174,11 @@ form:hover .tip {
 .body input[type=file] {
   outline: 1px solid black;
   padding: 0.2em;
+}
+
+.list .label {
+  font-weight: bold;
+  margin: 0.2em 0;
 }
 
 .body .image {

@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`User` (
   `Race` VARCHAR(45) NOT NULL,
   `Permissions` VARCHAR(45) NOT NULL DEFAULT 'User',
   `Photo` Blob,
+  `Archival_Date` DATE DEFAULT NULL,
   PRIMARY KEY (`CNU_ID`))
 ENGINE = InnoDB;
 
