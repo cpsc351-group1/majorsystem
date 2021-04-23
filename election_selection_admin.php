@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="css/selection.css">
-  <link rel="stylesheet" href="css/common.css">
+  
   <?php include 'databaseconnect.php'?>
 
   <title>CNU Committees - Elections</title>
