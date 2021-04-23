@@ -72,14 +72,7 @@
         </div>
 
         <hr>
-        <!-- Selection Options -->
-        <div>
-          <!--TODO: implement these -->
-          <button type="button" name="select_all">Select All</button>
-          <button type="button" name="deselect_all">Deselect All</button>
-        </div>
 
-        <hr>
       </div>
     </div>
   </div>

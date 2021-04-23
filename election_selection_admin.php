@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="css/selection.css">
-  <link rel="stylesheet" href="css/common.css">
+  
   <?php include 'databaseconnect.php'?>
 
   <title>CNU Committees - Elections</title>
@@ -74,7 +74,7 @@
 
         <hr>
         <!-- Administrative Options -->
-        <div class="emphasis">
+        <div class="choices">
           <a href="election_setup.php"><button type="button" name="add_user">Start Election</button></a>
           <!--TODO: implement this-->
         </div>

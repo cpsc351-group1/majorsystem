@@ -42,20 +42,6 @@
                        VALUES($election_id, $voter_id, $votee_id)
                        ON DUPLICATE KEY UPDATE Votee_CNU_ID = $votee_id";
         $conn->query($update_sql);
-
-        // # delete current user vote in current election
-        // $delete_sql = "DELETE FROM `Vote` WHERE
-        //                 Voter_CNU_ID = $voter_id AND
-        //                 Election_Election_ID = $election_id";
-        // $conn->query($delete_sql);
-
-        // # insert updated vote if not exists
-        // $insert_sql = "INSERT INTO `Vote`
-        //                SELECT $election_id, $voter_id, $votee_id
-        //                WHERE $votee_id NOT IN(
-        //                   SELECT Votee_CNU_ID FROM `Vote`
-        //                   WHERE Election_Election_ID = '$election_id')";
-        // $conn->query($insert_sql);
       }
 
       //  PERMISSIONS REDIRECTS

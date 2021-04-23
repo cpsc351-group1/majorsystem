@@ -49,7 +49,7 @@ DROP TABLE IF EXISTS `mydb`.`Committee` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`Committee` (
   `Committee_ID` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(45) NOT NULL,
-  `Description` VARCHAR(45) NOT NULL,
+  `Description` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`Committee_ID`))
 ENGINE = InnoDB;
 
@@ -60,12 +60,11 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `mydb`.`Committee Seat` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`Committee Seat` (
-  `Seat_ID` INT NOT NULL AUTO_INCREMENT,
   `Committee_Committee_ID` INT NOT NULL,
-  `Starting_Term` VARCHAR(12) NOT NULL,
-  `Ending_Term` VARCHAR(12),
+  `Starting_Term` DATE NOT NULL,
+  `Ending_Term` DATE DEFAULT NULL,
   `User_CNU_ID` INT NOT NULL,
-  PRIMARY KEY (`Seat_ID`, `Committee_Committee_ID`),
+  PRIMARY KEY (`Committee_Committee_ID`, `User_CNU_ID`),
   INDEX `fk_Committee Seat_Committee1_idx` (`Committee_Committee_ID` ASC),
   INDEX `fk_Committee Seat_User1_idx` (`User_CNU_ID` ASC),
   CONSTRAINT `fk_Committee Seat_Committee1`
@@ -88,16 +87,11 @@ DROP TABLE IF EXISTS `mydb`.`Chairman` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`Chairman` (
   `Committee_Committee_ID` INT(11) NOT NULL,
   `User_CNU_ID` INT(11) NOT NULL,
-  PRIMARY KEY (`Committee_Committee_ID`, `User_CNU_ID`),
+  PRIMARY KEY (`Committee_Committee_ID`),
   INDEX `fk_Chairman_User1_idx` (`User_CNU_ID` ASC),
   CONSTRAINT `fk_Chairman_Committee1`
     FOREIGN KEY (`Committee_Committee_ID`)
     REFERENCES `mydb`.`Committee` (`Committee_ID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Chairman_User1`
-    FOREIGN KEY (`User_CNU_ID`)
-    REFERENCES `mydb`.`User` (`CNU_ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

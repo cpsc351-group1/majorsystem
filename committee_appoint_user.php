@@ -1,41 +1,45 @@
-<?php session_start(); ?>
+<?php session_start(); ini_set('display_errors', true); ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="css/selection.css">
-  <link rel="stylesheet" href="css/common.css">
+
   <?php
 
     require 'databaseconnect.php';
+    require 'committee_functions.php';
 
-
-    # pull posted committee variable
+    //  GET
     $entered_id = $_GET['committee'];
 
-    # pull committee information using $_GET
-    $com_sql = "SELECT * FROM `Committee` WHERE Committee_ID=?";
-    # prepare statement (to prevent mysql injection)
-    $com_stmt = $conn->prepare($com_sql);
-    # bind inputs
-    $com_stmt->bind_param('i', $entered_id);
-    # execute statement
-    $com_stmt->execute();
-    # bind results to variables
-    $com_stmt->bind_result($committee_id, $committee_name, $committee_description);
-    # fetch row and close
-    $com_stmt->fetch();
-    $com_stmt->close();
+    //  SELECT COMMITTEE INFO
+    $committee = query_committee($conn, $entered_id);
 
-    # return to selection page if invalid id thrown
+    //  INVALID ID REDIRECT
     validate_inputs(is_null($committee_id), 0, 'committee_selection_admin.php');
 
-    # pull all nominee details
-    $members_sql = "SELECT * FROM `User` WHERE CNU_ID NOT IN(
-                      SELECT User_CNU_ID FROM `Committee Seat`
-                      WHERE Committee_Committee_ID=$committee_id)";
-    $members = $conn->query($members_sql);
+    //  SELECT AVAILABLE MEMBER DETAILS
+    # excludes users currently in the committee / currently in an election for the committee
+    $members_sql = "SELECT * FROM `User`
+                    WHERE CNU_ID NOT IN(
+                      SELECT `User_CNU_ID` FROM `Committee Seat` WHERE `Committee_Committee_ID` = '$committee_id'
+                    )";
+
+    $election = query_committee_election($conn, $entered_id);
+    if ($election != NULL) {
+      $election_id = $election['Election_ID'];
+
+      $members_sql = "SELECT * FROM `User`
+                    WHERE NOT (CNU_ID IN(
+                      SELECT `User_CNU_ID` FROM `Committee Seat` WHERE `Committee_Committee_ID` = '$committee_id'
+                    ) OR CNU_ID IN(
+                      SELECT `Nominee_CNU_ID` FROM `Nomination` WHERE `Election_Election_ID` = '$election_id'
+                    ))";
+    }
+
+    $members = $conn->query($members_sql) or die($conn->error);
 
     ?>
   <title>CNU Committees - Appoint User</title>
@@ -89,7 +93,7 @@
 
         <hr>
         <!-- Administrative Options -->
-        <div class="emphasis">
+        <div class="choices">
           <input type="submit" name="appoint" value="Appoint User" form="appointment">
         </div>
       </div>

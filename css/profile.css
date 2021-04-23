@@ -38,7 +38,7 @@
 .tiles {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   grid-auto-rows: 1fr;
   grid-gap: 1em;
 }
@@ -100,7 +100,7 @@ form .tip {
   padding: 5px;
   text-align: center;
   z-index: 99999;
-  top: 110%;
+  bottom: 110%;
 }
 
 form:hover .tip {

@@ -9,13 +9,13 @@
   
   include 'databaseconnect.php';
   
-  //  Send non-admin users back to election selection page
+  //  PERMISSIONS CHECK (ADMIN ONLY)
   # Defined in databaseconnect.php
   validate_inputs($_SESSION['permissions'], 'Admin', 'election_selection.php');
   
   ?>
 
-  <title>CNU Committees - Election Setup</title>
+  <title>CNU Committees - Committee Selection</title>
 </head>
 
 <body>
@@ -55,9 +55,8 @@
 
             ?>
       </div>
-      <form class="options" action="    'x'    " method="post">
         <!--TODO: add report generation href-->
-        
+      <form class="options" method="post" action="#">  
         <h4>Options</h4>
         <!-- Search Bar -->
         <!--TODO: add functionality to search options-->
@@ -76,13 +75,13 @@
         <hr>
         <!-- Administrative Options -->
 
-        <div class="emphasis">
-          <a href="#"><button type="button" name="add_user">Add Committee</button></a>
-          <!--TODO: implement this-->
+        <div class="choices">
+          <a href="committee_setup.php"><button type="button" name="add_user">Add Committee</button></a>
           <input type="submit" name="report" value="Generate Report on Selected">
           <!--TODO: implement this -->
         </div>
-      </form>
+      </div>
+      
     </div>
   </div>
 

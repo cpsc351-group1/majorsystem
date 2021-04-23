@@ -1,4 +1,4 @@
-<?php session_start(); ini_set('display_errors, 1'); ?>
+<?php session_start(); ini_set('display_errors', true); ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -6,67 +6,100 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="css/profile.css" type="text/css">
   <?php
-      include 'databaseconnect.php';
+      require 'databaseconnect.php';
+      require 'committee_functions.php';
 
-      # pull posted committee variable
+      //  GET
       $entered_id = $_GET['committee'];
 
-      # pull committee information using $_GET
-      $com_sql = "SELECT * FROM `Committee` WHERE Committee_ID=?";
-      # prepare statement (to prevent mysql injection)
-      $com_stmt = $conn->prepare($com_sql);
-      # bind inputs
-      $com_stmt->bind_param('i', $entered_id);
-      # execute statement
-      $com_stmt->execute();
-      # bind results to variables
-      $com_stmt->bind_result($committee_id, $committee_name, $committee_description);
-      # fetch row and close
-      $com_stmt->fetch();
-      $com_stmt->close();
+      //  PERMISSIONS CHECK (ADMIN ONLY)
+      validate_inputs($_SESSION['permissions'], 'Admin', 'election_selection.php');
 
+      //  SELECT COMMITTEE INFO
+      $committee = query_committee($conn, $entered_id);
+
+      //  MEMBER APPOINTMENT INSERT
       if (isset($_POST['appoint'])) {
-          $user = $_POST['user'];
+        $user = $_POST['user'];
 
-          $insert_sql = "INSERT INTO `Committee Seat` (Committee_Committee_ID, Starting_Term, Ending_Term, User_CNU_ID)
-                      SELECT $committee_id, 'Spring 2021', NULL, $user
-                      WHERE $user NOT IN(
-                          SELECT User_CNU_ID FROM `Committee Seat`
-                          WHERE Committee_Committee_ID = '$committee_id')";
-          $conn->query($insert_sql);
+        $insert_sql = "INSERT IGNORE INTO `Committee Seat` (Committee_Committee_ID, Starting_Term, User_CNU_ID)
+                         VALUES ('$committee_id', now(), '$user')";
+        $conn->query($insert_sql);
       }
 
+      //  CHAIR SELECTION INSERT
       if (isset($_POST['chair'])) {
-          $user = intval($_POST['chair']);
+        $user = $_POST['chair'];
 
-          $chair_sql = "UPDATE `Chairman`
-                        SET User_CNU_ID = $user
-                        WHERE Committee_Committee_ID = $committee_id";
-          $conn->query($chair_sql);
+        $chair_sql = "INSERT INTO `Chairman` (`Committee_Committee_ID`, `User_CNU_ID`) VALUES('$committee_id', '$user')
+                        ON DUPLICATE KEY UPDATE `User_CNU_ID` = VALUES(`User_CNU_ID`)";
+        $conn->query($chair_sql) or die($conn->error);
+
+        header("Location: committee_details_admin.php?committee=".$committee_id);
+        exit;
       }
 
+      //  MEMBER REMOVAL INSERT
       if (isset($_POST['delete'])) {
-          $user = intval($_POST['delete']);
+        $user = intval($_POST['delete']);
 
-          $delete_sql = "DELETE FROM `Committee Seat`
-                         WHERE User_CNU_ID = $user";
-          $conn->query($delete_sql) or die(mysqli_error($conn));
+        $archive_sql = "UPDATE `Committee Seat`
+                        SET `Ending_Term` = now()
+                        WHERE `User_CNU_ID` = $user
+                        AND `Ending_Term` IS NULL
+                        AND `Committee_Committee_ID` = $committee_id";
+        $conn->query($archive_sql) or die($user." -> ".$today." -> ".$archive_sql." -> ".mysqli_error($conn));
+
+        header("Location: committee_details_admin.php?committee=".$committee_id);
+        exit;
+      }
+      
+      //  CREATE COMMITTEE INSERT
+      if (isset($_POST['create'])) {
+        $name = $_POST['name'];
+        $description = $_POST['description'];
+
+        $insert_sql = "INSERT INTO `Committee` (`Name`, `Description`) VALUES(?, ?)";
+        $stmt = $conn->prepare($insert_sql);
+        $stmt->bind_param('ss', $name, $description);
+        $stmt->execute();
+
+        // GET NEW COMMITTEE ID
+        $new_committee_id = $conn->insert_id;
+
+        // APPOINT SELECTED MEMBERS TO COMMITTEE
+
+        if (isset($_POST['selected_users'])) {
+
+          $appointed_users = $_POST['selected_users'];
+
+          $insert_sql = "";
+          foreach ($appointed_users as $user) {
+            echo $new_committee_id."   ".$user." / ";
+            $insert_sql = "INSERT INTO `Committee Seat` (`Committee_Committee_ID`, `Starting_Term`, `User_CNU_ID`) VALUES('$new_committee_id', now(), '$user')";
+            $conn->query($insert_sql) or die($conn->error);
+          }
+          
+        }
+
+        header("Location: committee_details_admin.php?committee=".$new_committee_id);
+        exit;
       }
 
-      # return to selection page if invalid id thrown
+      //  INVALID ID REDIRECT
       validate_inputs(is_null($committee_id), 0, 'committee_selection.php');
 
-      # query chairman
-      $chair_sql = "SELECT User_CNU_ID FROM `Chairman` WHERE Committee_Committee_ID='$committee_id'";
-      $chair_id = $conn->query($chair_sql)->fetch_assoc()['User_CNU_ID'];
+      //  SELECT CHAIRMAN ID
+      $chair_id = query_committee_chair($conn, $committee_id);
 
-      # query committee seats info
-      $committee_seats_sql = "SELECT * FROM `Committee Seat` WHERE Committee_Committee_ID='$committee_id'";
-      $committee_seats = $conn->query($committee_seats_sql);
+      //  SELECT SEAT INFO
+      $committee_seats = query_committee_seats($conn, $committee_id);
 
-      # query any running elections
-      $election_sql = "SELECT * FROM `Election` WHERE Committee_Committee_ID='$committee_id' AND NOT Status='Complete'";
-      $election = $conn->query($election_sql)->fetch_assoc();
+      //  SELECT ARCHIVED SEAT INFO
+      $archived_seats = query_archived_committee_seats($conn, $committee_id);
+
+      //  SELECT CURRENT ELECTION
+      $election = query_committee_election($conn, $committee_id);
     ?>
 
   <title>CNU — <?php echo $committee_name;?></title>
@@ -88,20 +121,18 @@
 
             if (is_null($election)) {
 
-                # Administrative Option (create election)
-                # TODO: make this functional
+                // CREATE ELECTION
 
                 echo "<form action='election_setup.php' method='get'><button name='committee' value='$committee_id'>Start Election</button></form>";
             } else {
 
-                # View election, if exists
+                // VIEW ELECTION
 
                 $election_id = $election['Election_ID'];
                 echo "<form action='election_details_admin.php' method='get'><button name='election' value='$election_id'>View Election</button></form>";
             }
 
-            # Administrative Option
-            # Add user directly to committee
+            // ADD USER TO COMMITTEE
 
             echo "<form action='committee_appoint_user.php' method='get'><button name='committee' value='$committee_id'>Appoint User to Seat</button></form>";
 
@@ -116,47 +147,74 @@
         <div class="tiles">
           <?php
               # for each seat
-              while ($seat = $committee_seats->fetch_assoc()) {
+              if ($committee_seats->num_rows > 0) {
+                while ($seat = $committee_seats->fetch_assoc()) {
 
-                # get seatholder ID
-                  $user_id = intval($seat['User_CNU_ID']);
-
-                  # query seatholder information
-                  $user_sql = "SELECT CNU_ID, Fname, Lname, Department, Position, Photo FROM `User` WHERE CNU_ID='$user_id'";
-                  $user = $conn->query($user_sql)->fetch_assoc();
-
-                  # check if seatholder is the chair
-                  $is_chair = $user['CNU_ID'] == $chair_id;
-
-                  # show ending term if any
-                  $ending_term = $seat['Ending_Term'] ?? 'Present';
-
-                  // TODO: add photos, if desired :)
-
-                  # generate block of data for each user
-                  echo "<div class='tile'>";
-                  // TODO: remove/chair options
-                  echo "<div class='member_options'>"
-                          .($is_chair ? "" : "<form action='committee_details_admin.php?committee=$committee_id' method='post'><span class='tip'>Appoint as Chairman</span><button name='chair' value='$user_id'>★</button></form>
-                                              <form action='committee_details_admin.php?committee=$committee_id' method='post'><span class='tip'>Delete User</span><button name='delete' value='$user_id'>X</button></form>");
-                  echo "</div>";
-                  // name and employment details
-                  echo "<span class='sub heading'>".$user['Fname']." ".$user['Lname']."</span><br>";
-                  // displays if user is committee chair
-                  echo ($is_chair ? "<span class='heading'>Committee Chair</span><br>" : "")
-                       .$user['Department'].", ".$user['Position']."<br>"
-                       .$seat['Starting_Term']." - ".$ending_term;
-                  echo "</div>";
+                  # get seatholder ID
+                    $user_id = intval($seat['User_CNU_ID']);
+  
+                    # query seatholder information
+                    $user = query_user($conn, $user_id);
+  
+                    # check if seatholder is the chair
+                    $is_chair = $user['CNU_ID'] == $chair_id;
+  
+                    # show ending term if any
+                    $ending_term = $seat['Ending_Term'] ?? 'Present';
+  
+                    // TODO: add photos, if desired :)
+  
+                    # generate block of data for each user
+                    echo "<div class='tile'>";
+                    // TODO: remove/chair options
+                    echo "<div class='member_options'>"
+                            .($is_chair ? "" : "<form action='committee_details_admin.php?committee=$committee_id' method='post'><span class='tip'>Appoint as Chairman</span><button name='chair' value='$user_id'>★</button></form>
+                                                <form action='committee_details_admin.php?committee=$committee_id' method='post'><span class='tip'>Archive Seat</span><button name='delete' value='$user_id'>X</button></form>");
+                    echo "</div>";
+                    // name and employment details
+                    echo "<span class='sub heading'>".$user['Fname']." ".$user['Lname']."</span><br>";
+                    // displays if user is committee chair
+                    echo ($is_chair ? "<span class='heading'>Committee Chair</span><br>" : "")
+                         .$user['Department'].", ".$user['Position']."<br>"
+                         .$seat['Starting_Term']." - ".$ending_term;
+                    echo "</div>";
+                }
+              } else {
+                echo "<div class='center'>No members currently appointed.</div>";
               }
+              
 
               # Render blank tiles for every seat currently up for election
-
-              for ($i=0; $i < $election['Number_Seats']; $i++) {
+              if ($election != NULL) {
+                for ($i=0; $i < $election['Number_Seats']; $i++) {
                   echo "<div class='tile center'>(Seat up for election.)</div>";
+                }
               }
+              
             ?>
         </div>
+        <hr>
+        <?php if ($archived_seats->num_rows == 0) {goto skip_archived;}?>
+        <span class="sub heading">Archived Seats</span>
+        <div class="tiles">
+          <?php
+            while ($archived_seat = $archived_seats -> fetch_assoc()) {
+              $user_id = $archived_seat['User_CNU_ID'];
 
+              $user = query_user($conn, $user_id);
+
+              $user_name = $user['Fname']." ".$user['Lname'];
+              $user_department = $user['Department'];
+              $user_position = $user['Position'];
+              $user_start = $archived_seat['Starting_Term'];
+              $user_end = $archived_seat['Ending_Term'];
+
+              echo "<div class='tile'><b>$user_name</b><br>"
+                   ."$user_department, $user_position<br>$user_start — $user_end</div>";
+            }
+          ?>
+        </div>
+        <?php skip_archived: ?>
       </div>
     </div>
   </div>
