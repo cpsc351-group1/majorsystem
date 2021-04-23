@@ -20,34 +20,70 @@
 
       //  MEMBER APPOINTMENT INSERT
       if (isset($_POST['appoint'])) {
-          $user = $_POST['user'];
+        $user = $_POST['user'];
 
-          $insert_sql = "INSERT INTO `Committee Seat` (Committee_Committee_ID, Starting_Term, User_CNU_ID)
-                      SELECT $committee_id, now(), $user
-                      WHERE $user NOT IN(
-                          SELECT User_CNU_ID FROM `Committee Seat`
-                          WHERE Committee_Committee_ID = '$committee_id')";
-          $conn->query($insert_sql);
+        $insert_sql = "INSERT IGNORE INTO `Committee Seat` (Committee_Committee_ID, Starting_Term, User_CNU_ID)
+                         VALUES ('$committee_id', now(), '$user')";
+        $conn->query($insert_sql);
       }
 
       //  CHAIR SELECTION INSERT
       if (isset($_POST['chair'])) {
-          $user = $_POST['chair'];
+        $user = $_POST['chair'];
 
-          $chair_sql = "INSERT INTO `Chairman` (`Committee_Committee_ID`, `User_CNU_ID`) VALUES('$committee_id', '$user')
-                          ON DUPLICATE KEY UPDATE `User_CNU_ID` = VALUES(`User_CNU_ID`)";
-          $conn->query($chair_sql) or die($conn->error);
+        $chair_sql = "INSERT INTO `Chairman` (`Committee_Committee_ID`, `User_CNU_ID`) VALUES('$committee_id', '$user')
+                        ON DUPLICATE KEY UPDATE `User_CNU_ID` = VALUES(`User_CNU_ID`)";
+        $conn->query($chair_sql) or die($conn->error);
+
+        header("Location: committee_details_admin.php?committee=".$committee_id);
+        exit;
       }
 
       //  MEMBER REMOVAL INSERT
       if (isset($_POST['delete'])) {
-          $user = intval($_POST['delete']);
+        $user = intval($_POST['delete']);
 
-          $archive_sql = "UPDATE `Committee Seat`
-                          SET `Ending_Term` = now()
-                          WHERE `User_CNU_ID` = $user
-                          AND `Ending_Term` IS NULL";
-          $conn->query($archive_sql) or die($user." -> ".$today." -> ".$archive_sql." -> ".mysqli_error($conn));
+        $archive_sql = "UPDATE `Committee Seat`
+                        SET `Ending_Term` = now()
+                        WHERE `User_CNU_ID` = $user
+                        AND `Ending_Term` IS NULL
+                        AND `Committee_Committee_ID` = $committee_id";
+        $conn->query($archive_sql) or die($user." -> ".$today." -> ".$archive_sql." -> ".mysqli_error($conn));
+
+        header("Location: committee_details_admin.php?committee=".$committee_id);
+        exit;
+      }
+      
+      //  CREATE COMMITTEE INSERT
+      if (isset($_POST['create'])) {
+        $name = $_POST['name'];
+        $description = $_POST['description'];
+
+        $insert_sql = "INSERT INTO `Committee` (`Name`, `Description`) VALUES(?, ?)";
+        $stmt = $conn->prepare($insert_sql);
+        $stmt->bind_param('ss', $name, $description);
+        $stmt->execute();
+
+        // GET NEW COMMITTEE ID
+        $new_committee_id = $conn->insert_id;
+
+        // APPOINT SELECTED MEMBERS TO COMMITTEE
+
+        if (isset($_POST['selected_users'])) {
+
+          $appointed_users = $_POST['selected_users'];
+
+          $insert_sql = "";
+          foreach ($appointed_users as $user) {
+            echo $new_committee_id."   ".$user." / ";
+            $insert_sql = "INSERT INTO `Committee Seat` (`Committee_Committee_ID`, `Starting_Term`, `User_CNU_ID`) VALUES('$new_committee_id', now(), '$user')";
+            $conn->query($insert_sql) or die($conn->error);
+          }
+          
+        }
+
+        header("Location: committee_details_admin.php?committee=".$new_committee_id);
+        exit;
       }
 
       //  INVALID ID REDIRECT
