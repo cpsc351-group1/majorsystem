@@ -208,10 +208,10 @@
           <div class="tile list">
             <span class="sub heading">Password</span>
             <label for="pass" class="required">Password</label>
-            <input id='pass' type="password" name="pass" placeholder="Password" maxlength="24" required>
+            <input id='pass' type="password" name="pass" placeholder="Password" maxlength="24">
 
             <label for='cpass' class="required">Confirm</label>
-            <input id='cpass' type="password" name="cpass" placeholder="Confirm Password" maxlength="24" required>
+            <input id='cpass' type="password" name="cpass" placeholder="Confirm Password" maxlength="24">
 
             <span id="pass_validation">
               <!-- For password validation javascript -->
