@@ -27,7 +27,7 @@ body {
 
   display: flex;
   flex-flow: column nowrap;
-  overflow: auto;
+  overflow: scroll;
   
   padding: 0.5em;
 
