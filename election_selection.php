@@ -11,7 +11,7 @@
   
   //  PERMISSIONS REDIRECTS
   # defined in databaseconnect.php
-  admin_redirect($_SESSION['permissions'], "election_selection_admin.php");
+  admin_redirect($current_user_permissions, "election_selection_admin.php");
   
   ?>
 

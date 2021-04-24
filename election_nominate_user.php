@@ -24,7 +24,7 @@
     //  INSERT SQL FOR SUBMITTING NOMINATIONS   
     if (isset($_POST['nominate'])) {
       # pull posted information
-      $nominator_id = $_SESSION['user'];
+      $nominator_id = $current_user_id;
       $nominee_id = $_POST['nominee'];
 
       # insert nomination if not exists

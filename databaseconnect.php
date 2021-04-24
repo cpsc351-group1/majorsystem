@@ -20,8 +20,20 @@ $no_session_pages = array(
   "user_registration.php"
 );
 
-if (!in_array(basename($_SERVER['SCRIPT_FILENAME']), $no_session_pages) and is_null($_SESSION['user'])) {
-    header("Location: index.php");
+$current_file_name = basename($_SERVER['SCRIPT_FILENAME']);
+
+if (isset($_SESSION['user'])) {
+    if (in_array($current_file_name, $no_session_pages)) {
+        header("Location: homepage.php");
+        exit();
+    } else {
+        $current_user_id = $_SESSION['user'];
+        $current_user_permissions = $_SESSION['permissions'];
+    }
+} else {
+    if (!in_array($current_file_name, $no_session_pages)) {
+        header("Location: index.php");
+    }
 }
 
 // INPUT VALIDATION

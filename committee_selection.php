@@ -10,7 +10,7 @@
   
   //  PERMISSIONS REDIRECTS
   # pulled from databaseconnect.php
-  admin_redirect($_SESSION['permissions'], "committee_selection_admin.php");
+  admin_redirect($current_user_permissions, "committee_selection_admin.php");
   
   ?>
 

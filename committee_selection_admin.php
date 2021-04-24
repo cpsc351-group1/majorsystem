@@ -11,7 +11,7 @@
   
   //  PERMISSIONS CHECK (ADMIN ONLY)
   # Defined in databaseconnect.php
-  validate_inputs($_SESSION['permissions'], 'Admin', 'election_selection.php');
+  validate_inputs($current_user_permissions, 'Admin', 'election_selection.php');
   
   ?>
 

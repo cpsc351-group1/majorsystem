@@ -22,7 +22,7 @@
 
     if (isset($_POST['submit_vote'])) {
       # pull posted information
-      $voter_id = $_SESSION['user'];
+      $voter_id = $current_user_id;
       $votee_id = $_POST['vote'];
 
       $update_sql = "INSERT INTO `Vote`

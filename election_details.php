@@ -15,7 +15,7 @@
 
       //  PERMISSIONS REDIRECTS
       # defined in databaseconnect.php
-      admin_redirect($_SESSION['permissions'], "election_details_admin.php?election=".$entered_id);
+      admin_redirect($current_user_permissions, "election_details_admin.php?election=".$entered_id);
 
       //  SELECT ELECTION INFO
       # defined in election_functions.php
