@@ -53,7 +53,7 @@
                     // and details options.
 
                     // Checkbox belongs to options form, placed here for visuals
-                    echo "<div class='data'>";
+                    echo "<div class='data $status'>";
                     echo "<div><b>$name Election</b><br>Electing $seats seat".($seats==1?'':'s')."<br><b>Status: </b>$status</div>";
                     echo "<div class='result_choices'><a href='election_details.php?election=$id'><button>Details</button></a></div>";
                     echo "</div>";
