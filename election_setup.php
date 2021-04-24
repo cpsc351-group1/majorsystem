@@ -36,7 +36,7 @@
 
     // PERMISSIONS CHECK - RETURN TO ELECTION_SELECTION IF NOT ADMIN
     # defined in databaseconnect.php
-    validate_inputs($_SESSION['permissions'], 'Admin', 'election_selection.php');
+    validate_inputs($current_user_permissions, 'Admin', 'election_selection.php');
 
     // SELECT ELIGIBLE COMMITTEES
 

@@ -10,18 +10,15 @@
     session_unset();
   }
 
-  $user_id = $_SESSION['user'];
-  $permissions = $_SESSION['permissions'];
-
   # connect to database
   include 'databaseconnect.php';
 
   //  REDIRECT ADMIN AND SUPER USERS
-  admin_redirect($permissions, 'homepage_admin.php');
-  super_redirect($permissions, 'homepage_admin.php');
+  admin_redirect($permissions, 'homepage_super.php');
+  super_redirect($permissions, 'homepage_super.php');
 
   # run query
-  $sql = "SELECT * FROM `User` WHERE CNU_ID=$user_id";
+  $sql = "SELECT * FROM `User` WHERE CNU_ID=$current_user_id";
   $result = $conn->query($sql);
 
   $user = $result->fetch_assoc();
@@ -54,7 +51,7 @@
         What are you looking for, <?php echo $full_name; ?>?
       </div>
       <div class="tiles">
-        <a href="user_details.php?user=<?php echo $user_id;?>" style="color: white"><button>View Profile</button></a>
+        <a href="user_details.php?user=<?php echo $current_user_id;?>" style="color: white"><button>View Profile</button></a>
         <a href="committee_selection.php" style="color: white"><button>Committees</button></a>
         <a href="election_selection.php" style="color: white"><button>Elections</button></a>
         <a href="notifications.php" style="color: white"><button>Notifications</button></a>

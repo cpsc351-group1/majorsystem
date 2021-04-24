@@ -8,6 +8,9 @@
 
   <?php include 'databaseconnect.php';
 
+    // ADMIN PERMISSIONS CHECK
+    validate_inputs($current_user_permissions, "Admin", "homepage.php");
+
     # Pull user details to generate checklist
     $sql = "SELECT CNU_ID, Fname, Lname, Department, Position FROM User";
     $result = $conn->query($sql);

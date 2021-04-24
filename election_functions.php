@@ -53,9 +53,10 @@ function query_election_votes(int $election_id) {
     global $votes;
     global $votes_count;
     global $previous;
+    global $current_user_id;
 
     # username
-    $voter_id = $_SESSION['user'];
+    $voter_id = $current_user_id;
 
     # pull previous vote in this election
     $votes_sql = "SELECT * FROM `Vote` WHERE Election_Election_ID = '$election_id'";

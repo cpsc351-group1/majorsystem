@@ -6,7 +6,12 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="css/selection.css">
   
-  <?php include 'databaseconnect.php'?>
+  <?php include 'databaseconnect.php';
+  
+  // ADMIN PERMISSIONS CHECK
+  validate_inputs($current_user_permissions, "Admin", "election_selection.php");
+
+  ?>
 
   <title>CNU Committees - Elections</title>
 </head>

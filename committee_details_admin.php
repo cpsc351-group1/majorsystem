@@ -19,7 +19,7 @@
       validate_inputs(is_null($committee_id), 0, 'committee_selection.php');
       
       //  PERMISSIONS CHECK (ADMIN ONLY)
-      validate_inputs($_SESSION['permissions'], 'Admin', 'election_selection.php');
+      validate_inputs($current_user_permissions, 'Admin', 'election_selection.php');
 
 
       //  CHAIR SELECTION INSERT

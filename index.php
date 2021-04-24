@@ -3,13 +3,6 @@
 <html lang="en">
 <head>
   <?php
-    # erase current session if coming from logout
-
-    # if session variable already set, redirect to homepage
-    if (isset($_SESSION['user'])) {
-        header('Location: homepage.php');
-        exit();
-    }
 
     # connect to database
     include 'databaseconnect.php';

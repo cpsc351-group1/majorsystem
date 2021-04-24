@@ -1,7 +1,5 @@
 <?php
 
-$current_user_id = $_SESSION['user'];
-
 $current_user = query_user($current_user_id);
 $current_user_name = $current_user['Fname']." ".$current_user["Lname"];
 
@@ -19,11 +17,12 @@ echo "
     </div>
     <ul class='menu_body'>
         <li><a href='homepage.php'>Home</a></li>
-        <li><a href='user_details.php?user=$current_user_id'>Profile</a></li>
-        <li><a href='committee_selection.php'>Commitees Info</a></li>
+        <li><a href='user_details.php?user=$current_user_id'>User Profile</a></li>
+        <li><a href='committee_selection.php'>Commitees</a></li>
         <li><a href='election_selection.php'>Elections</a></li>
-        <li><a href='notifications.php'>Notifications</a></li>
-    </ul>
+        <li><a href='notifications.php'>Notifications</a></li>".
+        (in_array($current_user_permissions, array("Admin", "Super")) ? "<li><a href='user_selection.php'>All Users</a></li>" : "")
+."    </ul>
 </div>
 
 <script type='text/javascript' src='js/jquery-3.6.0.min.js'></script>
