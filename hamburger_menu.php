@@ -24,15 +24,5 @@ echo "
         (in_array($current_user_permissions, array("Admin", "Super")) ? "<li><a href='user_selection.php'>All Users</a></li>" : "")
 ."    </ul>
 </div>
-
-<script type='text/javascript' src='js/jquery-3.6.0.min.js'></script>
-<script type='text/javascript'>
-    $(document).ready(function() {
-        $('.toggler').click(function(){
-            $(this).toggleClass('toggled');
-            $('.menu_wrapper').toggleClass('shown');
-        })
-    });
-</script>
 ";
 ?>
