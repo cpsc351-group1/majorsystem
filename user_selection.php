@@ -16,6 +16,8 @@
     $result = $conn->query($sql);
     ?>
 
+    <script type="text/javascript" src="js/force_checkboxes.js"></script>
+
   <title>CNU Committees - System Users</title>
 </head>
 
@@ -45,7 +47,7 @@
                     // Checkbox belongs to options form, placed here for visuals
                     echo "<div class='data' id='$id'> <label for='$id'><b>$name</b><br>$dept<br>$pos</label>
                         <div class='result_choices'>
-                          <input type='checkbox' name='$id' form='options'></input>
+                          <input class='checkbox' type='checkbox' name='$id' form='options'></input>
                           <a href='user_details.php?user=$id'><button>Details</button></a>
                         </div>
                       </div>";
@@ -80,7 +82,7 @@
           <div class="choices">
             <a href="account_registration.php"><button type="button" name="add_user" form='options'>Add User</button></a>
             <!--TODO: Implement this -->
-            <input type="submit" name="report" value="Generate Report on Selected" form='options'>
+            <input id="report" type="submit" name="report" value="Generate Report on Selected" form='options'>
             <!--TODO: Implement this -->
           </div>
           <form action="user_report.php" method="post"></form>

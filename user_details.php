@@ -7,7 +7,8 @@
   <link rel="stylesheet" href="css/profile.css" type="text/css">
   <?php
 
-      include 'databaseconnect.php';
+      require 'databaseconnect.php';
+      require 'committee_functions.php';
 
       // $user_id = intval($_GET['user']);
       // $sql = "SELECT * FROM `User` WHERE CNU_ID='$user_id';";
@@ -52,18 +53,30 @@
     <div class="body">
       <div class="column">
         <!-- Heading -->
-        <span class="major heading"><?php echo $user['Fname'].' '.$user['Lname'];?></span>
-        <hr>
+        <span class="major sub heading"><?php echo $user['Fname'].' '.$user['Lname'];?></span>
         <div class="profile">
+        
 
           <div class="tiles">
+            <div class="tile center tall">
+              <div class="image">
+                <!-- TODO: dynamically insert image -->
+                <?php
+                  echo '<img src="data:image/png;base64,'.base64_encode($user['Photo']).'"/>';
+                ?>
+              </div>
+              <?php
+                $user_id = $user['CNU_ID'];
+                echo "<form action='user_modify.php' method='get'><button name='user' value='$user_id'>Modify Profile</button></form>";
+              ?>
+            <form action="user_details.php" method="post"></form>
+          </div>
             <div class="tile">
               <span class="sub heading">Personal Info</span>
-              <hr>
-              <div class="list">
+              <div class="">
                 <span class="label">Email:</span>
                 <span><?php echo $user['Email'];?></span>
-
+                <br>
                 <span class="label">Birthday:</span>
                 <span><?php echo $user['Birthday'];?></span>
               </div>
@@ -71,11 +84,10 @@
 
             <div class="tile">
               <span class="sub heading">Other</span>
-              <hr>
-              <div class="list">
+              <div class="">
                 <span class="label">Race:</span>
                 <span><?php echo $user['Race'];?></span>
-
+                <br>
                 <span class="label">Gender:</span>
                 <span><?php echo $user['Gender'];?></span>
               </div>
@@ -83,36 +95,24 @@
 
             <div class="tile">
               <span class="sub heading">Employment</span>
-              <hr>
-              <div class="list">
+              <div class="">
                 <span class="label">Department:</span>
                 <span><?php echo $user['Department'];?></span>
-
+                <br>
                 <span class="label">Position:</span>
                 <span><?php echo $user['Position'];?></span>
-
+                <br>
                 <span class="label">Year of Hiring:</span>
                 <span><?php echo $user['Hiring_Year'];?></span>
               </div>
             </div>
           </div>
-          <div class="right">
-            <div class="image">
-              <!-- TODO: dynamically insert image -->
-              <?php
-                echo '<img src="data:image/png;base64,'.base64_encode($user['Photo']).'"/>';
-              ?>
-            </div>
-            <?php
-              $user_id = $user['CNU_ID'];
-              echo "<form action='user_modify.php' method='get'><button name='user' value='$user_id'>Modify Profile</button></form>";
-            ?>
-            <form action="user_details.php" method="post"></form>
-          </div>
-
         </div>
-        <hr>
-        <span class="heading major">Committee Membership</span>
+    </div>
+    </div>
+    <div class="body">
+      <div class="column">
+        <span class="heading major sub">Committee Memberships</span>
         <div class="profile">
         <div class="tiles">
           <?php
@@ -121,17 +121,14 @@
               while ($seat = $seats->fetch_assoc()) {
                   # pull committee details
                   $committee_id = $seat['Committee_Committee_ID'];
-                  $committee_sql = "SELECT * FROM `Committee` WHERE Committee_ID = '$committee_id'";
-
-                  $committee = $conn->query($committee_sql)->fetch_assoc();
+                  $committee = query_committee($conn, $committee_id);
 
                   # store committee variables
                   $committee_name = $committee['Name'];
                   $committee_description = $committee['Description'];
 
                   # pull committee chairman
-                  $chairman_sql = "SELECT * FROM `Chairman` WHERE Committee_Committee_ID = '$committee_id' AND User_CNU_ID = $user_id";
-                  $chairman = $conn->query($chairman_sql)->fetch_assoc();
+                  $chairman = query_committee_chair($conn, $committee_id);
 
                   # render tile for committee
                   echo "<div class='tile'>";
@@ -144,12 +141,13 @@
               }
           } else {
               # error message in case user has no seats
-              echo "<div class='center'>No committee memberships to display.</div>";
+              echo "<div class='center'><i>No committee memberships to display.</i></div>";
           }
           ?>
         </div>
         </div>
       </div>
+        </div>
     </div>
   </div>
 
