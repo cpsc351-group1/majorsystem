@@ -19,7 +19,7 @@ body {
 
 .wrapper {
   width: 80%;
-  height: 75vh;
+  height: 80vh;
   position: absolute;
   top: 10%;
   right: 10%;
@@ -27,28 +27,28 @@ body {
 
   display: flex;
   flex-flow: column nowrap;
+  overflow: auto;
+  
+  padding: 0.5em;
+
+  outline: 1px solid #000000;
 }
 
 /* header */
 
 header {
-  width: inherit;
+  width: auto;
 
   height: 10%;
 
   background-color: #FFFFFF;
 
-  margin: 0;
   position: fixed;
   top: 0;
   display: flex;
   align-items: center;
   border-bottom: 1px solid black;
   z-index: 999;
-}
-
-.wrapper>div {
-  margin: 1em 0;
 }
 
 header * {
