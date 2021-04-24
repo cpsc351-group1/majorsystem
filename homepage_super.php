@@ -8,15 +8,11 @@
   # connect to database
   include 'databaseconnect.php';
 
-  # pull user id from session
-  $user_id = intval($_SESSION['user']);
-  $permissions = $_SESSION['permissions'];
-
   // PERMISSIONS VALIDATION
-  validate_inputs($permissions, true, "homepage.php");  
+  validate_inputs($current_user_permissions, true, "homepage.php");  
 
   # run query
-  $sql = "SELECT * FROM `User` WHERE CNU_ID=$user_id";
+  $sql = "SELECT * FROM `User` WHERE CNU_ID=$current_user_id";
   $result = $conn->query($sql);
 
   $user = $result->fetch_assoc();
@@ -49,7 +45,7 @@
         What are you looking for, <?php echo $full_name; ?>?
       </div>
       <div class="tiles">
-        <a href="user_details.php?user=<?php echo $user_id;?>" style="color: white"><button>View Profile</button></a>
+        <a href="user_details.php?user=<?php echo $current_user_id;?>" style="color: white"><button>View Profile</button></a>
         <a href="committee_selection.php" style="color: white"><button>Committees</button></a>
         <a href="election_selection.php" style="color: white"><button>Elections</button></a>
         <a href="user_selection.php" style="color: white"><button>Users</button></a>
