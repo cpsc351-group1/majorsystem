@@ -5,9 +5,10 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="css/profile.css" type="text/css">
-  <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
   
-  <?php include 'databaseconnect.php';
+  <?php
+  
+    require 'databaseconnect.php';
 
       # USER ACCOUNT CREATION
 
@@ -138,8 +139,16 @@
               <option value="Prefer not to say">Prefer not to say</option>
             </select>
           </div>
-          <span class="sub heading">Password</span>
-          <div class="list">
+        </div>
+        <div class="column tiles">
+          <div class="tile center">
+            <!-- TODO: add photo uploading capability -->
+            <label for="img" class="heading">Account Image</label>
+            <div class="image"></div>
+            <input type="file" id="img" name="img" value=NULL accept="image/png">
+          </div>
+          <div class="tile list">
+            <span class="sub heading">Password</span>
             <label for="pass" class="required">Password</label>
             <input id='pass' type="password" name="pass" placeholder="Password" maxlength="24" required>
 
@@ -150,16 +159,8 @@
               <!-- For password validation javascript -->
             </span>
           </div>
-        </div>
-        <div class="column tiles">
-          <div class="tile center">
-            <!-- TODO: add photo uploading capability -->
-            <label for="img">Select user account image:</label>
-            <div class="image"></div>
-            <input type="file" id="img" name="img" value=NULL accept="image/png">
-          </div>
           <div class="tile">
-            <input id='create' name='create' type="submit" value="Create Account" disabled>
+            <input id='create' name='create' type="submit" value="Create Account">
           </div>
         </div>
       </div>
@@ -168,39 +169,47 @@
   </div>
   <?php $conn->close(); ?>
   <script type="text/javascript">
-    function confirmPassword() {
+  
+  $(function() {
+
+    $('#pass_validation').html('Password must be 8 digits or longer');
+
+    $(document).on("input", function() {
+      validate_pass($('#pass_validation'));
+    });
+
+    function validate_pass(validator) {
+
       var pass = $('#pass').val();
       var cpass = $('#cpass').val();
-      var pointer = $('#pass_validation');
 
-      var blank_style = "border: 0; background-color: #DEDEDE;";
-      var valid_style = "border: 1px solid #007D22; background-color: #2CBD0f;";
-      var invalid_style = "border: 1px solid #780A00; background-color: #DE5021;";
+      validator.removeClass('invalid');
+      validator.removeClass('valid');
 
-      $('#create').prop('disabled', true);
-
+      $('#update').prop('disabled', true);
+)
       if (pass.length == 0 || cpass.length == 0) {
-        pointer.html('');
-        pointer.prop('style', blank_style);
-      } else if (pass == cpass) {
-        if (pass.length >= 8) {
-          pointer.html('Password valid');
-          pointer.prop('style', valid_style);
-          $('#create').prop('disabled', false);
-        } else {
-          pointer.html('Password shorter than 8 digits');
-          pointer.prop('style', invalid_style);
+        validator.html("Password must be 8 digits or longer");
+        if (pass == cpass) {
+          $('#update').prop('disabled', false);
         }
+      } else if (pass == cpass) {
+          if (pass.length >= 8) {
+            $('#update').prop('disabled', false);
+            validator.addClass('valid');
+            validator.html('Valid Password');
+          } else {
+            validator.addClass('invalid');
+            validator.html('Password shorter than 8 digits');
+          }
       } else {
-        pointer.html('Passwords do not match');
-        pointer.prop('style', invalid_style);
+        validator.addClass('invalid');
+        validator.html('Passwords do not match');
       }
-    }
 
-    $(document).ready(function() {
-      $('#cpass').keyup(confirmPassword);
-      $('#pass').keyup(confirmPassword);
-    });
+    }
+  });
+
   </script>
 </body>
 
