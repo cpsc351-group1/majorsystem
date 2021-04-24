@@ -26,6 +26,10 @@
 <!-- INCLUDE HAMBURGER MENU -->
 <?php include 'hamburger_menu.php'; ?>
 
+<form action="user_report.php" method="post" id='options'>
+
+
+
   <div class="wrapper">
     <header>
       <h2>System Users</h2>
@@ -59,7 +63,6 @@
             ?>
       </div>
       <div class="options">
-        
           <!--TODO: add report generation href-->
 
           <h4>Options</h4>
@@ -81,14 +84,14 @@
           <!-- Administrative Options -->
           <div class="choices">
             <a href="account_registration.php"><button type="button" name="add_user" form='options'>Add User</button></a>
-            <!--TODO: Implement this -->
             <input id="report" type="submit" name="report" value="Generate Report on Selected" form='options'>
             <!--TODO: Implement this -->
           </div>
-          <form action="user_report.php" method="post"></form>
+
       </div>
     </div>
   </div>
+</form>
 
   <?php $conn->close(); ?>
 </body>
