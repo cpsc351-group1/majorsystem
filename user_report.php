@@ -34,7 +34,10 @@
 ?>
           <div class="body">
             <div class="column">
+            <span class="major heading"><?php echo $user['Fname']." ".$user['Lname'] ?></span> 
+            <hr>
           <div class="tiles">
+
             <div class="tile">
               <span class="sub heading">Personal Info</span>
               <hr>
