@@ -26,6 +26,8 @@ function query_election(int $entered_id) {
     return $num_seats;
 }
 
+//  QUERY COMMITTEE
+# queries committee based on given ID
 function query_committee(int $committee_id) {
 
     global $conn;
@@ -45,6 +47,8 @@ function query_election_nominees(int $election_id) {
     $noms_sql = "SELECT * FROM `Nomination` WHERE Election_Election_ID = $election_id";
     $noms = $conn->query($noms_sql);
     $noms_count = $noms->num_rows;
+
+    return $noms;
 }
 
 //  GET VOTES INFO
@@ -74,6 +78,21 @@ function query_election_votes(int $election_id) {
         }
     }
     return $votes;
+}
+
+// QUERY USER VOTES
+# queries for the number of votes received in a specific election by a specific user
+function query_user_votes($conn, $election_id, $user_id) {
+    $votes_sql = "SELECT * FROM `Vote`
+                    WHERE Election_Election_ID = '$election_id'
+                    AND Votee_CNU_ID = $user_id";
+
+    $user_votes = $conn->query($votes_sql) or die($conn->error);
+    if ($user_votes != NULL) {
+        return $user_votes->num_rows;
+    } else {
+        return 0;
+    }
 }
 
 //  PRINT NOMINEES TABULARLY
@@ -132,26 +151,25 @@ function print_nominees()
     }
 }
 
+
+// PRINT VOTE RESULTS
+# prints nominee tiles for given election, with
+# winning users being sifted to the top and displayed uniquely
 function print_vote_results($conn, $election_id) {
 
-    $votes_sql = "SELECT * FROM `Vote` WHERE Election_Election_ID = '$election_id'";
+    $noms = query_election_nominees($election_id);
 
-    $votes = $conn->query($votes_sql);
-
+    // create array of num_votes for each nominee, then sort by num_votes
     $vote_counts = array();
 
-    while ($row = $votes->fetch_assoc()) {
-        $votee_id = $row['Votee_CNU_ID'];
-
-        if (in_array($votee_id, array_keys($vote_counts))) {
-            $vote_counts[$votee_id] += 1;
-        } else {
-            $vote_counts[$votee_id] = 1;
-        }      
+    while ($nominee = $noms->fetch_assoc()) {
+        $votee_id = $nominee['Nominee_CNU_ID'];
+        $vote_counts[$votee_id] = query_user_votes($conn, $election_id, $votee_id);
     }
 
-    asort($vote_counts);
+    arsort($vote_counts);
 
+    // get total number of seats elected
     $seat_count = query_election($election_id);
 
     foreach ($vote_counts as $nominee_id => $vote_count) {
