@@ -69,7 +69,9 @@
                 ?>
               </div>
               <?php
-                echo "<form action='user_modify.php' method='get'><button name='user' value='$user_id'>Modify Profile</button></form>";
+                if (($user_id == $current_user_id) or ($current_user_permissions == "Admin")) {
+                  echo "<form action='user_modify.php' method='get'><button name='user' value='$user_id'>Modify Profile</button></form>";
+                }
               ?>
             <form action="user_details.php" method="post"></form>
           </div>

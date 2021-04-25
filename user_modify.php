@@ -67,7 +67,7 @@
     $stmt->execute();
     # CNU_ID, Password, Fname, Lname, Email, Department, Position, Birthday, Hiring_Year, Gender, Race, Permissions, Photo
     $stmt->bind_result(
-      $CNU_ID, $Password, $Fname, $Lname, $Email, $Department, $Position, $Birthday, $Hiring_Year, $Gender, $Race, $Permissions, $Photo
+      $CNU_ID, $Permissions, $Password, $Fname, $Lname, $Email, $Department, $Position, $Birthday, $Hiring_Year, $Gender, $Race, $Permissions, $Photo
     );
     $stmt->fetch();
     $stmt->close();
