@@ -13,9 +13,9 @@
   # connect to database
   include 'databaseconnect.php';
 
-  //  REDIRECT ADMIN AND SUPER USERS
-  admin_redirect($permissions, 'homepage_super.php');
-  super_redirect($permissions, 'homepage_super.php');
+  //  PERMISSIONS CHECK (ADMIN/SUPERS TO HOMEPAGE_SUPER)
+  # Defined in databaseconnect.php
+  validate_inputs(in_array($current_user_permissions, array("Admin", "Super")), false, 'homepage_super.php');
 
   # run query
   $sql = "SELECT * FROM `User` WHERE CNU_ID=$current_user_id";
