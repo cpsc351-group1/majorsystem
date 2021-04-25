@@ -100,7 +100,7 @@
 
   <div class="wrapper">
     <header>
-      <h2>Account Update</h2>
+      <h2>Modify Account</h2>
     </header>
     <form action="user_modify.php" method="post">
       <div class="body">

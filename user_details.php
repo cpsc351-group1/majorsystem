@@ -15,20 +15,23 @@
       // $user = $conn->query($sql)->fetch_assoc();
 
       # pull posted user id variable
-      $entered_id = $_GET['user'];
+      
+      if (isset($_GET['user'])) {
+        $entered_id = $_GET['user'];
 
-      # prepare statement (this is done to prevent sql injection)
-      $stmt = $conn->prepare("SELECT * FROM `User` WHERE CNU_ID=?");
-      # bind parameter to int
-      $stmt->bind_param('i', $entered_id);
-      # execute statement
-      $stmt->execute();
-      # obtain results object
-      $user = $stmt->get_result()->fetch_assoc();
-      # close connection
-      $stmt->close();
-
-      validate_inputs(is_null($user), 0, 'user_selection.php');
+        # prepare statement (this is done to prevent sql injection)
+        $stmt = $conn->prepare("SELECT * FROM `User` WHERE CNU_ID=?");
+        # bind parameter to int
+        $stmt->bind_param('i', $entered_id);
+        # execute statement
+        $stmt->execute();
+        # obtain results object
+        $user = $stmt->get_result()->fetch_assoc();
+        # close connection
+        $stmt->close();
+      }
+      
+      validate_inputs($user == NULL, false, 'user_selection.php');
 
       # store user id variable
       $user_id = $user['CNU_ID'];
@@ -66,7 +69,6 @@
                 ?>
               </div>
               <?php
-                $user_id = $user['CNU_ID'];
                 echo "<form action='user_modify.php' method='get'><button name='user' value='$user_id'>Modify Profile</button></form>";
               ?>
             <form action="user_details.php" method="post"></form>
@@ -121,11 +123,7 @@
               while ($seat = $seats->fetch_assoc()) {
                   # pull committee details
                   $committee_id = $seat['Committee_Committee_ID'];
-                  $committee = query_committee($conn, $committee_id);
-
-                  # store committee variables
-                  $committee_name = $committee['Name'];
-                  $committee_description = $committee['Description'];
+                  query_committee($conn, $committee_id);
 
                   # pull committee chairman
                   $chairman = query_committee_chair($conn, $committee_id);
@@ -133,7 +131,7 @@
                   # render tile for committee
                   echo "<div class='tile'>";
                         if (!is_null($chairman)) {
-                          echo "<div class='sub heading'>Committee Chair</div>";
+                          echo "<div class='heading'>Committee Chair</div>";
                         }
                   echo  " <div class='sub heading'>$committee_name</div>
                           <div>$committee_description</div>

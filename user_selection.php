@@ -12,7 +12,7 @@
     validate_inputs($current_user_permissions, "Admin", "homepage.php");
 
     # Pull user details to generate checklist
-    $sql = "SELECT CNU_ID, Fname, Lname, Department, Position FROM User";
+    $sql = "SELECT CNU_ID, Fname, Lname, Department, Position FROM User ORDER BY Fname";
     $result = $conn->query($sql);
     ?>
 
@@ -25,17 +25,12 @@
 
 <!-- INCLUDE HAMBURGER MENU -->
 <?php include 'hamburger_menu.php'; ?>
-
-<form action="user_report.php" method="post" id='options'>
-
-
-
   <div class="wrapper">
     <header>
       <h2>System Users</h2>
     </header>
     <div class="selection">
-      <div class="results">
+        <div class="results">
         <?php
             if ($result->num_rows > 0) {
                 # Iterate through all users
@@ -52,7 +47,7 @@
                     echo "<div class='data' id='$id'> <label for='$id'><b>$name</b><br>$dept<br>$pos</label>
                         <div class='result_choices'>
                           <input class='checkbox' type='checkbox' name='$id' form='options'></input>
-                          <a href='user_details.php?user=$id'><button>Details</button></a>
+                          <form id='details' action='user_details.php' method='get'><button name='user' value='$id'>Details >></button></form>
                         </div>
                       </div>";
                 }
@@ -61,7 +56,8 @@
                 echo "<div class='center'>No results found for current search settings.</div>";
             }
             ?>
-      </div>
+      
+        </div>
       <div class="options">
           <!--TODO: add report generation href-->
 
@@ -82,16 +78,16 @@
 
           <hr>
           <!-- Administrative Options -->
+          <form action="user_report.php" method="post" id='options'></form>
           <div class="choices">
-            <a href="account_registration.php"><button type="button" name="add_user" form='options'>Add User</button></a>
+            <a href="account_registration.php"><button class="admin" type="button" name="add_user" form='options'>Add User</button></a>
             <input id="report" type="submit" name="report" value="Generate Report on Selected" form='options'>
             <!--TODO: Implement this -->
           </div>
-
       </div>
     </div>
   </div>
-</form>
+
 
   <?php $conn->close(); ?>
 </body>
