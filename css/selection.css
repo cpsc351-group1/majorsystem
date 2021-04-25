@@ -15,7 +15,7 @@ a {
 /* list formatting */
 
 .selection {
-  height: 100%;
+  height: inherit;
   display: grid;
   grid-template-columns: 3fr 2fr;
   grid-template-rows: none;
@@ -152,7 +152,7 @@ a {
   border: 1px solid #222222;
 }
 
-.data.complete {
+.Complete {
   background-color: #BCBCBC;
   font-style: italic;
 }

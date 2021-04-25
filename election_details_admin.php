@@ -45,10 +45,11 @@
       <div class="column">
         <!-- Details -->
         <span class='major heading'><?php echo $committee['Name']; ?> Election</span>
-        <hr>
-        <div class="block">
-          <div class="heading sub"><?php echo $num_seats." seat".($num_seats==1?'':'s'); ?> being elected</div>
-          <div> Election Status: <?php echo $status; ?></div>
+        <div class="tiles center">
+          <div class='tile'>
+            <div class="heading sub"><?php echo $num_seats." seat".($num_seats==1?'':'s'); ?> being elected</div>
+            <div> Election Status: <?php echo $status; ?></div>
+          </div>
         </div>
       </div>
       <div class="column">
@@ -59,12 +60,12 @@
               case 'Nomination':
                 // nominate user option
                 echo "<form action='election_nominate_user.php' method='get'><button name='election' value='$election_id'>Nominate User</button></form>";
-                echo "<form action='election_modify.php' method='get'><button name='election' value='$election_id'><b>Modify Election</b></button></form>";
+                echo "<form action='election_modify.php' method='get'><button class='admin' name='election' value='$election_id'><b>Modify Election</b></button></form>";
                 break;
               case 'Voting':
                 // vote in election option
                 echo "<form action='election_vote_user.php' method='get'><button name='election' value='$election_id'>Vote in Election</button></form>";
-                echo "<form action='election_modify.php' method='get'><button name='election' value='$election_id'><b>Modify Election</b></button></form>";
+                echo "<form action='election_modify.php' method='get'><button class='admin' name='election' value='$election_id'><b>Modify Election</b></button></form>";
                 break;
               case 'Complete':
                 // election complete (no option)
@@ -77,7 +78,6 @@
     <div class="body">
       <div class="column">
         <span class="major heading">Nominees</span>
-        <hr>
         <div class="tiles">
           <?php
             if ($status != "Complete") {

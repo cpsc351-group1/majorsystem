@@ -48,7 +48,6 @@
       <div class="column">
         <!-- Details -->
         <span class='major heading'><?php echo $committee['Name']; ?> Election</span>
-        <hr>
         <div class="tiles center">
           <div class="tile">
             <div class="heading "><?php echo $num_seats." seat".($num_seats==1?'':'s'); ?> being elected</div>
@@ -80,7 +79,6 @@
     <div class="body">
       <div class="column">
         <span class="major heading">Nominees</span>
-        <hr>
         <div class="tiles">
           <?php
             if ($status != "Complete") {

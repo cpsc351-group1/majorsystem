@@ -27,8 +27,10 @@ body {
   right: 10%;
   left: 10%;
 
-  display: flex;
-  flex-flow: column nowrap;
+  display: grid;
+  grid-auto-flow: row;
+  grid-auto-rows: minmax(min-content, auto);
+  row-gap: 1em;
   overflow: scroll;
   
   padding: 0.5em;
@@ -84,6 +86,7 @@ header * {
 
 .heading.major {
   font-size: 1.5em;
+  border-bottom: 2px solid #999999;
 }
 
 .required::after {
@@ -97,16 +100,22 @@ header * {
   background-color: #CCCCCC;
 }
 
+
 .wrapper button, .wrapper input[type=submit] {
   cursor: pointer;
   color: #EEEEEE;
-  background-color: #555555;
+  background-color: #444444;
   border: 1px solid #000000;
 }
 
 .wrapper button:disabled, .wrapper input[type=submit]:disabled {
   cursor: not-allowed;
   color: #555555;
-  background-color: #AAAAAA;
-  border: 1px solid #888888;
+  background-color: #AAAAAA !important;
+  border: 1px solid #888888 !important;
+}
+
+button.admin {
+  background-color: #333333 !important;
+  border: 2px solid #000000 !important;
 }

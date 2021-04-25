@@ -74,8 +74,8 @@
     <header>
       <h2>Committee Details</h2>
     </header>
-    <div class="body">
-      <div class="column">
+    <div class="body tiles">
+      <div class="tile">
         <span class='major heading'><?php echo $committee_name;?></span>
         <div class="block"><?php echo $committee_description;?></div>
       </div>
@@ -98,7 +98,7 @@
 
             // ADD USER TO COMMITTEE
 
-            echo "<form action='committee_appoint_user.php' method='get'><button name='committee' value='$committee_id'>Appoint User to Seat</button></form>";
+            echo "<form action='committee_appoint_user.php' method='get'><button class='admin' name='committee' value='$committee_id'>Appoint User to Seat</button></form>";
 
           ?>
 
@@ -107,7 +107,6 @@
     <div class="body">
       <div class="column">
         <span class='major heading'>Committee Seats</span>
-        <hr>
         <div class="tiles">
           <?php
               # for each seat
@@ -131,16 +130,16 @@
                     # generate block of data for each user
                     echo "<div class='tile'>";
                     // TODO: remove/chair options
-                    echo "<div class='member_options'>"
-                            .($is_chair ? "" : "<form action='committee_details_admin.php?committee=$committee_id' method='post'><span class='tip'>Appoint as Chairman</span><button name='chair' value='$user_id'>★</button></form>
-                                                <form action='committee_details_admin.php?committee=$committee_id' method='post'><span class='tip'>Archive Seat</span><button name='delete' value='$user_id'>X</button></form>");
-                    echo "</div>";
                     // name and employment details
-                    echo "<span class='sub heading'>".$user['Fname']." ".$user['Lname']."</span><br>";
+                    echo "<span class='sub heading'>".$user['Fname']." ".$user['Lname']."</span>";
                     // displays if user is committee chair
-                    echo ($is_chair ? "<span class='heading'>Committee Chair</span><br>" : "")
-                         .$user['Department'].", ".$user['Position']."<br>"
-                         .$seat['Starting_Term']." - ".$ending_term;
+                    echo ($is_chair ? "<span class='heading'>Committee Chair</span>" : "")
+                         ."<div>".$user['Department'].", ".$user['Position']."</div>"
+                         ."<div>".$seat['Starting_Term']." - ".$ending_term."</div>";
+                    echo "<div class='member_options'>"
+                      .($is_chair ? "" : "<form action='committee_details_admin.php?committee=$committee_id' method='post'><span class='tip'>Appoint as Chairman</span><button name='chair' value='$user_id'>★</button></form>
+                                          <form action='committee_details_admin.php?committee=$committee_id' method='post'><span class='tip'>Remove User</span><button class='admin' name='delete' value='$user_id'>X</button></form>")
+                      ."</div>";
                     echo "</div>";
                 }
               } else {
@@ -157,7 +156,6 @@
               
             ?>
         </div>
-        <hr>
         <?php if ($archived_seats->num_rows == 0) {goto skip_archived;}?>
         <span class="sub heading">Archived Seats</span>
         <div class="tiles">
