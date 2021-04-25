@@ -160,7 +160,7 @@
             </span>
           </div>
           <div class="tile">
-            <input id='create' name='create' type="submit" value="Create Account">
+            <input id='create' name='create' type="submit" value="Create Account" disabled>
           </div>
         </div>
       </div>
@@ -172,43 +172,40 @@
   
   $(function() {
 
-    $('#pass_validation').html('Password must be 8 digits or longer');
+$('#pass_validation').html('Password must be 8 digits or longer');
 
-    $(document).on("input", function() {
-      validate_pass($('#pass_validation'));
-    });
+$(document).on("input", function() {
+  validate_pass($('#pass_validation'));
+});
 
-    function validate_pass(validator) {
+function validate_pass(validator) {
 
-      var pass = $('#pass').val();
-      var cpass = $('#cpass').val();
+  var pass = $('#pass').val();
+  var cpass = $('#cpass').val();
 
-      validator.removeClass('invalid');
-      validator.removeClass('valid');
+  validator.removeClass('invalid');
+  validator.removeClass('valid');
 
-      $('#update').prop('disabled', true);
-)
-      if (pass.length == 0 || cpass.length == 0) {
-        validator.html("Password must be 8 digits or longer");
-        if (pass == cpass) {
-          $('#update').prop('disabled', false);
-        }
-      } else if (pass == cpass) {
-          if (pass.length >= 8) {
-            $('#update').prop('disabled', false);
-            validator.addClass('valid');
-            validator.html('Valid Password');
-          } else {
-            validator.addClass('invalid');
-            validator.html('Password shorter than 8 digits');
-          }
+  $('#create').prop('disabled', true);
+
+  if (pass.length == 0 || cpass.length == 0) {
+    validator.html("Password must be 8 digits or longer");
+  } else if (pass == cpass) {
+      if (pass.length >= 8) {
+        $('#create').prop('disabled', false);
+        validator.addClass('valid');
+        validator.html('Valid Password');
       } else {
         validator.addClass('invalid');
-        validator.html('Passwords do not match');
+        validator.html('Password shorter than 8 digits');
       }
+  } else {
+    validator.addClass('invalid');
+    validator.html('Passwords do not match');
+  }
 
-    }
-  });
+}
+});
 
   </script>
 </body>
