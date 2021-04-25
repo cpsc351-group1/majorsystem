@@ -80,7 +80,7 @@
                 // nominate user option
                 $disabled = $noms_count < $num_seats;
                 echo "<form action='election_modify.php?election=$election_id' method='post'>"
-                        .($disabled ? "<div class='tip'>Less nominations than electable seats</div>" : "")
+                        .($disabled ? "<div class='tip bottom'>Less nominations than electable seats</div>" : "")
                         ."<input type='hidden' name='election' value='$election_id'>"
                         ."<button name='status' value='Voting'".($disabled ? 'disabled' : '').">End Nominations</button>
                       </form>";
@@ -90,7 +90,7 @@
                 // vote in election option
                 $disabled = !($votes_count > $num_seats or $noms_count == $num_seats);
                 echo "<form action='election_modify.php?election=$election_id' method='post'>"
-                        .($disabled ? "<div class='tip'>Less votes submitted than electable seats</div>" : "")
+                        .($disabled ? "<div class='tip bottom'>Less votes submitted than electable seats</div>" : "")
                         ."<input type='hidden' name='election' value='$election_id'>"
                         ."<button name='status' value='Complete'".($disabled ? 'disabled' : '').">End Voting</button>
                       </form>";

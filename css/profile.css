@@ -127,7 +127,11 @@ form .tip {
   padding: 5px;
   text-align: center;
   z-index: 9999;
-  top: 110%;
+  bottom: 110%;
+}
+
+form .tip.bottom {
+  bottom: -80%;
 }
 
 form:hover .tip {
