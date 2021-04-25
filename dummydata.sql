@@ -113,16 +113,22 @@ INSERT INTO `election`
   VALUES (1, 1, 'Nomination', 1);
 
 INSERT INTO `election`
-  VALUES (2, 2, 'Voting', 5);
+  VALUES (2, 2, 'Voting', 1);
 
 INSERT INTO `election`
-  VALUES (3, 3, 'Complete', 1);
+  VALUES (3, 3, 'Nomination', 2);
 
 /*  NOMINATIONS   */
 /*  Election_Election_ID, Nominator_CNU_ID, Nominee_CNU_ID    */
 
 INSERT INTO `nomination`
-  VALUES (1, 1, 1);
+  VALUES (1, 1, 00942069);
+
+INSERT INTO `nomination`
+VALUES (1, 1, 00955259);
+
+INSERT INTO `nomination`
+VALUES (1, 1, 00998877);
 
 INSERT INTO `nomination`
   VALUES (2, 00998877, 00987987);
