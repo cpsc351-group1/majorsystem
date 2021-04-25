@@ -55,10 +55,7 @@
 
     //  SELECT NOMINEE INFO
     # pull all nominee details as users
-    $nom_sql = "SELECT * FROM `User` WHERE CNU_ID IN(
-                          SELECT Nominee_CNU_ID FROM `Nomination` WHERE
-                          Election_Election_ID='$election_id')";
-    $noms = $conn->query($nom_sql);
+    $noms = query_election_nominees($election_id);
 
     ?>
   <title>CNU Committees - Vote for User</title>
@@ -86,10 +83,12 @@
               if ($noms->num_rows > 0) {
                   # Iterate through all users
                   while ($row = $noms->fetch_assoc()) {
-                      $id = $row['CNU_ID'];
-                      $name = $row['Fname'].' '.$row['Lname'];
-                      $dept = $row['Department'];
-                      $pos = $row['Position'];
+                      $user = query_user($row['Nominee_CNU_ID']);
+                      
+                      $id = $user['CNU_ID'];
+                      $name = $user['Fname'].' '.$user['Lname'];
+                      $dept = $user['Department'];
+                      $pos = $user['Position'];
 
                       # Detect if user is same as previously voted                      
                       if (NULL != $previous) {
