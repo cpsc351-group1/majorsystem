@@ -77,7 +77,14 @@
   cursor: not-allowed;
 }
 
-.tile.voted {
+.tile .check {
+  position: absolute;
+  font-size: 1.5em;
+  right: 0.2em;
+  top: 0em;
+}
+
+.tile.voted, .tile.winner {
   outline: 2px solid #666666;
 }
 
@@ -117,7 +124,7 @@
   position: relative;
 }
 
-form .tip {
+.tip {
   background-color: #444444;
   border: 1px solid #222222;
   color: #FFFFFF;
@@ -130,11 +137,11 @@ form .tip {
   bottom: 110%;
 }
 
-form .tip.bottom {
+.tip.bottom {
   bottom: -80%;
 }
 
-form:hover .tip {
+*:hover>.tip {
   visibility: visible;
 }
 

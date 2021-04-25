@@ -22,6 +22,8 @@ function query_election(int $entered_id) {
     # fetch row and close
     $election->fetch();
     $election->close();
+
+    return $num_seats;
 }
 
 function query_committee(int $committee_id) {
@@ -71,6 +73,7 @@ function query_election_votes(int $election_id) {
             break;
         }
     }
+    return $votes;
 }
 
 //  PRINT NOMINEES TABULARLY
@@ -126,6 +129,55 @@ function print_nominees()
             }
             echo "</div></div>";
         }
+    }
+}
+
+function print_vote_results($conn, $election_id) {
+
+    $votes_sql = "SELECT * FROM `Vote` WHERE Election_Election_ID = '$election_id'";
+
+    $votes = $conn->query($votes_sql);
+
+    $vote_counts = array();
+
+    while ($row = $votes->fetch_assoc()) {
+        $votee_id = $row['Votee_CNU_ID'];
+
+        if (in_array($votee_id, array_keys($vote_counts))) {
+            $vote_counts[$votee_id] += 1;
+        } else {
+            $vote_counts[$votee_id] = 1;
+        }      
+    }
+
+    asort($vote_counts);
+
+    $seat_count = query_election($election_id);
+
+    foreach ($vote_counts as $nominee_id => $vote_count) {
+        $user = query_user($nominee_id);
+
+        $user_name = $user['Fname']." ".$user['Lname'];
+
+        $user_info = array(
+                    'Department'=>$user['Department'],
+                    'Position'=>$user['Position'],
+                    'Race'=>$user['Race'],
+                    'Gender'=>$user['Gender'],
+                    'Vote Count' => $vote_count);
+
+        # ... and print tiles
+        echo "<div class='tile".($seat_count > 0?" winner'><span class='check'>✓</span>":"'>");
+        echo "<span class='heading sub'>$user_name</span>";
+        echo "<div class='list ruled'>";
+        // user information
+        foreach ($user_info as $label => $detail) {
+            echo "<div>$label</div> <div>$detail</div>";
+        }
+
+        echo "</div></div>";
+
+        $seat_count -= 1;
     }
 }
 ?>

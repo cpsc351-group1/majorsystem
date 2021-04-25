@@ -71,7 +71,6 @@
                 break;
               case 'Complete':
                 // election complete (no option)
-                echo "<span class='center'>This election has been completed.</span>";
                 break;
             }
           ?>
@@ -84,7 +83,11 @@
         <hr>
         <div class="tiles">
           <?php
-            print_nominees();
+            if ($status != "Complete") {
+              print_nominees();
+            } else {
+              print_vote_results($conn, $election_id);
+            }
           ?>
         </div>
       </div>
