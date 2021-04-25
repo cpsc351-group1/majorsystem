@@ -55,7 +55,7 @@
                   echo "<div class='data'> <label for='$id'><b>$name</b><br>$description<br>Chair: <b>$chair_name</b></label>
                       <div class='result_choices'>
                         <input class='checkbox' type='checkbox' name='committee' value='$id' form='create'></input>
-                        <a href='committee_details.php?committee=$id'><button>Details</button></a>
+                        <a href='committee_details.php?committee=$id'><button>Details >></button></a>
                       </div>
                     </div>";
                 }
@@ -87,7 +87,7 @@
         <!-- Administrative Options -->
 
         <div class="choices">
-          <a href="committee_setup.php"><button type="button" name="add_user">Add Committee</button></a>
+          <a href="committee_setup.php"><button class="admin" type="button" name="add_user">Add Committee</button></a>
           <input id="report" type="submit" name="report" value="Generate Report on Selected" disabled>
           <!--TODO: implement this -->
         </div>

@@ -55,7 +55,7 @@
                     // Checkbox belongs to options form, placed here for visuals
                     echo "<div class='data'> <label for='$id'><b>$name</b><br>$description<br>Chair: <b>$chair_name</b></label>
                         <div class='result_choices'>
-                          <a href='committee_details.php?committee=$id'><button>Details</button></a>
+                          <a href='committee_details.php?committee=$id'><button>Details >></button></a>
                         </div>
                       </div>";
                 }
