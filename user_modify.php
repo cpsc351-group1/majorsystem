@@ -5,10 +5,9 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="css/profile.css" type="text/css">
-  <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
 
   <?php 
-    include "databaseconnect.php";
+    require "databaseconnect.php";
 
     // UPDATE USER INFORMATION
     if (isset($_POST['update'])) {
@@ -198,25 +197,25 @@
               ?>
             </select>
           </div>
-          <span class="sub heading">Change Password</span>
-          <div class="list">
-            <label for="pass">Password</label>
+        </div>
+        <div class="column tiles">
+          <div class="tile center">
+            <!-- TODO: add photo uploading capability -->
+            <label for="img" class="heading">Account Image</label>
+            <div class="image"></div>
+            <input type="file" id="img" name="img" value=NULL accept="image/png">
+          </div>
+          <div class="tile list">
+            <span class="sub heading">Password</span>
+            <label for="pass" class="required">Password</label>
             <input id='pass' type="password" name="pass" placeholder="Password" maxlength="24">
 
-            <label for='cpass'>Confirm</label>
+            <label for='cpass' class="required">Confirm</label>
             <input id='cpass' type="password" name="cpass" placeholder="Confirm Password" maxlength="24">
 
             <span id="pass_validation">
               <!-- For password validation javascript -->
             </span>
-          </div>
-        </div>
-        <div class="column tiles">
-          <div class="tile center">
-            <!-- TODO: add photo uploading capability -->
-            <label for="img">Select user account image:</label>
-            <div class="image"></div>
-            <input type="file" id="img" name="img" value=NULL accept="image/png">
           </div>
           <div class="tile">
             <input id='update' name='update' type="submit" value="Update Account">
@@ -226,46 +225,55 @@
   </div>
   </form>
   </div>
-  <?php $conn->close(); ?>
+
   <script type="text/javascript">
-    function confirmPassword() {
-      var pass = $('#pass').val();
-      var cpass = $('#cpass').val();
-      var pointer = $('#pass_validation');
 
-      var blank_style = "border: 0; background-color: #DEDEDE;";
-      var valid_style = "border: 1px solid #007D22; background-color: #2CBD0f;";
-      var invalid_style = "border: 1px solid #780A00; background-color: #DE5021;";
 
-      if (pass.length + cpass.length == 0) {
-        pointer.prop('style', blank_style);
-        $('#update').prop('disabled', false);
-      } else if (pass.length == 0 || cpass.length == 0) {
-        pointer.html('');
-        pointer.prop('style', blank_style);
-        $('#update').prop('disabled', true);
-      } else if (pass == cpass) {
-        if (pass.length >= 8) {
-          pointer.html('Password will be updated');
-          pointer.prop('style', valid_style);
+
+$(function() {
+
+  $('#pass_validation').html('Password must be 8 digits or longer');
+
+  $(document).on("input", function() {
+    validate_pass($('#pass_validation'));
+  });
+
+  function validate_pass(validator) {
+
+    var pass = $('#pass').val();
+    var cpass = $('#cpass').val();
+
+    validator.removeClass('invalid');
+    validator.removeClass('valid');
+
+    $('#update').prop('disabled', true);
+
+    if (pass.length == 0 || cpass.length == 0) {
+      validator.html("Password must be 8 digits or longer");
+      if (pass == cpass) {
           $('#update').prop('disabled', false);
-        } else {
-          pointer.html('Password shorter than 8 digits');
-          pointer.prop('style', invalid_style);
-          $('#update').prop('disabled', true);
-        }
-      } else {
-        pointer.html('Passwords do not match');
-        pointer.prop('style', invalid_style);
-        $('#update').prop('disabled', true);
       }
+    } else if (pass == cpass) {
+        if (pass.length >= 8) {
+          $('#update').prop('disabled', false);
+          validator.addClass('valid');
+          validator.html('Valid Password');
+        } else {
+          validator.addClass('invalid');
+          validator.html('Password shorter than 8 digits');
+        }
+    } else {
+      validator.addClass('invalid');
+      validator.html('Passwords do not match');
     }
 
-    $(document).ready(function() {
-      $('#cpass').keyup(confirmPassword);
-      $('#pass').keyup(confirmPassword);
-    });
-  </script>
+  }
+});
+
+</script>
+
+  <?php $conn->close(); ?>
+  
 </body>
 
 </html>

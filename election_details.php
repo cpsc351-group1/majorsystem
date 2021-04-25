@@ -49,9 +49,11 @@
         <!-- Details -->
         <span class='major heading'><?php echo $committee['Name']; ?> Election</span>
         <hr>
-        <div class="block">
-          <div class="heading sub"><?php echo $num_seats." seat".($num_seats==1?'':'s'); ?> being elected</div>
-          <div> Election Status: <?php echo $status; ?></div>
+        <div class="tiles center">
+          <div class="tile">
+            <div class="heading "><?php echo $num_seats." seat".($num_seats==1?'':'s'); ?> being elected</div>
+            <div> Election Status: <?php echo $status; ?></div>
+          </div>
         </div>
       </div>
       <div class="column">

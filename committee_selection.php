@@ -6,12 +6,14 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="css/selection.css">
   <?php
-  include 'databaseconnect.php';
+  
+  require 'databaseconnect.php';
+  require 'committee_functions.php';
   
   //  PERMISSIONS REDIRECTS
   # pulled from databaseconnect.php
   admin_redirect($current_user_permissions, "committee_selection_admin.php");
-  
+
   ?>
 
   <title>CNU Committees - Committees</title>
@@ -42,15 +44,17 @@
                 foreach ($a_result as $row) {
                     $id = $row['Committee_ID'];
                     $name = $row['Name'];
-                    $dept = $row['Description'];
+                    $description = $row['Description'];
+
+                    $chair = query_user(query_committee_chair($conn, $id));
+                    $chair_name = $chair['Fname']." ".$chair['Lname'];
 
                     // Create div populated with relevant information
                     // and checkbox/details options.
 
                     // Checkbox belongs to options form, placed here for visuals
-                    echo "<div class='data'> <label for='$id'><b>$name</b><br>$dept<br>$pos</label>
+                    echo "<div class='data'> <label for='$id'><b>$name</b><br>$description<br>Chair: <b>$chair_name</b></label>
                         <div class='result_choices'>
-                          <input type='checkbox' name='$id' form='options'></input>
                           <a href='committee_details.php?committee=$id'><button>Details</button></a>
                         </div>
                       </div>";
@@ -62,10 +66,10 @@
 
             ?>
       </div>
-      <form class="options" action="    'x'    " method="post">
+      <div class="options">
         <!--TODO: add report generation href-->
         
-        <h4>Options</h4>
+        <span class="sub heading">Options</span>
         <!-- Search Bar -->
         <!--TODO: add functionality to search options-->
         <div class='searchbar'>
@@ -73,15 +77,8 @@
         </div>
 
         <hr>
-        <!-- Selection Options -->
-        <div>
-          <!-- TODO: implement these -->
-          <button type="button" name="select_all">Select All</button>
-          <button type="button" name="deselect_all">Deselect All</button>
-        </div>
 
-        <hr>
-      </form>
+      </div>
     </div>
   </div>
 

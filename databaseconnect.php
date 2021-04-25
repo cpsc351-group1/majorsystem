@@ -15,6 +15,9 @@ if ($conn->connect_error) {
     die("Oh no! Connection failed: " . $conn->connect_error);
 }
 
+// INCLUDE JQUERY IN EVERY HEADER
+echo "<script type='text/javascript' src='js/jquery-3.6.0.min.js'></script>";
+
 $no_session_pages = array(
   "index.php",
   "user_registration.php"
@@ -33,8 +36,15 @@ if (isset($_SESSION['user'])) {
 } else {
     if (!in_array($current_file_name, $no_session_pages)) {
         header("Location: index.php");
+        exit();
+    } else {
+        goto skip_hamburger;
     }
 }
+
+echo "<script type='text/javascript' src='js/hamburger_menu.js'></script>";
+
+skip_hamburger:
 
 // INPUT VALIDATION
 function validate_inputs($input, $expected, $location)

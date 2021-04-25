@@ -5,15 +5,19 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="css/selection.css">
+
   <?php
   
-  include 'databaseconnect.php';
+  require 'databaseconnect.php';
+  require 'committee_functions.php';
   
   //  PERMISSIONS CHECK (ADMIN ONLY)
   # Defined in databaseconnect.php
   validate_inputs($current_user_permissions, 'Admin', 'election_selection.php');
   
   ?>
+
+  <script type="text/javascript" src="js/force_checkboxes.js"></script>
 
   <title>CNU Committees - Committee Selection</title>
 </head>
@@ -41,13 +45,16 @@
                   $name = $row['Name'];
                   $description = $row['Description'];
 
+                  $chair = query_user(query_committee_chair($conn, $id));
+                  $chair_name = $chair['Fname']." ".$chair['Lname'];
+
                   // Create div populated with relevant information
                   // and checkbox/details options.
 
                   // Checkbox belongs to options form, placed here for visuals
-                  echo "<div class='data'> <label for='$id'><b>$name</b><br>$description<br>$pos</label>
+                  echo "<div class='data'> <label for='$id'><b>$name</b><br>$description<br>Chair: <b>$chair_name</b></label>
                       <div class='result_choices'>
-                        <input type='checkbox' name='committee' value='$id' form='create'></input>
+                        <input class='checkbox' type='checkbox' name='committee' value='$id' form='create'></input>
                         <a href='committee_details.php?committee=$id'><button>Details</button></a>
                       </div>
                     </div>";
@@ -81,7 +88,7 @@
 
         <div class="choices">
           <a href="committee_setup.php"><button type="button" name="add_user">Add Committee</button></a>
-          <input type="submit" name="report" value="Generate Report on Selected">
+          <input id="report" type="submit" name="report" value="Generate Report on Selected" disabled>
           <!--TODO: implement this -->
         </div>
       </div>

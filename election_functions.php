@@ -106,12 +106,13 @@ function print_nominees()
                         'Race'=>$user['Race'],
                         'Gender'=>$user['Gender']);
 
-            # ... and print tiles
-            echo "<div class='tile'>";
-
             // voter status, if applicable (in voting status)
             // detect if user is same as previously voted
             $checked = $nominee_id == $previous;
+
+            # ... and print tiles
+            echo "<div class='tile".($checked?" voted":"")."'>";
+
             // render disabled radio badges to show vote
             if ($status=='Voting') {
                 echo "<input type='radio' disabled='disabled' ".($checked?'checked':'').">";
