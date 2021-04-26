@@ -34,9 +34,47 @@
         exit();
       }
 
+      if (isset($_POST['delete_committee'])) {
+
+        $delete_seats_sql = "DELETE FROM `Committee Seat`
+                             WHERE Committee_Committee_ID = '$committee_id'";
+
+        $delete_chair_sql = "DELETE FROM `Chairman`
+                             WHERE Committee_Committee_ID = '$committee_id'";
+
+        $delete_nominations_sql = "DELETE FROM `Nomination`
+                               WHERE Election_Election_ID IN(
+                                 SELECT Election_ID FROM `Election`
+                                 WHERE `Committee_Committee_ID` = '$committee_id'
+                               )";
+
+        $delete_votes_sql = "DELETE FROM `Vote`
+                         WHERE Election_Election_ID IN(
+                            SELECT Election_ID FROM `Election`
+                            WHERE `Committee_Committee_ID` = '$committee_id'
+                         )";
+
+        $delete_elections_sql = "DELETE FROM `Election`
+                               WHERE Committee_Committee_ID = '$committee_id'";
+
+        $delete_committee_sql = "DELETE FROM `Committee`
+                                  WHERE Committee_ID = '$committee_id'";
+
+        $conn->query($delete_seats_sql) or die($conn->error);
+        $conn->query($delete_chair_sql) or die($conn->error);
+        $conn->query($delete_nominations_sql) or die($conn->error);
+        $conn->query($delete_votes_sql) or die($conn->error);
+        $conn->query($delete_elections_sql) or die($conn->error);
+        $conn->query($delete_committee_sql) or die($conn->error);
+
+        header("Location: committee_selection.php");
+        exit();
+                            
+      }
+
       //  MEMBER REMOVAL INSERT
-      if (isset($_POST['delete'])) {
-        $user = intval($_POST['delete']);
+      if (isset($_POST['delete_seat'])) {
+        $user = intval($_POST['delete_seat']);
 
         $archive_sql = "UPDATE `Committee Seat`
                         SET `Ending_Term` = now()
@@ -92,6 +130,9 @@
       <div class="column">
 
         <?php
+            echo "<form id='delete_committee' action='committee_details_admin.php?committee=$committee_id' method='post'>
+                    <button class='danger' name='delete_committee' value='$committee_id'>Delete Committee</button>
+                  </form>";
 
             if (is_null($election)) {
 
@@ -154,7 +195,7 @@
                       if (!$ufoc_exclusion) {
                         echo "<form action='committee_details_admin.php?committee=$committee_id' method='post'><span class='tip'>Appoint as Chairman</span><button class='admin' name='chair' value='$user_id'>★</button></form>";
                       }
-                      echo "<form action='committee_details_admin.php?committee=$committee_id' method='post'><span class='tip'>Remove User</span><button class='danger' name='delete' value='$user_id'>X</button></form>";
+                      echo "<form action='committee_details_admin.php?committee=$committee_id' method='post'><span class='tip'>Remove User</span><button class='danger' name='delete_seat' value='$user_id'>X</button></form>";
                       echo "</div>";
                     }
                     echo "</div>";
