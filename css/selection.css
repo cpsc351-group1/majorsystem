@@ -17,8 +17,8 @@ a {
 .selection {
   height: inherit;
   display: grid;
+  grid-auto-flow: column;
   grid-template-columns: 3fr 2fr;
-  grid-template-rows: none;
 }
 
 .results {
@@ -31,7 +31,8 @@ a {
 }
 
 .results .data {
-  display: flex;
+  display: grid;
+  grid-template-columns: 2fr auto;
   justify-content: space-between;
   padding: 0.5em;
   margin: 0.5em;
@@ -58,7 +59,8 @@ a {
 }
 
 .result_choices a, .result_choices a button {
-  height: 2em;
+  width: 100%;
+  height: 100%;
 }
 
 /* options menu style */
