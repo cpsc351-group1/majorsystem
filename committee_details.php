@@ -47,8 +47,8 @@
     </header>
     <div class="body">
       <div class="column">
-        <span class='major heading'><?php echo $committee_name;?></span>
-        <div class="block"><?php echo $committee_description;?></div>
+        <span class='major heading center'><?php echo $committee_name;?></span>
+        <div class="block center"><?php echo $committee_description;?></div>
       </div>
       <div class="column">
 
