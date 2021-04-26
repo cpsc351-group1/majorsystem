@@ -10,4 +10,12 @@ $(document).ready(function() {
        $('#report').prop('disabled', true);
      }
    });
+
+   $('#select_all').click(function() {
+    $('.checkbox').prop('checked', true);
+   });
+
+   $('#deselect_all').click(function() {
+    $('.checkbox').prop('checked', false);
+   });
  });

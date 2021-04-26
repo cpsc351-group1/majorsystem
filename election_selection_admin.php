@@ -78,8 +78,8 @@
         <!-- Selection Options -->
         <div>
           <!--TODO: implement these -->
-          <button type="button" name="select_all">Select All</button>
-          <button type="button" name="deselect_all">Deselect All</button>
+          <button id="select_all" type="button" name="select_all">Select All</button>
+          <button id="deselect_all" type="button" name="deselect_all">Deselect All</button>
         </div>
 
         <hr>
