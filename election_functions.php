@@ -185,7 +185,7 @@ function print_vote_results($conn, $election_id) {
                     'Vote Count' => $vote_count);
 
         # ... and print tiles
-        echo "<div class='tile".($seat_count > 0?" winner'><span class='check'>✓</span>":"'>");
+        echo "<div class='tile".($seat_count > 0?" winner'><span class='check'>✓</span>":" greyed'>");
         echo "<span class='heading sub'>$user_name</span>";
         echo "<div class='list ruled'>";
         // user information

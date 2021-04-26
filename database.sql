@@ -61,11 +61,12 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `mydb`.`Committee Seat` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`Committee Seat` (
+  `Seat_ID` INT NOT NULL AUTO_INCREMENT,
   `Committee_Committee_ID` INT NOT NULL,
   `Starting_Term` DATE NOT NULL,
   `Ending_Term` DATE DEFAULT NULL,
   `User_CNU_ID` INT NOT NULL,
-  PRIMARY KEY (`Committee_Committee_ID`, `User_CNU_ID`),
+  PRIMARY KEY (`Seat_ID`),
   INDEX `fk_Committee Seat_Committee1_idx` (`Committee_Committee_ID` ASC),
   INDEX `fk_Committee Seat_User1_idx` (`User_CNU_ID` ASC),
   CONSTRAINT `fk_Committee Seat_Committee1`

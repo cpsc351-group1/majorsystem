@@ -21,7 +21,7 @@ body {
 
 .wrapper {
   width: 80%;
-  height: 85vh;
+  height: 80vh;
   position: absolute;
   top: 10%;
   right: 10%;
@@ -29,13 +29,18 @@ body {
 
   display: grid;
   grid-auto-flow: row;
-  grid-auto-rows: minmax(min-content, auto);
+  grid-auto-rows: min-content;
   row-gap: 1em;
   overflow: scroll;
   
   padding: 0.5em;
 
   outline: 1px solid #000000;
+}
+
+.wrapper:after {
+  height: 0.25em;
+  content: '';
 }
 
 /* header */

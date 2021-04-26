@@ -22,10 +22,8 @@
     if (isset($_POST['appoint'])) {
         $user = $_POST['user'];
 
-        $time = now('YMD');
-
         $insert_sql = "INSERT IGNORE INTO `Committee Seat` (Committee_Committee_ID, Starting_Term, User_CNU_ID)
-                          VALUES ('$committee_id', '$time', '$user')";
+                          VALUES ('$committee_id', DATE(NOW()), '$user')";
 
         $conn->query($insert_sql);
 

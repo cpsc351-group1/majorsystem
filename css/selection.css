@@ -15,7 +15,11 @@ a {
 /* list formatting */
 
 .selection {
-  height: inherit;
+  top: 0.5em;
+  left: 0.5em;
+  right: 0.5em;
+  bottom: 0.5em;
+  position: absolute;
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: 3fr 2fr;
@@ -26,8 +30,14 @@ a {
   overflow-y: scroll;
   display: grid;
   grid-auto-rows: minmax(auto, max-content);
+  row-gap: 1em;
+  padding: 1em;
   grid-column: 1 / 2;
-  padding: 0.5em;
+}
+
+.results:after {
+  height: 0.25em;
+  content: '';
 }
 
 .results .data {
@@ -35,7 +45,6 @@ a {
   grid-template-columns: 2fr auto;
   justify-content: space-between;
   padding: 0.5em;
-  margin: 0.5em;
 }
 
 .center {
@@ -66,7 +75,8 @@ a {
 /* options menu style */
 
 .options {
-  height: inherit;
+  position: sticky;
+  top: 0;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;

@@ -150,7 +150,7 @@
               # Render blank tiles for every seat currently up for election
               if ($election != NULL) {
                 for ($i=0; $i < $election['Number_Seats']; $i++) {
-                  echo "<div class='tile center'>(Seat up for election.)</div>";
+                  echo "<div class='tile center greyed'>(Seat up for election.)</div>";
                 }
               }
               

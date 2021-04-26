@@ -180,21 +180,6 @@
   color: #222222;
 }
 
-/* element styling */
-
-.body {
-  outline: 1px solid #222222;
-  background-color: #DEDEDE;
-}
-
-.tile {
-  outline: 1px solid #777777;
-  background-color: #EEEEEE;
-}
-
-.heading.sub {
-  border-bottom: 2px solid #AAAAAA;
-}
 
 /*    body inputs    */
 .body .body input[type=submit] {
@@ -279,4 +264,29 @@
 
 *:hover>.tip {
   visibility: visible;
+}
+
+/* element styling */
+
+.body {
+  outline: 1px solid #222222;
+  background-color: #DEDEDE;
+}
+
+.tile {
+  outline: 1px solid #777777;
+  background-color: #EEEEEE;
+}
+
+.heading.sub {
+  border-bottom: 2px solid #AAAAAA;
+}
+
+.tile.greyed {
+  background-color: #DEDEDE !important;
+  font-style: italic; 
+}
+
+.tile.greyed .ruled div:nth-child(4n+1), .tile.greyed .ruled div:nth-child(4n-2) {
+  background-color: #CCCCCC;
 }

@@ -46,14 +46,19 @@
                     $name = $row['Name'];
                     $description = $row['Description'];
 
-                    $chair = query_user(query_committee_chair($conn, $id));
-                    $chair_name = $chair['Fname']." ".$chair['Lname'];
+                    $chair_id = query_committee_chair($conn, $id);
+                    if ($chair_id != NULL) {
+                      $chair = query_user($chair_id);
+                      $chair_name = $chair['Fname']." ".$chair['Lname'];
+                    } else {
+                      $chair_name = "Not assigned";
+                    }
 
                     // Create div populated with relevant information
                     // and checkbox/details options.
 
                     // Checkbox belongs to options form, placed here for visuals
-                    echo "<div class='data'> <label for='$id'><b>$name</b><br>$description<br>Chair: <b>$chair_name</b></label>
+                    echo "<div class='data'> <label for='$id'><b>$name</b><br>$description<br>Chair: <i>$chair_name</i></label>
                         <div class='result_choices'>
                           <a href='committee_details.php?committee=$id'><button>Details >></button></a>
                         </div>

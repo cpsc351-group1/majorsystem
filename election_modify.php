@@ -22,8 +22,8 @@
       if (isset($_POST['status'])) {
         $new_status = $_POST['status'];
 
-        // $status_sql = "UPDATE `Election` SET `Status` = '$new_status' WHERE `Election_ID` = '$entered_id'";
-        // $conn->query($status_sql);
+        $status_sql = "UPDATE `Election` SET `Status` = '$new_status' WHERE `Election_ID` = '$entered_id'";
+        $conn->query($status_sql);
 
         // if election gets moved to complete, appoint winners automatically
         if ($new_status == 'Complete') {
@@ -38,7 +38,7 @@
           }
 
           // sort them by value
-          arsort($vote_counts);
+          asort($vote_counts);
 
           // for the number of seats being appointed, insert users at the end of the array
           for ($seat_count = $num_seats; $seat_count>0; $seat_count--) {
@@ -46,18 +46,16 @@
             $votee_id = array_key_last($vote_counts);
             array_pop($vote_counts);
 
-            $time = now('YMD');
-
             // insert as committee seat
             $insert_sql = "INSERT INTO `Committee Seat` (Committee_Committee_ID, Starting_Term, User_CNU_ID)
-                           VALUES ('$committee_id', '$time', '$votee_id')";
+                           VALUES ('$committee_id', DATE(NOW()), '$votee_id')";
 
             $conn->query($insert_sql) or die($insert_sql."<br>".$conn->error);
-
-            // and go to the new committee page
-            header("Location: committee_details_admin.php?committee=".$committee_id);
-            exit();
           }
+
+          // and go to the new committee page
+          header("Location: committee_details_admin.php?committee=".$committee_id);
+          exit();
         }
 
         // otherwise, return to election page
@@ -155,7 +153,7 @@
                 $disabled = !($votes_count >= $num_seats and $noms_count != $num_seats);
                 echo "<form id='status' action='election_modify.php?election=$election_id' method='post'>"
                         .($disabled ? "<div class='tip bottom'>Less votes submitted than electable seats</div>" : "")
-                        ."<button class='admin' name='status' value='Complete'".($disabled ? 'disabled' : '').">End Voting</button>
+                        ."<button class='admin' name='status' value='Complete'".($disabled ? 'disabled' : '').">End Election</button>
                       </form>
                       $delete_html";
                 break;

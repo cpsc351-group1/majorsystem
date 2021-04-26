@@ -64,34 +64,34 @@ VALUES (5, 'Sustainability Committee', 'Committee that oversees sustainability.'
 /* TODO: give some of these end_date values for testing archived seats */
 
 INSERT INTO `committee seat`
-  VALUES (1, '2019-11-20', NULL, 1);
+  VALUES (1, 1, '2019-11-20', NULL, 1);
 
 INSERT INTO `committee seat`
-  VALUES (1, '2020-01-04', NULL, 00987987);
+  VALUES (2, 1, '2020-01-04', NULL, 00987987);
 
 INSERT INTO `committee seat`
-  VALUES (1, '2019-09-15', NULL, 00978879);
+  VALUES (3, 1, '2019-09-15', NULL, 00978879);
 
 INSERT INTO `committee seat`
-  VALUES (2, '2021-02-18', NULL, 00966678);
+  VALUES (4, 2, '2021-02-18', NULL, 00966678);
 
 INSERT INTO `committee seat`
-  VALUES (2, '2020-08-08', NULL, 00942069);
+  VALUES (5, 2, '2020-08-08', NULL, 00942069);
 
 INSERT INTO `committee seat`
-  VALUES (3, '2021-01-01', NULL, 00933833);
+  VALUES (6, 3, '2021-01-01', NULL, 00933833);
 
 INSERT INTO `committee seat`
-  VALUES (3, '2020-10-31', NULL, 00999919);
+  VALUES (7, 3, '2020-10-31', NULL, 00999919);
 
 INSERT INTO `committee seat`
-  VALUES (4, '2021-02-14', NULL, 00955259);
+  VALUES (8, 4, '2021-02-14', NULL, 00955259);
 
 INSERT INTO `committee seat`
-  VALUES (5, '2020-05-20', NULL, 00982429);
+  VALUES (9, 5, '2020-05-20', NULL, 00982429);
 
 INSERT INTO `committee seat`
-  VALUES (5, '2017-07-13', NULL, 00944004);
+  VALUES (10, 5, '2017-07-13', NULL, 00944004);
 
 /*    CHAIRMAN    */
 /*    Committee_Committee_ID, User_CNU_ID   */
