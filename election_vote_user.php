@@ -117,10 +117,6 @@
 
           <!--TODO: add functionality to search options-->
           <h4>Options</h4>
-          <!-- Search Bar -->
-          <div class='searchbar'>
-            <input type="text" name="search" placeholder="Search...">
-          </div>
 
           <hr>
           <!-- Submission Options -->

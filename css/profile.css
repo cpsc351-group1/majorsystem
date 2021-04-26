@@ -262,7 +262,7 @@
 }
 
 .tip.bottom {
-  bottom: 0;
+  bottom: -50%;
 }
 
 *:hover>.tip {

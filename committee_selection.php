@@ -79,13 +79,13 @@
         <!--TODO: add report generation href-->
         
         <span class="sub heading">Options</span>
-        <!-- Search Bar -->
-        <!--TODO: add functionality to search options-->
-        <div class='searchbar'>
-          <input type="text" name="search" placeholder="Search...">
-        </div>
 
         <hr>
+
+        <div>
+            <button id="select_all" type="button" name="select_all">Select All</button>
+            <button id="deselect_all" type="button" name="deselect_all">Deselect All</button>
+        </div>
 
       </div>
     </div>

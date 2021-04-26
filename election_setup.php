@@ -91,10 +91,7 @@
       <div class='options'>
         <!--TODO: add functionality to search options-->
         <h4>Options</h4>
-        <!-- Search Bar -->
-        <div class='searchbar'>
-          <input type="text" name="search" placeholder="Search...">
-        </div>
+        
         <hr>
         <div class='details'>
             <label for="number_seats" class="required">Number of Seats to Elect</label>

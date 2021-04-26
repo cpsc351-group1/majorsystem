@@ -68,11 +68,6 @@
       </div>
       <div class="options">
         <h4>Options</h4>
-        <!-- Search Bar -->
-        <!--TODO: add functionality to search options-->
-        <div class='searchbar'>
-          <input type="text" name="search" placeholder="Search...">
-        </div>
 
         <hr>
         <!-- Selection Options -->
