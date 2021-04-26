@@ -140,8 +140,6 @@ function print_nominees()
                 echo "<div class='member_options'>";
                 echo "<form action='election_details.php?election=$election_id' method='post'><span class='tip'>Reject Nomination</span><button class='danger' name='delete_nomination' value='$nominee_id'>X</button></form>";
                 echo "</div>";
-            } else {
-                echo "pum";
             }
 
             // render disabled radio badges to show vote
