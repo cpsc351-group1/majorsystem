@@ -7,7 +7,7 @@
   padding: 1em;
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-around;
+  align-items: flex-start;
   gap: 1em;
   
 }
@@ -43,8 +43,9 @@
 
 .tiles .tile {
   position: relative;
+  align-items: flex-start;
   display: grid;
-  grid-auto-rows: auto;
+  grid-auto-rows: minmax(min-content, auto);
   grid-auto-flow: row;
   padding: 0.5em;
 }
@@ -112,9 +113,10 @@
 }
 
 .list {
-  height: 100%;
+  flex: 1;
   display: grid;
   grid-row-gap: 0.2em;
+  grid-auto-rows: min-content;
   grid-template-columns: 2fr 3fr;
   align-items: center;
 }

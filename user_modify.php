@@ -9,6 +9,21 @@
   <?php 
     require "databaseconnect.php";
 
+    if (isset($_POST['archive'])) {
+
+      echo "pummmies";
+      $user_id = $_POST['user_id'];
+      $archival_date = date('Y-m-d');
+
+      $archival_sql = "UPDATE `User`
+                       SET `Archival_Date` = '$archival_date'
+                       WHERE `CNU_ID` = $user_id";
+      $conn->query($archival_sql) or die($conn->error);
+
+      header("Location: user_selection.php");
+      exit();
+    }
+
     // UPDATE USER INFORMATION
     if (isset($_POST['update'])) {
 
@@ -67,7 +82,7 @@
     $stmt->execute();
     # CNU_ID, Password, Fname, Lname, Email, Department, Position, Birthday, Hiring_Year, Gender, Race, Permissions, Photo
     $stmt->bind_result(
-      $CNU_ID, $Permissions, $Password, $Fname, $Lname, $Email, $Department, $Position, $Birthday, $Hiring_Year, $Gender, $Race, $Permissions, $Photo
+      $CNU_ID, $Password, $Fname, $Lname, $Email, $Department, $Position, $Birthday, $Hiring_Year, $Gender, $Race, $Permissions, $Photo, $Archival_Date
     );
     $stmt->fetch();
     $stmt->close();
@@ -78,11 +93,12 @@
       echo "value='$desired_value'";
     }
 
-    function print_options(array $options, string $default_option = "Please select...") {
+    function print_options(array $options, $selected="Please select...") {
       array_unshift($options, "Please select...");
+      $output_string = array();
       foreach ($options as $option) {
         echo "<option value='$option'";
-        echo ($default_option == $option ? " selected" : "");
+        echo ($selected == $option ? " selected" : "");
         echo ($option == "Please select..." ? " disabled hidden" : "");
         echo ">$option</option>";
       }
@@ -102,6 +118,7 @@
     <header>
       <h2>Modify Account</h2>
     </header>
+    <form id='archive' name='archive' action='user_modify.php' method='post'></form>
     <form action="user_modify.php" method="post">
       <div class="body">
         <div class="column">
@@ -159,7 +176,7 @@
             <input id='position' type="text" name="position" placeholder="Position" <?php print_value($Position); ?> >
 
             <label for='hiring_year' class='required'>Hiring Year</label>
-            <input id='hiring_year' type="number" name="hiring_year" max="<?php echo date('Y').'"'; print_value($Hiring_Year); ?> required>
+            <input id='hiring_year' type="number" name="hiring_year" max='<?php echo date('Y')."'"; echo " value='$Hiring_Year'" ?> required>
           </div>
           <span class="sub heading">Other</span>
           <!-- TODO: turn these into dropdown menus -->
@@ -218,7 +235,12 @@
             </span>
           </div>
           <div class="tile">
+            <!-- update user -->
             <input id='update' name='update' type="submit" value="Update Account">
+
+            <!-- archive user -->
+            <input type="hidden" name="user_id" value="<?php echo $CNU_ID; ?>" form='archive'>
+            <input class='danger' id='archive' name='archive' type="submit" form="archive" value="Archive Account">
           </div>
         </div>
       </div>

@@ -12,7 +12,7 @@
     validate_inputs($current_user_permissions, "Admin", "homepage.php");
 
     # Pull user details to generate checklist
-    $sql = "SELECT CNU_ID, Fname, Lname, Department, Position FROM User ORDER BY Fname";
+    $sql = "SELECT CNU_ID, Fname, Lname, Department, Position, Archival_Date FROM User ORDER BY Lname ASC, Archival_Date DESC";
     $result = $conn->query($sql);
     ?>
 
@@ -40,16 +40,20 @@
                     $dept = $row['Department'];
                     $pos = $row['Position'];
 
+                    $archived = ($row['Archival_Date'] == NULL ? "" : "greyed");
+
                     // Create div populated with relevant information
                     // and checkbox/details options.
 
                     // Checkbox belongs to options form, placed here for visuals
-                    echo "<div class='data' id='$id'> <label for='$id'><b>$name</b><br>$dept<br>$pos</label>
-                        <div class='result_choices'>
-                          <input class='checkbox' type='checkbox' name='$id' form='options'></input>
-                          <form id='details' action='user_details.php' method='get'><button name='user' value='$id'>Details >></button></form>
-                        </div>
-                      </div>";
+                    echo "<div class='data $archived' id='$id'> <label for='$id'><b>$name</b>"
+                        .($archived == "greyed" ? " <i>(Archived)</i>" : "").
+                        "<br>$dept<br>$pos</label>
+                          <div class='result_choices'>
+                            <input class='checkbox' type='checkbox' name='$id' form='options'></input>
+                            <form id='details' action='user_details.php' method='get'><button name='user' value='$id'>Details >></button></form>
+                          </div>
+                        </div>";
                 }
             } else {
                 # Display blank result if no search results

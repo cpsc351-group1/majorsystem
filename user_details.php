@@ -56,7 +56,15 @@
     <div class="body">
       <div class="column">
         <!-- Heading -->
-        <span class="major sub heading"><?php echo $user['Fname'].' '.$user['Lname'];?></span>
+        <span class="major sub heading"><?php echo $user['Fname'].' '.$user['Lname'];?>
+          <i>
+            <?php
+              if ($user['Archival_Date'] != NULL) {
+                echo " (Archived)";
+              }
+            ?>
+          </i>
+        </span>
         <div class="profile">
         
 
@@ -76,40 +84,47 @@
             <form action="user_details.php" method="post"></form>
           </div>
             <div class="tile">
-              <span class="sub heading">Personal Info</span>
-              <div class="">
-                <span class="label">Email:</span>
-                <span><?php echo $user['Email'];?></span>
-                <br>
-                <span class="label">Birthday:</span>
-                <span><?php echo $user['Birthday'];?></span>
+              <div class="sub heading">Personal Info</div>
+              <div class="list ruled">
+                <div class="label">Email:</div>
+                <div><?php echo $user['Email'];?></div>
+
+                <div class="label">Birthday:</div>
+                <div><?php echo $user['Birthday'];?></div>
               </div>
             </div>
 
             <div class="tile">
-              <span class="sub heading">Other</span>
-              <div class="">
-                <span class="label">Race:</span>
-                <span><?php echo $user['Race'];?></span>
-                <br>
-                <span class="label">Gender:</span>
-                <span><?php echo $user['Gender'];?></span>
+              <div class="sub heading">Other</div>
+              <div class="list ruled">
+                <div class="label">Race:</div>
+                <div><?php echo $user['Race'];?></div>
+
+                <div class="label">Gender:</div>
+                <div><?php echo $user['Gender'];?></div>
               </div>
             </div>
 
             <div class="tile">
-              <span class="sub heading">Employment</span>
-              <div class="">
-                <span class="label">Department:</span>
-                <span><?php echo $user['Department'];?></span>
-                <br>
-                <span class="label">Position:</span>
-                <span><?php echo $user['Position'];?></span>
-                <br>
-                <span class="label">Year of Hiring:</span>
-                <span><?php echo $user['Hiring_Year'];?></span>
+              <div class="sub heading">Employment</div>
+              <div class="list ruled">
+                <div class="label">Department:</div>
+                <div><?php echo $user['Department'];?></div>
+
+                <div class="label">Position:</div>
+                <div><?php echo $user['Position'];?></div>
+
+                <div class="label">Year of Hiring:</div>
+                <div><?php echo $user['Hiring_Year'];?></div>
               </div>
             </div>
+            <?php if ($user['Archival_Date'] == NULL) {goto skip_archival;}?>
+
+            <div class="tile center">
+              <span class="heading">Account archived on <?php echo $user['Archival_Date'];?>.</span>
+            </div>
+
+            <?php skip_archival: ?>
           </div>
         </div>
     </div>
@@ -118,33 +133,33 @@
       <div class="column">
         <span class="heading major sub">Committee Memberships</span>
         <div class="profile">
-        <div class="tiles">
-          <?php
-          if ($seats->num_rows != 0) {
-              # iterate through each seat
-              while ($seat = $seats->fetch_assoc()) {
-                  # pull committee details
-                  $committee_id = $seat['Committee_Committee_ID'];
-                  query_committee($conn, $committee_id);
+          <div class="tiles">
+            <?php
+            if ($seats->num_rows != 0) {
+                # iterate through each seat
+                while ($seat = $seats->fetch_assoc()) {
+                    # pull committee details
+                    $committee_id = $seat['Committee_Committee_ID'];
+                    query_committee($conn, $committee_id);
 
-                  # pull committee chairman
-                  $chairman = query_committee_chair($conn, $committee_id);
+                    # pull committee chairman
+                    $chairman = query_committee_chair($conn, $committee_id);
 
-                  # render tile for committee
-                  echo "<div class='tile'>";
-                        if (!is_null($chairman)) {
-                          echo "<div class='heading'>Committee Chair</div>";
-                        }
-                  echo  " <div class='sub heading'>$committee_name</div>
-                          <div>$committee_description</div>
-                        </div>";
-              }
-          } else {
-              # error message in case user has no seats
-              echo "<div class='center'><i>No committee memberships to display.</i></div>";
-          }
-          ?>
-        </div>
+                    # render tile for committee
+                    echo "<div class='tile'>";
+                          if (!is_null($chairman)) {
+                            echo "<div class='heading'>Committee Chair</div>";
+                          }
+                    echo  " <div class='sub heading'>$committee_name</div>
+                            <div>$committee_description</div>
+                          </div>";
+                }
+            } else {
+                # error message in case user has no seats
+                echo "<div class='center'><i>No committee memberships to display.</i></div>";
+            }
+            ?>
+          </div>
         </div>
       </div>
         </div>

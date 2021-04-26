@@ -171,7 +171,7 @@
               $user_start = $archived_seat['Starting_Term'];
               $user_end = $archived_seat['Ending_Term'];
 
-              echo "<div class='tile'><b>$user_name</b><br>"
+              echo "<div class='tile greyed'><b>$user_name</b><br>"
                    ."$user_department, $user_position<br>$user_start — $user_end</div>";
             }
           ?>

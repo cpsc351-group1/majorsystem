@@ -164,7 +164,7 @@ a {
   border: 1px solid #222222;
 }
 
-.Complete {
+.Complete, .greyed {
   background-color: #BCBCBC;
   font-style: italic;
 }
