@@ -76,6 +76,28 @@
         header("Location: election_details_admin.php?election=".$entered_id);
       }
 
+      // DELETE ELECTION SQL
+      if (isset($_POST['delete'])) {
+        // delete dependencies
+
+        $delete_nominations_sql = "DELETE FROM `Nomination`
+                                   WHERE Election_Election_ID = $election_id";
+        $delete_votes_sql = "DELETE FROM `Vote`
+                             WHERE Election_Election_ID = $election_id";
+        $conn->query($delete_nominations_sql) or die($conn->error);
+        $conn->query($delete_votes_sql) or die($conn->error);
+        
+        // delete election
+
+        $delete_sql = "DELETE FROM `Election`
+                       WHERE Election_ID = $election_id";
+        $conn->query($delete_sql) or die($conn->error);
+
+        // redirect
+        header("Location: election_selection.php");
+        exit();
+      }
+
       //  VALIDATE GET INPUTS
       # return to selection page if invalid id thrown
       # defined in databaseconnect.php
