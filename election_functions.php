@@ -99,6 +99,7 @@ function query_user_votes($conn, $election_id, $user_id) {
 # prints nominee tiles or an error message if there are none.
 function print_nominees()
 {
+    global $current_user_id;
     global $conn;
     global $election_id;
     global $status;
@@ -134,6 +135,14 @@ function print_nominees()
 
             # ... and print tiles
             echo "<div class='tile".($checked?" voted":"")."'>";
+
+            if ($nominee_id == $current_user_id) {
+                echo "<div class='member_options'>";
+                echo "<form action='election_details.php?election=$election_id' method='post'><span class='tip'>Reject Nomination</span><button class='danger' name='delete_nomination' value='$nominee_id'>X</button></form>";
+                echo "</div>";
+            } else {
+                echo "pum";
+            }
 
             // render disabled radio badges to show vote
             if ($status=='Voting') {

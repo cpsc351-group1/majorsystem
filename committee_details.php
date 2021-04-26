@@ -98,6 +98,7 @@
                     echo ($is_chair ? "<span class='heading'>Committee Chair</span><br>" : "")
                          .$user['Department'].", ".$user['Position']."<br>"
                          .$seat['Starting_Term']." - ".$ending_term;
+    
                     echo "</div>";
                 }
               } else {

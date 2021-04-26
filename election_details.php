@@ -13,13 +13,25 @@
       //  GET
       $entered_id = $_GET['election'];
 
-      //  PERMISSIONS REDIRECTS
-      # defined in databaseconnect.php
-      admin_redirect($current_user_permissions, "election_details_admin.php?election=".$entered_id);
-
       //  SELECT ELECTION INFO
       # defined in election_functions.php
       query_election($entered_id);
+
+      if (isset($_POST['delete_nomination'])) {
+        $user_id = $_POST['delete_nomination'];
+
+        $delete_nomination_sql = "DELETE FROM `Nomination`
+                                  WHERE Nominee_CNU_ID = '$user_id'";
+
+        $conn->query($delete_nomination_sql) or die($conn->error);
+
+        header("Location: election_details.php?election=$election_id");
+        exit();
+      }
+
+      //  PERMISSIONS REDIRECTS
+      # defined in databaseconnect.php
+      admin_redirect($current_user_permissions, "election_details_admin.php?election=".$entered_id);
 
       //  INVALID ID REDIRECT
       # defined in databaseconnect.php
