@@ -15,27 +15,35 @@
       $entered_pass = $_POST['pass'];
 
       # sql query for matching user pass
-      $login_sql = "SELECT `CNU_ID`, `Password`, `Permissions` FROM `User` WHERE CNU_ID=?";
+      $login_sql = "SELECT `CNU_ID`, `Password`, `Permissions`, `Archival_Date` FROM `User` WHERE CNU_ID=?";
       $stmt = $conn->prepare($login_sql);
       
       # bind inputs, execute, bind outputs and close
       $stmt->bind_param('i',$entered_user);
       $stmt->execute();
-      $stmt->bind_result($username, $password, $permissions);
+      $stmt->bind_result($username, $password, $permissions, $archival_date);
       $stmt->fetch();
       $stmt->close();
 
       # if user exists        and passwords match
       if (!is_null($username) and $entered_pass == $password) {
-        # open login session
-        $_SESSION['user'] = $username;
-        $_SESSION['permissions'] = $permissions;
-        # redirect to homepage
-        header('Location: homepage.php');
-        exit();
+        if ($archival_date == NULL) {
+          # open login session
+          $_SESSION['user'] = $username;
+          $_SESSION['permissions'] = $permissions;
+          # redirect to homepage
+          header('Location: homepage.php');
+          exit();
+        } else {
+          $archival_error = true;
+          $_POST = array();
+
+        }
+        
       } else {
         $login_error = true;
         $_POST = array();
+
       }
     }
 
@@ -59,6 +67,8 @@
         if (isset($login_error)) {
           # throw up error
           echo "<hr><div class='error'>Invalid credentials entered.</div>";
+        } elseif (isset($archival_error)) {
+          echo "<hr><div class='error'>Account archived, not accessible.</div>";
         }
         ?>
         <hr>

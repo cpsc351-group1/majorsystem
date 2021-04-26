@@ -33,6 +33,16 @@
       $user_id = $_POST['user_id'];
       $archival_date = date('Y-m-d');
 
+      $seat_archival_sql = "UPDATE `Committee Seat`
+                            SET `Ending_Term` = '$archival_date'
+                            WHERE `User_CNU_ID` = '$user_id'
+                            AND `Ending_Term` IS NULL";
+      $chair_archival_sql = "DELETE FROM `Chairman`
+                             WHERE `User_CNU_ID` = $user_id";
+
+      $conn->query($seat_archival_sql) or die($seat_archival_sql."<br>".$conn->error);
+      $conn->query($chair_archival_sql)  or die($chair_archival_sql."<br>".$conn->error);
+
       $archival_sql = "UPDATE `User`
                        SET `Archival_Date` = '$archival_date'
                        WHERE `CNU_ID` = $user_id";

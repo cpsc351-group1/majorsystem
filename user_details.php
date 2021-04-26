@@ -10,25 +10,11 @@
       require 'databaseconnect.php';
       require 'committee_functions.php';
 
-      // $user_id = intval($_GET['user']);
-      // $sql = "SELECT * FROM `User` WHERE CNU_ID='$user_id';";
-      // $user = $conn->query($sql)->fetch_assoc();
-
       # pull posted user id variable
       
       if (isset($_GET['user'])) {
         $entered_id = $_GET['user'];
-
-        # prepare statement (this is done to prevent sql injection)
-        $stmt = $conn->prepare("SELECT * FROM `User` WHERE CNU_ID=?");
-        # bind parameter to int
-        $stmt->bind_param('i', $entered_id);
-        # execute statement
-        $stmt->execute();
-        # obtain results object
-        $user = $stmt->get_result()->fetch_assoc();
-        # close connection
-        $stmt->close();
+        $user = query_user($entered_id);
       }
       
       validate_inputs($user == NULL, false, 'user_selection.php');
@@ -77,7 +63,7 @@
                 ?>
               </div>
               <?php
-                if (($user_id == $current_user_id) or ($current_user_permissions == "Admin")) {
+                if (($user_id == $current_user_id) or ($current_user_permissions == "Admin") and $user['Archival_Date'] == NULL) {
                   echo "<form action='user_modify.php' method='get'><button name='user' value='$user_id'>Modify Profile</button></form>";
                 }
               ?>
@@ -140,14 +126,22 @@
                 while ($seat = $seats->fetch_assoc()) {
                     # pull committee details
                     $committee_id = $seat['Committee_Committee_ID'];
+                    $end_date = $seat['Ending_Term'];
+
+                    if ($end_date == NULL) {
+                      $is_archived = "";
+                    } else {
+                      $is_archived = "greyed";
+                    }
+                    
                     query_committee($conn, $committee_id);
 
                     # pull committee chairman
                     $chairman = query_committee_chair($conn, $committee_id);
 
                     # render tile for committee
-                    echo "<div class='tile'>";
-                          if (!is_null($chairman)) {
+                    echo "<div class='tile $is_archived'>";
+                          if ($chairman == $user_id) {
                             echo "<div class='heading'>Committee Chair</div>";
                           }
                     echo  " <div class='sub heading'>$committee_name</div>

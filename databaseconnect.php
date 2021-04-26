@@ -20,6 +20,7 @@ echo "<script type='text/javascript' src='js/jquery-3.6.0.min.js'></script>";
 
 $no_session_pages = array(
   "index.php",
+  "user_registration.php"
 );
 
 $current_file_name = basename($_SERVER['SCRIPT_FILENAME']);
@@ -66,12 +67,21 @@ function super_redirect($user_permissions, $location) {
 
 //  SELECT USER DETAILS
 # pulls a user's details based on a given ID -> user assoc
-function query_user(int $user_id)
+function query_user(int $entered_id)
 {
     global $conn;
 
-    $user_sql = "SELECT * FROM `User` WHERE CNU_ID='$user_id'";
-    $user = $conn->query($user_sql)->fetch_assoc();
+    # prepare statement (this is done to prevent sql injection)
+    $stmt = $conn->prepare("SELECT * FROM `User` WHERE CNU_ID=?");
+    # bind parameter to int
+    $stmt->bind_param('i', $entered_id);
+    # execute statement
+    $stmt->execute();
+    # obtain results object
+    $user = $stmt->get_result()->fetch_assoc();
+    # close connection
+    $stmt->close();
+
     return $user;
 }
 

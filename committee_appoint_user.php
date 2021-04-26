@@ -46,7 +46,8 @@
     $members_sql = "SELECT * FROM `User`
                     WHERE CNU_ID NOT IN(
                       SELECT `User_CNU_ID` FROM `Committee Seat` WHERE (`Committee_Committee_ID` = '$committee_id') AND (`Ending_Term` IS NULL)
-                    )";
+                    )
+                    AND `Archival_Date` IS NULL";
                     
 
     //  SELECT ELECTION DETAILS
@@ -60,7 +61,8 @@
                       SELECT `User_CNU_ID` FROM `Committee Seat` WHERE (`Committee_Committee_ID` = '$committee_id') AND (`Ending_Term` IS NULL)
                     ) OR CNU_ID IN(
                       SELECT `Nominee_CNU_ID` FROM `Nomination` WHERE `Election_Election_ID` = '$election_id'
-                    ))";
+                    ))
+                    AND `Archival_Date` IS NULL";
     }
 
     $members = $conn->query($members_sql);
@@ -83,8 +85,7 @@
 
     </header>
     <div class="selection">
-      <div class="results">
-        <form id="appointment" action="committee_appoint_user.php?committee=<?php echo $committee_id; ?>" method="post">
+        <form class='results' id="appointment" action="committee_appoint_user.php?committee=<?php echo $committee_id; ?>" method="post">
           <input type="hidden" name="committee_id" value="<?php echo $committee_id;?>">
           <?php
           if ($members->num_rows > 0) {
@@ -110,7 +111,6 @@
           }
           ?>
         </form>
-      </div>
       <div class='options'>
         <!--TODO: add functionality to search options-->
         <h4>Options</h4>

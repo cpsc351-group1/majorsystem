@@ -54,7 +54,8 @@
                       SELECT `User_CNU_ID` FROM `Committee Seat` WHERE (`Committee_Committee_ID` = '$committee_id') AND (`Ending_Term` IS NULL)
                     ) OR CNU_ID IN(
                       SELECT `Nominee_CNU_ID` FROM `Nomination` WHERE `Election_Election_ID` = '$election_id'
-                    ))";
+                    ))
+                    AND `Archival_Date` IS NULL";
 
     $acceptable = $conn->query($acceptable_sql);
 
