@@ -171,21 +171,23 @@
               case 'Nomination':
                 // nominate user option
                 $disabled = $noms_count < $num_seats;
-                echo "<form id='status' action='election_modify.php?election=$election_id' method='post'>"
+                echo "$delete_html
+                      <form id='status' action='election_modify.php?election=$election_id' method='post'>"
                         .($disabled ? "<div class='tip bottom'>Less nominations than electable seats</div>" : "")
                         ."<button class='admin' name='status' value='Voting'".($disabled ? 'disabled' : '').">End Nominations</button>
                       </form>
-                      $delete_html";
+                      ";
                 
                 break;
               case 'Voting':
                 // vote in election option
                 $disabled = !($votes_count >= $num_seats and $noms_count != $num_seats);
-                echo "<form id='status' action='election_modify.php?election=$election_id' method='post'>"
+                echo "$delete_html
+                      <form id='status' action='election_modify.php?election=$election_id' method='post'>"
                         .($disabled ? "<div class='tip bottom'>Less votes submitted than electable seats</div>" : "")
                         ."<button class='admin' name='status' value='Complete'".($disabled ? 'disabled' : '').">End Election</button>
                       </form>
-                      $delete_html";
+                      ";
                 break;
 
               case 'Complete':
