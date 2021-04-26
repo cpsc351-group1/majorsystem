@@ -54,20 +54,24 @@ a {
 /* to comply with the design for faculty listing... */
 
 .result_choices {
+  min-width: 50px;
   margin-left: 1em;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  display: grid;
+  grid-auto-rows: 1fr;
+  grid-auto-flow: row;
+  justify-items: center;
   align-items: center;
+  outline: 1px solid #555555;
+  outline-offset: 2px;
+  background-color: #DDDDDD;
 }
 
-.result_choices input {
-  width: 1.5em;
-  height: 1.5em;
-  flex: none;
+.result_choices input[type='checkbox'] {
+  transform: scale(1.5);
+  border: 1px solid black;
 }
 
-.result_choices a, .result_choices a button {
+.result_choices a, .result_choices button {
   width: 100%;
   height: 100%;
 }
