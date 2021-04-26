@@ -5,6 +5,7 @@ $current_user_name = $current_user['Fname']." ".$current_user["Lname"];
 
 echo "
 <button class='toggler'></button>
+<div class='menu_focus'></div>
 <div class='menu_wrapper'>
     <div class='menu_header'>
         <div class='menu_image'></div>

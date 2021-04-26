@@ -3,6 +3,7 @@
 <html lang="en">
 
 <head>
+  <link href="css/main.css" rel="stylesheet">
   <?php
   # pull user id from session
 
@@ -27,7 +28,6 @@
 
 ?>
   <title>CNU Committee Database</title>
-  <link href="css/main.css" rel="stylesheet">
 </head>
 
 <body>

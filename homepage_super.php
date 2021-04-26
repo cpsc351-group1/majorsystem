@@ -3,6 +3,7 @@
 <html lang="en">
 
 <head>
+  <link href="css/main.css" rel="stylesheet">
   <?php
 
   # connect to database
@@ -21,7 +22,6 @@
 
 ?>
   <title>CNU Committee Database</title>
-  <link href="css/main.css" rel="stylesheet">
 </head>
 
 <body>
