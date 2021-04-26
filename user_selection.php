@@ -49,9 +49,9 @@
                     echo "<div class='data $archived' id='$id'> <label for='$id'><b>$name</b>"
                         .($archived == "greyed" ? " <i>(Archived)</i>" : "").
                         "<br>$dept<br>$pos</label>
-                          <div class='result_choices'>
-                            <input class='checkbox' type='checkbox' name='$id' form='options'></input>
-                            <form id='details' action='user_details.php' method='get'><button name='user' value='$id'>Details >></button></form>
+                          <div class='result_choices'>"
+                        .($archived == "greyed" ? "" : "<input class='checkbox' type='checkbox' name='$id' form='options'></input>").
+                            "<a href='user_details.php?user=$id'><button>Details >></button></a>
                           </div>
                         </div>";
                 }
@@ -84,7 +84,7 @@
           <!-- Administrative Options -->
           <form action="user_report.php" method="post" id='options'></form>
           <div class="choices">
-            <a href="account_registration.php"><button class="admin" type="button" name="add_user" form='options'>Add User</button></a>
+            <a href="user_registration.php"><button class="admin" type="button" name="add_user" form='options'>Add User</button></a>
             <input id="report" type="submit" name="report" value="Generate Report on Selected" form='options'>
             <!--TODO: Implement this -->
           </div>

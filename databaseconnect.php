@@ -20,7 +20,6 @@ echo "<script type='text/javascript' src='js/jquery-3.6.0.min.js'></script>";
 
 $no_session_pages = array(
   "index.php",
-  "user_registration.php"
 );
 
 $current_file_name = basename($_SERVER['SCRIPT_FILENAME']);
