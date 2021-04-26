@@ -226,8 +226,9 @@
 
 .member_options {
   display: grid;
-  grid-template-columns: 1.7em 1.7em;
+  grid-auto-columns: 1.7em;
   grid-template-rows: 1.7em;
+  grid-auto-flow: column;
   column-gap: 0.2em;
   position: absolute;
   bottom: 0.3em;

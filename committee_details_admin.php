@@ -45,6 +45,15 @@
                         AND `Committee_Committee_ID` = $committee_id";
         $conn->query($archive_sql) or die($user." -> ".$today." -> ".$archive_sql." -> ".mysqli_error($conn));
 
+        // Remove superuser status
+        if ($committee_id == 1) {
+
+          $superuser_sql = "UPDATE `User`
+                            SET `Permissions` = 'User'
+                            WHERE CNU_ID = $user";
+          $conn->query($superuser_sql);
+        }
+
         header("Location: committee_details_admin.php?committee=".$committee_id);
         exit();
       }
@@ -121,6 +130,9 @@
   
                     # check if seatholder is the chair
                     $is_chair = $user['CNU_ID'] == $chair_id;
+
+                    # check if seatholder is the admin, and the committee is #1 (the UFOC)
+                    $ufoc_exclusion = $committee_id == 1;
   
                     # show ending term if any
                     $ending_term = $seat['Ending_Term'] ?? 'Present';
@@ -136,10 +148,14 @@
                     echo ($is_chair ? "<span class='heading'>Committee Chair</span>" : "")
                          ."<div>".$user['Department'].", ".$user['Position']."</div>"
                          ."<div>".$seat['Starting_Term']." - ".$ending_term."</div>";
-                    echo "<div class='member_options'>"
-                      .($is_chair ? "" : "<form action='committee_details_admin.php?committee=$committee_id' method='post'><span class='tip'>Appoint as Chairman</span><button name='chair' value='$user_id'>★</button></form>
-                                          <form action='committee_details_admin.php?committee=$committee_id' method='post'><span class='tip'>Remove User</span><button class='admin' name='delete' value='$user_id'>X</button></form>")
-                      ."</div>";
+                    if (!$is_chair) {
+                      echo "<div class='member_options'>";
+                      if (!$ufoc_exclusion) {
+                        echo "<form action='committee_details_admin.php?committee=$committee_id' method='post'><span class='tip'>Appoint as Chairman</span><button class='admin' name='chair' value='$user_id'>★</button></form>";
+                      }
+                      echo "<form action='committee_details_admin.php?committee=$committee_id' method='post'><span class='tip'>Remove User</span><button class='danger' name='delete' value='$user_id'>X</button></form>";
+                      echo "</div>";
+                    }
                     echo "</div>";
                 }
               } else {

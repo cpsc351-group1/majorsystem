@@ -51,6 +51,13 @@
                            VALUES ('$committee_id', DATE(NOW()), '$votee_id')";
 
             $conn->query($insert_sql) or die($insert_sql."<br>".$conn->error);
+
+            if ($committee_id == 1) {
+              $superuser_sql = "UPDATE `User`
+                                SET `Permissions` = 'Super'
+                                WHERE CNU_ID = $votee_id";
+              $conn->query($superuser_sql);
+            }
           }
 
           // and go to the new committee page
@@ -156,7 +163,7 @@
         <!-- Standard User Options -->
         <?php
             $delete_html = "<form id='delete' action='election_modify.php?election=$election_id' method='post'>
-                                    <button class='admin' name='delete' value='$election_id'>Delete Election</button>
+                                    <button class='danger' name='delete' value='$election_id'>Delete Election</button>
                                   </form>";
             # different options render based on status
             switch ($status) {

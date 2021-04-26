@@ -12,7 +12,10 @@
   
   //  PERMISSIONS REDIRECTS
   # pulled from databaseconnect.php
+  
   admin_redirect($current_user_permissions, "committee_selection_admin.php");
+
+  super_redirect($current_user_permissions, "committee_selection_super.php");
 
   ?>
 

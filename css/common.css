@@ -122,6 +122,11 @@ header * {
 
 /* BUTTON OVERRIDES */
 
+.large {
+  min-height: 4em;
+  font-weight: bold;
+}
+
 .admin {
   background-color: #333333 !important;
   border: 2px solid #000000 !important;
@@ -129,6 +134,5 @@ header * {
 
 .danger {
   background-color: #550000 !important;
-  margin-top: 1em;
   border: #220000 !important;
 }

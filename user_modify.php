@@ -9,9 +9,27 @@
   <?php 
     require "databaseconnect.php";
 
-    if (isset($_POST['archive'])) {
+    if (isset($_POST['superuser'])) {
+      $user_id = $_POST['user_id'];
 
-      echo "pummmies";
+      $superuser_sql = "UPDATE `User`
+                        SET `Permissions` = 'Super'
+                        WHERE CNU_ID = $user_id";
+      $conn->query($superuser_sql);
+
+    }
+
+    if (isset($_POST['remove_superuser'])) {
+      $user_id = $_POST['user_id'];
+
+      $superuser_sql = "UPDATE `User`
+                        SET `Permissions` = 'User'
+                        WHERE CNU_ID = $user_id";
+      $conn->query($superuser_sql);
+
+    }
+
+    if (isset($_POST['archive'])) {
       $user_id = $_POST['user_id'];
       $archival_date = date('Y-m-d');
 
@@ -107,6 +125,9 @@
   ?>
 
   <title>CNU Committees — Update Account</title>
+
+  <form id='archive' name='archive' action='user_modify.php' method='post'></form>
+  <form id='superuser' name='superuser' action='user_modify.php' method='post'></form>
 </head>
 
 <body>
@@ -118,7 +139,6 @@
     <header>
       <h2>Modify Account</h2>
     </header>
-    <form id='archive' name='archive' action='user_modify.php' method='post'></form>
     <form action="user_modify.php" method="post">
       <div class="body">
         <div class="column">
@@ -222,6 +242,11 @@
             <div class="image"></div>
             <input type="file" id="img" name="img" value=NULL accept="image/png">
           </div>
+          <?php
+            if ($current_user_id != $CNU_ID) {
+              goto skip_password;
+            }
+          ?>
           <div class="tile list">
             <span class="sub heading">Password</span>
             <label for="pass" class="required">Password</label>
@@ -234,13 +259,35 @@
               <!-- For password validation javascript -->
             </span>
           </div>
+          <?php skip_password: ?>
           <div class="tile">
             <!-- update user -->
-            <input id='update' name='update' type="submit" value="Update Account">
+            <input class='large' id='update' name='update' type="submit" value="Update Account">
+            
+            <?php
+              if ($current_user_permissions != 'Admin' or $Permissions == "Admin") {
+                goto skip_admin_options;
+              }
+            ?>
+            <br>
 
+            <?php
+            if ($Permissions == "User") {
+              // make superuser
+              echo "<input type='hidden' name='user_id' value='$CNU_ID' form='superuser'>
+                    <input class='admin' id='superuser' name='superuser' type='submit' form='superuser' value='Make Super-User'>";
+            } elseif ($Permissions == "Super") {
+              // remove superuser
+              echo "<input type='hidden' name='user_id' value='$CNU_ID' form='superuser'>
+                    <input class='admin' id='remove_superuser' name='remove_superuser' type='submit' form='superuser' value='Remove Super-User'>";
+            }
+            ?>
+            <br>
             <!-- archive user -->
-            <input type="hidden" name="user_id" value="<?php echo $CNU_ID; ?>" form='archive'>
-            <input class='danger' id='archive' name='archive' type="submit" form="archive" value="Archive Account">
+            <input type='hidden' name='user_id' value='<?php echo $CNU_ID; ?>' form='archive'>
+            <input class='danger' id='archive' name='archive' type='submit' form='archive' value='Archive Account'>
+
+            <?php skip_admin_options: ?>
           </div>
         </div>
       </div>

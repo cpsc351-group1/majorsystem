@@ -11,10 +11,6 @@
   require 'databaseconnect.php';
   require 'committee_functions.php';
   
-  //  PERMISSIONS CHECK (ADMIN ONLY)
-  # Defined in databaseconnect.php
-  validate_inputs($current_user_permissions, 'Admin', 'election_selection.php');
-  
   ?>
 
   <script type="text/javascript" src="js/force_checkboxes.js"></script>
@@ -92,7 +88,6 @@
         <!-- Administrative Options -->
 
         <div class="choices">
-        <a href="committee_setup.php"><button class="admin" type="button" name="add_user">Add Committee</button></a>
           <input id="report" type="submit" name="report" value="Generate Report on Selected" disabled>
           <!--TODO: implement this -->
         </div>

@@ -8,8 +8,8 @@
 
   <?php include 'databaseconnect.php';
 
-    // SUPERUSER REDIRECT
-    super_redirect($current_user_permissions, 'user_selection_super.php');
+    // ADMIN PERMISSIONS CHECK
+    validate_inputs(in_array($current_user_permissions, array("Admin", "Super")), true, 'homepage.php');
 
     # Pull user details to generate checklist
     $sql = "SELECT CNU_ID, Fname, Lname, Department, Position, Archival_Date FROM User ORDER BY Archival_Date ASC, Lname ASC";
@@ -84,7 +84,6 @@
           <!-- Administrative Options -->
           <form action="user_report.php" method="post" id='options'></form>
           <div class="choices">
-            <a href="account_registration.php"><button class="admin" type="button" name="add_user" form='options'>Add User</button></a>
             <input id="report" type="submit" name="report" value="Generate Report on Selected" form='options'>
             <!--TODO: Implement this -->
           </div>

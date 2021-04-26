@@ -27,6 +27,13 @@
 
         $conn->query($insert_sql);
 
+        if ($committee_id == 1) {
+          $superuser_sql = "UPDATE `User`
+                            SET `Permissions` = 'Super'
+                            WHERE CNU_ID = $user";
+          $conn->query($superuser_sql);
+        }
+
         header("Location: committee_details_admin.php?committee=".$committee_id);
         exit();
     }    
