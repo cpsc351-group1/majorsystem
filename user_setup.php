@@ -45,13 +45,13 @@
         $stmt->execute();
         $stmt->close();
 
-        header("Location: index.php");
+        header("Location: user_details.php?user=$entered_user");
         exit();
       }
 
     ?>
 
-  <title>CNU Committees — Registration</title>
+  <title>CNU Committees — New User</title>
 </head>
 
 <body>
@@ -59,9 +59,9 @@
   <div class="wrapper">
     <header>
       <?php print_back_button("User Selection", "user_selection_super.php"); ?>
-      <h2>Account Registration</h2>
+      <h2>New User Setup</h2>
     </header>
-    <form action="user_registration.php" method="post">
+    <form action="user_setup.php" method="post">
       <div class="body">
         <div class="column">
           <span class="sub heading">Personal Info</span>

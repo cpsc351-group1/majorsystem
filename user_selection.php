@@ -85,7 +85,7 @@
           <!-- Administrative Options -->
           <form action="user_report.php" method="post" id='options'></form>
           <div class="choices">
-            <a href="user_registration.php"><button class="admin" type="button" name="add_user" form='options'>Add User</button></a>
+            <a href="user_setup.php"><button class="admin" type="button" name="add_user" form='options'>Add User</button></a>
             <input id="report" type="submit" name="report" value="Generate Report on Selected" form='options'>
             <!--TODO: Implement this -->
           </div>
