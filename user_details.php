@@ -44,10 +44,12 @@
       <div class="column">
         <!-- Heading -->
         <span class="major sub heading"><?php echo $user['Fname'].' '.$user['Lname'];?>
-          <i>
+          <i class="red">
             <?php
               if ($user['Archival_Date'] != NULL) {
                 echo " (Archived)";
+              } elseif ($user['Permissions'] == 'Super') {
+                echo "★ Superuser";
               }
             ?>
           </i>

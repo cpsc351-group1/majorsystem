@@ -293,3 +293,7 @@
 .tile.greyed .ruled div:nth-child(4n+1), .tile.greyed .ruled div:nth-child(4n-2) {
   background-color: #CCCCCC;
 }
+
+.red {
+  color: #880000;
+}
