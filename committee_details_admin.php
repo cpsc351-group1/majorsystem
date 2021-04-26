@@ -130,9 +130,11 @@
       <div class="column">
 
         <?php
-            echo "<form id='delete_committee' action='committee_details_admin.php?committee=$committee_id' method='post'>
-                    <button class='danger' name='delete_committee' value='$committee_id'>Delete Committee</button>
-                  </form>";
+            if ($committee_id != 1) {
+              echo "<form id='delete_committee' action='committee_details_admin.php?committee=$committee_id' method='post'>
+                      <button class='danger' name='delete_committee' value='$committee_id'>Delete Committee</button>
+                    </form>";
+            }
 
             if (is_null($election)) {
 
