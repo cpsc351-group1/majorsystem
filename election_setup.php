@@ -55,11 +55,11 @@
 
   <div class="wrapper">
     <header>
+      <?php print_back_button("Election Selection", "election_selection.php"); ?>
       <h2>Setup Election</h2>
     </header>
     <div class="selection">
-      <div class="results">
-        <form id="election" action="election_setup.php" method="post">
+        <form class="results" id="election" action="election_setup.php" method="post">
           <?php
 
           // PRINT SELECTED COMMITTEES
@@ -88,7 +88,6 @@
           }
           ?>
         </form>
-      </div>
       <div class='options'>
         <!--TODO: add functionality to search options-->
         <h4>Options</h4>

@@ -58,6 +58,7 @@
 
   <div class="wrapper">
     <header>
+      <?php print_back_button("User Selection", "user_selection_super.php"); ?>
       <h2>Account Registration</h2>
     </header>
     <form action="user_registration.php" method="post">

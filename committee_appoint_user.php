@@ -78,6 +78,7 @@
 
   <div class="wrapper">
     <header>
+     <?php print_back_button("Committee Selection", "committee_selection_admin.php"); ?>
       <h2>Appoint User</h2>
       <?php
           echo "<div class='sub heading'>&nbsp;—&nbsp; to $committee_name</div>";

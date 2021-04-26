@@ -23,7 +23,7 @@ body {
   width: 80%;
   height: 80vh;
   position: absolute;
-  top: 10%;
+  top: 12.5%;
   right: 10%;
   left: 10%;
 
@@ -48,14 +48,13 @@ body {
 header {
   width: auto;
 
-  height: 10%;
+  height: 12.5%;
   color: #FFFFFF;
 
   position: fixed;
   top: 0;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid black;
   z-index: 999;
 }
 
@@ -139,4 +138,13 @@ button, input[type=submit] {
 .danger {
   background-color: #550000 !important;
   border: #220000 !important;
+}
+
+header a {
+  padding: 1em;
+  border: 1px solid white;
+  border-radius: 5px;
+  color: white;
+  text-decoration: none;
+  margin-right: 2em;
 }

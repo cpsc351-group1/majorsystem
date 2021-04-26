@@ -17,11 +17,9 @@
 
 <body>
 
-  <!-- TODO: Create PHP script to generate this page for all
-               users in a report    -->
-
   <div class="wrapper">
     <header>
+     <?php print_back_button("User Selection", "user_selection.php"); ?>
       <h2>User Details</h2>
     </header>
     <?php

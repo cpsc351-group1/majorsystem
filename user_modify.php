@@ -147,6 +147,7 @@
 
   <div class="wrapper">
     <header>
+    <?php print_back_button("User Details", "user_details.php", array("user"=>$CNU_ID)); ?>
       <h2>Modify Account</h2>
     </header>
     <form action="user_modify.php" method="post">

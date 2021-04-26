@@ -38,6 +38,7 @@
 
   <div class="wrapper">
     <header>
+     <?php print_back_button("Election Selection", "election_selection.php"); ?>
       <h2>Election Details</h2>
     </header>
 

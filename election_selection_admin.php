@@ -23,6 +23,7 @@
 
   <div class="wrapper">
     <header>
+      <?php print_back_button("Homepage", "homepage.php"); ?>
       <h2>Elections</h2>
     </header>
     <div class="selection">

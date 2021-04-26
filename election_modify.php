@@ -134,7 +134,8 @@
 
   <div class="wrapper">
     <header>
-      <h2>Election Details</h2>
+     <?php print_back_button("Election Details", "election_details.php", array('election' => $election_id)); ?>
+      <h2>Modify Election</h2>
     </header>
 
     <div class="body">

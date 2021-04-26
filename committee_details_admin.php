@@ -81,6 +81,7 @@
 
   <div class="wrapper">
     <header>
+      <?php print_back_button("Committee Selection", "committee_selection_admin.php"); ?>
       <h2>Committee Details</h2>
     </header>
     <div class="body tiles">

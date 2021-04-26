@@ -25,6 +25,7 @@
 
   <div class="wrapper">
     <header>
+     <?php print_back_button("Homepage", "homepage_super.php"); ?>
       <h2>Committees</h2>
     </header>
     <div class="selection">

@@ -70,6 +70,7 @@
 
   <div class="wrapper">
     <header>
+      <?php print_back_button("Election Details", "election_details.php", array('election' => $election_id)); ?>
       <h2>Nominate User</h2>
       <?php
           echo "<div class='sub heading'>&nbsp;—&nbsp;Election for the $com_name</div>";
@@ -77,8 +78,7 @@
 
     </header>
     <div class="selection">
-      <div class="results">
-        <form id="nomination" action="election_nominate_user.php?election=<?php echo $election_id; ?>" method="post">
+        <form class="results" id="nomination" action="election_nominate_user.php?election=<?php echo $election_id; ?>" method="post">
           <input type="hidden" name="election_id" value="<?php echo $election_id; ?>">
           <?php
           # pull nominee details
@@ -106,7 +106,6 @@
 
             ?>
         </form>
-      </div>
 
       <div class="options">
 

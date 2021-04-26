@@ -43,6 +43,7 @@
 
   <div class="wrapper">
     <header>
+     <?php print_back_button("Committee Selection", "committee_selection.php"); ?>
       <h2>Committee Details</h2>
     </header>
     <div class="body">
