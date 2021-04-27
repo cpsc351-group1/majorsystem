@@ -60,7 +60,7 @@
                   // Checkbox belongs to options form, placed here for visuals
                   echo "<div class='data'> <label for='$id'><b>$name</b><br>$description<br>Chair: <i>$chair_name</i></label>
                       <div class='result_choices'>
-                        <input class='checkbox' type='checkbox' name='committee' value='$id' form='create'></input>
+                        <input class='checkbox' type='checkbox' name='$id' form='options'></input>
                         <a href='committee_details.php?committee=$id'><button>Details >></button></a>
                       </div>
                     </div>";
@@ -73,9 +73,7 @@
             ?>
       </div>
         <!--TODO: add report generation href-->
-      <form class="options" method="post" action="#">  
         <h4>Options</h4>
-
         <hr>
         <!-- Selection Options -->
         <div>
@@ -83,13 +81,13 @@
           <button id="select_all" type="button" name="select_all">Select All</button>
           <button id="deselect_all" type="button" name="deselect_all">Deselect All</button>
         </div>
-
         <hr>
+       
         <!-- Administrative Options -->
-
+        <form action="committee_report.php" method="post" id='options'></form>
         <div class="choices">
         <a href="committee_setup.php"><button class="admin" type="button" name="add_user">Add Committee</button></a>
-          <input id="report" type="submit" name="report" value="Generate Report on Selected" disabled>
+        <input id="report" type="submit" name="report" value="Generate Report on Selected" form='options'>
           <!--TODO: implement this -->
         </div>
       </div>
