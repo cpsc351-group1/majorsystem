@@ -190,7 +190,7 @@ DELETE FROM `user`;
 /*    CNU_ID, Password, Fname, Lname, Email, Department, Position, Birthday, Hiring_Year, Gender, Race, Permissions, Photo    */
 
 INSERT INTO `user`
-  VALUES (1, 'admin', 'Test', 'Admin', 'admin@cnu.edu', 'All', 'Administrator', '2000-01-01', '2020', 'Non-binary', 'None', 'Admin', NULL, NULL);
+  VALUES (1, 'admin', 'Test', 'Admin', 'admin@cnu.edu', 'CNU Administration', 'Administrator', '2000-01-01', '2020', 'Non-binary', 'None', 'Admin', NULL, NULL);
 
 INSERT INTO `user`
   VALUES (00998877, 'testpass1', 'John', 'Doe', 'johndoe@cnu.edu', 'Molecular Biology and Chemistry', 'Associate Professor', '1979-01-01', '2020', 'Male', 'White', 'User', NULL, NULL);
