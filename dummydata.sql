@@ -36,7 +36,7 @@ INSERT INTO `user`
   VALUES (00955259, 'testpass8', 'Dolly', 'Parton', 'dollyparton@cnu.edu', 'Molecular Biology and Chemistry', 'Department Lead', '1946-01-19', '1998', 'Female', 'White', 'User', NULL, NULL);
 
 INSERT INTO `user`
-  VALUES (00982429, 'testpass9', 'Mike', 'Lapke', 'mikelapke@cnu.edu', 'Physics, Computer Science and Engineering', 'Associate Professor', '1960-02-03', '2020', 'Male', 'White', 'User', NULL, NULL);
+  VALUES (00938804, 'testpass9', 'Samuel', 'Tyler', 'samuel.tyler.17@cnu.edu', 'Molecular Biology and Chemistry', 'Student', '1999', '2017', 'Male', 'White', 'User', NULL, NULL);
 
 INSERT INTO `user`
   VALUES (00944004, 'testpass10', 'Onika', 'Maraj-Petty', 'onikamaraj@cnu.edu', 'Luter School of Business', 'Department Lead', '1982-12-08', '2000', 'Female', 'Black or African American', 'User', NULL, NULL);
@@ -138,3 +138,6 @@ INSERT INTO `nomination`
 
 INSERT INTO `nomination`
   VALUES (2, 1, 00998877);
+
+INSERT INTO `nomination`
+  VALUES (3, 00998877, 00987987);
