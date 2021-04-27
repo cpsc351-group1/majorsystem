@@ -217,7 +217,7 @@ INSERT INTO `user`
   VALUES (00955259, 'testpass8', 'Dolly', 'Parton', 'dollyparton@cnu.edu', 'Molecular Biology and Chemistry', 'Department Lead', '1946-01-19', '1998', 'Female', 'White', 'User', NULL, NULL);
 
 INSERT INTO `user`
-  VALUES (00938804, 'testpass9', 'Samuel', 'Tyler', 'samuel.tyler.17@cnu.edu', 'Molecular Biology and Chemistry', 'Student', '1999', '2017', 'Male', 'White', 'User', NULL, NULL);
+  VALUES (00938804, 'testpass9', 'Samuel', 'Tyler', 'samuel.tyler.17@cnu.edu', 'Molecular Biology and Chemistry', 'Student', '1999-09-15', '2017', 'Male', 'White', 'User', NULL, NULL);
 
 INSERT INTO `user`
   VALUES (00944004, 'testpass10', 'Onika', 'Maraj-Petty', 'onikamaraj@cnu.edu', 'Luter School of Business', 'Department Lead', '1982-12-08', '2000', 'Female', 'Black or African American', 'User', NULL, NULL);
@@ -269,7 +269,7 @@ INSERT INTO `committee seat`
   VALUES (8, 4, '2021-02-14', NULL, 00955259);
 
 INSERT INTO `committee seat`
-  VALUES (9, 5, '2020-05-20', NULL, 00982429);
+  VALUES (9, 5, '2020-05-20', NULL, 00938804);
 
 INSERT INTO `committee seat`
   VALUES (10, 5, '2017-07-13', NULL, 00944004);
@@ -285,7 +285,7 @@ INSERT INTO `chairman` VALUES (3, 00933833);
 
 INSERT INTO `chairman` VALUES (4, 00955259);
 
-INSERT INTO `chairman` VALUES (5, 00982429);
+INSERT INTO `chairman` VALUES (5, 00938804);
 
 /*    ELECTION    */
 /*    Election_ID, Committee_Committee_ID, Status, Number_Seats    */
