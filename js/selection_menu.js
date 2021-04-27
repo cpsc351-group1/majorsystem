@@ -13,11 +13,13 @@ $(document).ready(function() {
 
   $('#select_all').click(function() {
     $('.checkbox').prop('checked', true);
+    $('#report').prop('disabled', false);
     parent_styles();
   });
 
   $('#deselect_all').click(function() {
     $('.checkbox').prop('checked', false);
+    $('#report').prop('disabled', true);
     parent_styles();
   });
 
