@@ -4,7 +4,7 @@ $current_user = query_user($current_user_id);
 $current_user_name = $current_user['Fname']." ".$current_user["Lname"];
 
 echo "
-<button class='toggler'></button>
+<button class='toggler'><span class='menu_icons'><div>≡</div><div>X</div></span></button>
 <div class='menu_focus'></div>
 <div class='menu_wrapper'>
     <div class='menu_header'>
