@@ -60,10 +60,6 @@
           <div class="tiles">
             <div class="tile center tall">
               <div class="image">
-                <!-- TODO: dynamically insert image -->
-                <?php
-                  echo '<img src="data:image/png;base64,'.base64_encode($user['Photo']).'"/>';
-                ?>
               </div>
               <?php
                 if (($user_id == $current_user_id) or ($current_user_permissions == "Admin") and $user['Archival_Date'] == NULL) {
