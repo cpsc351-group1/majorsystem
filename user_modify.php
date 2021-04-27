@@ -257,7 +257,7 @@
             <!-- TODO: add photo uploading capability -->
             <label for="img" class="heading">Account Image</label>
             <div class="image"></div>
-            <input type="file" id="img" name="img" value=NULL accept="image/png">
+            <input type="file" id="img" name="img" value=NULL accept="image/png" disabled>
           </div>
           <?php
             if ($current_user_id != $CNU_ID) {

@@ -12,14 +12,21 @@ $(document).ready(function() {
   });
 
   $('#select_all').click(function() {
-  $('.checkbox').prop('checked', true);
+    $('.checkbox').prop('checked', true);
+    parent_styles();
   });
 
   $('#deselect_all').click(function() {
-  $('.checkbox').prop('checked', false);
+    $('.checkbox').prop('checked', false);
+    parent_styles();
   });
 
+  function parent_styles() {
+    $('.data').removeClass('checked');
+    $('.data:has(input:checked)').addClass('checked');
+  }
+
   $(document).on("input", function() {
-    update_search($("search"), $(".results"));
+    parent_styles();
   });
  });

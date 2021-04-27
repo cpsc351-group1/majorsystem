@@ -168,6 +168,11 @@ a {
   border: 1px solid #222222;
 }
 
+.data.checked {
+  background-color: #ffffff;
+  border: 1px solid #222222;
+}
+
 .Complete, .greyed {
   background-color: #BCBCBC;
   font-style: italic;

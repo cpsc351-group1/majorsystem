@@ -146,7 +146,7 @@
             <!-- TODO: add photo uploading capability -->
             <label for="img" class="heading">Account Image</label>
             <div class="image"></div>
-            <input type="file" id="img" name="img" value=NULL accept="image/png">
+            <input type="file" id="img" name="img" value=NULL accept="image/png" disabled>
           </div>
           <div class="tile list">
             <span class="sub heading">Password</span>
