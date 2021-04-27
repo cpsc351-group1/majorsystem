@@ -48,7 +48,13 @@
 
   <div class="wrapper">
     <header>
-      <?php print_back_button("User Selection", "user_selection.php"); ?>
+      <?php
+        if ($current_user_permissions != 'User') {
+          print_back_button("User Selection", "user_selection.php");
+        } else {
+          print_back_button("Homepage", "homepage.php");
+        }
+       ?>
       <h2>User Details</h2>
     </header>
     <div class="body">

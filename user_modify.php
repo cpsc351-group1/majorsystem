@@ -179,10 +179,11 @@
           <span class="sub heading">Employment</span>
           <!-- TODO: turn into dropdown menus where appropriate-->
           <div class="list">
-            <label for='department'>Department</label>
-            <select id="department" name="department">
+            <label for='department' class='required'>Department</label>
+            <select id="department" name="department" required>
               <?php
               $dept_options = array(
+                "CNU Administration",
                 "Communication",
                 "Economics",
                 "Preparation/Teacher Education",
@@ -209,8 +210,8 @@
               ?>
             </select>
 
-            <label for='position'>Position</label>
-            <input id='position' type="text" name="position" placeholder="Position" <?php print_value($Position); ?> >
+            <label for='position' class='required'>Position</label>
+            <input id='position' type="text" name="position" placeholder="Position" <?php print_value($Position); ?> required>
 
             <label for='hiring_year' class='required'>Hiring Year</label>
             <input id='hiring_year' type="number" name="hiring_year" max='<?php echo date('Y')."'"; echo " value='$Hiring_Year'" ?> required>
