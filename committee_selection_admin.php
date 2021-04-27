@@ -72,6 +72,7 @@
 
             ?>
       </div>
+      <div class='options'>
         <!--TODO: add report generation href-->
         <h4>Options</h4>
         <hr>
@@ -84,11 +85,10 @@
         <hr>
        
         <!-- Administrative Options -->
-        <form action="committee_report.php" method="post" id='options'></form>
+        <form action="committee_report.php" method="post" id='options' name='options'></form>
         <div class="choices">
-        <a href="committee_setup.php"><button class="admin" type="button" name="add_user">Add Committee</button></a>
-        <input id="report" type="submit" name="report" value="Generate Report on Selected" form='options'>
-          <!--TODO: implement this -->
+          <a href="committee_setup.php"><button class="admin" type="button" name="add_user">Add Committee</button></a>
+          <input id="report" type="submit" name="report" value="Generate Report on Selected" form='options'>
         </div>
       </div>
       
