@@ -16,6 +16,17 @@
         $entered_id = $_GET['user'];
         $user = query_user($entered_id);
       }
+
+      if (isset($_POST['unarchive'])) {
+        $unarchive_sql = "UPDATE `User`
+                          SET Archival_Date = NULL
+                          WHERE CNU_ID = '$entered_id'";
+
+        $conn->query($unarchive_sql) or die($conn->error);
+
+        header("Location: user_details.php?user=$entered_id");
+        exit();
+      }
       
       validate_inputs($user == NULL, false, 'user_selection.php');
 
@@ -44,10 +55,12 @@
       <div class="column">
         <!-- Heading -->
         <span class="major sub heading"><?php echo $user['Fname'].' '.$user['Lname'];?>
-          <i>
+          <i class="red">
             <?php
               if ($user['Archival_Date'] != NULL) {
                 echo " (Archived)";
+              } elseif ($user['Permissions'] == 'Super') {
+                echo "★ Superuser";
               }
             ?>
           </i>
@@ -58,14 +71,12 @@
           <div class="tiles">
             <div class="tile center tall">
               <div class="image">
-                <!-- TODO: dynamically insert image -->
-                <?php
-                  echo '<img src="data:image/png;base64,'.base64_encode($user['Photo']).'"/>';
-                ?>
               </div>
               <?php
                 if (($user_id == $current_user_id) or ($current_user_permissions == "Admin") and $user['Archival_Date'] == NULL) {
                   echo "<form action='user_modify.php' method='get'><button name='user' value='$user_id'>Modify Profile</button></form>";
+                } elseif ($current_user_permissions == "Admin" and $user['Archival_Date'] != NULL){
+                  echo "<form action='user_details.php?user=$user_id' method='post'><button class='admin' name='unarchive' value='$user_id'>Un-Archive Profile</button></form>";
                 }
               ?>
             <form action="user_details.php" method="post"></form>

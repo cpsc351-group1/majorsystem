@@ -76,17 +76,9 @@
             ?>
       </div>
       <div class="options">
-        <!--TODO: add report generation href-->
-        
-        <span class="sub heading">Options</span>
-
-        <hr>
-
-        <div>
-            <button id="select_all" type="button" name="select_all">Select All</button>
-            <button id="deselect_all" type="button" name="deselect_all">Deselect All</button>
-        </div>
-
+        <p class='center'>
+          Please select a committee to see its details.
+        </p>
       </div>
     </div>
   </div>

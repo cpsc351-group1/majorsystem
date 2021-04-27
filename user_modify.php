@@ -17,6 +17,9 @@
                         WHERE CNU_ID = $user_id";
       $conn->query($superuser_sql);
 
+      header("Location: user_details.php?user=$user_id");
+      exit();
+
     }
 
     if (isset($_POST['remove_superuser'])) {
@@ -26,6 +29,9 @@
                         SET `Permissions` = 'User'
                         WHERE CNU_ID = $user_id";
       $conn->query($superuser_sql);
+
+      header("Location: user_details.php?user=$user_id");
+      exit();
 
     }
 
@@ -48,7 +54,7 @@
                        WHERE `CNU_ID` = $user_id";
       $conn->query($archival_sql) or die($conn->error);
 
-      header("Location: user_selection.php");
+      header("Location: user_details.php?user=$user_id");
       exit();
     }
 

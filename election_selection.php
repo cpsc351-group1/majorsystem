@@ -68,6 +68,11 @@
 
             ?>
       </div>
+      <div class="options">
+        <p class='center'>
+          Please select a election to see its details.
+        </p>
+      </div>
     </div>
   </div>
 
