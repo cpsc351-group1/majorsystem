@@ -181,7 +181,7 @@
                 break;
               case 'Voting':
                 // vote in election option
-                $disabled = !($votes_count >= $num_seats and $noms_count != $num_seats);
+                $disabled = !($votes_count >= $num_seats or $noms_count == $num_seats);
                 echo "$delete_html
                       <form id='status' action='election_modify.php?election=$election_id' method='post'>"
                         .($disabled ? "<div class='tip bottom'>Less votes submitted than electable seats</div>" : "")
