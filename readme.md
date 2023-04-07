@@ -22,7 +22,7 @@ The default MySQL port is hard-coded to `3308` in [databaseconnect.php](https://
 
 Next, you'll need to generate the underlying database using `database.sql` as a query. Once that query completes, you should be able to access the web-server interface at `localhost:3308` (*or whatever MySQL port number you have in place of `3308`*).
 
-[Screenshot of MySQL database, showing various passwords. Same as examples given below.](https://user-images.githubusercontent.com/9289863/230565629-df2694fd-64b3-4eab-ba63-39f87f697c21.png")
+![Screenshot of MySQL database, showing various passwords. Same as examples given below.](https://user-images.githubusercontent.com/9289863/230565629-df2694fd-64b3-4eab-ba63-39f87f697c21.png")
 
 Create an account, or sign in using [someone else's password](https://github.com/cpsc351-group1/majorsystem/blob/main/database.sql#L192-L223).
 
