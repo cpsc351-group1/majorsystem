@@ -16,16 +16,29 @@ https://docs.google.com/document/d/1DjevFpbf6gJFbpAEUbiKhVj7KkbwjKkyaLZr0A2OqNo/
 
 ### Usage
 
-This entire codebase can be interacted with by placing it in the htdocs folder of any Apache web-server hosting software you use. If you're looking for a hosting tool, I recommend <a href="https://www.apachefriends.org/">XAMPP</a>, though this was predominantly developed using <a href="https://www.mamp.info/">MAMP</a>.
+This entire codebase can be interacted with by placing it in the htdocs folder of any Apache web-server hosting software you use. If you're looking for a hosting tool, I recommend [XAMPP](https://www.apachefriends.org/), though this was predominantly developed using [MAMP](https://www.mamp.info/).
 
-The default MySQL port is hard-coded to `3308` in <a href=https://github.com/cpsc351-group1/majorsystem/blob/main/databaseconnect.php#L5>databaseconnect.php</a>, but can easily be changed.
+The default MySQL port is hard-coded to `3308` in [databaseconnect.php](https://github.com/cpsc351-group1/majorsystem/blob/main/databaseconnect.php#L5), but can easily be changed.
 
 Next, you'll need to generate the underlying database using `database.sql` as a query. Once that query completes, you should be able to access the web-server interface at `localhost:3308` (*or whatever MySQL port number you have in place of `3308`*).
 
-<img width="554" alt="Screen Shot 2023-04-07 at 3 44 12 AM" src="https://user-images.githubusercontent.com/9289863/230565629-df2694fd-64b3-4eab-ba63-39f87f697c21.png">
+[Screenshot of MySQL database, showing various passwords. Same as examples given below.](https://user-images.githubusercontent.com/9289863/230565629-df2694fd-64b3-4eab-ba63-39f87f697c21.png")
 
-Create an account, or sign in using <a href="https://github.com/cpsc351-group1/majorsystem/blob/main/database.sql#L192-L223">someone else's password</a>.
+Create an account, or sign in using [someone else's password](https://github.com/cpsc351-group1/majorsystem/blob/main/database.sql#L192-L223).
 
 ### Capabilities
 
-This web-server is able 
+This web-server is able to maintain a large list of faculty organized into various committees. It also has a comprehensive web-based front-end with varying levels of user read/write access to faculty information. Atop all of that, the database contains a built-in election handling system that can be participated in by all users to appoint faculty to committee positions.
+
+#### User Types
+- *Administrator* — (username `1`,             password `admin`) <sub>top security</sub>
+- *Super-User* —    (e.g. username `00978879`, password `testpass3`)
+- *User* —          (e.g. username `00966678`, password `testpass4`)
+
+## Credits
+
+Majority of codebase, and this readme.md by [skyset](https://github.com/skyset) (Samuel Tyler)
+
+#### Additional Contributors
+
+Kenneth Sheppard, Matthew Orr, Melissa Thompson, Bradley McCoy
