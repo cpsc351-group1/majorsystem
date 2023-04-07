@@ -22,7 +22,7 @@ The default MySQL port is hard-coded to `3308` in <a href=https://github.com/cps
 
 Next, you'll need to generate the underlying database using `database.sql` as a query. Once that query completes, you should be able to access the web-server interface at `localhost:3308` (*or whatever MySQL port number you have in place of `3308`*).
 
-![image](https://user-images.githubusercontent.com/9289863/230565079-f545bef5-8b71-40d3-8210-9ebeb6a63fdc.png)
+<img width="554" alt="Screen Shot 2023-04-07 at 3 44 12 AM" src="https://user-images.githubusercontent.com/9289863/230565629-df2694fd-64b3-4eab-ba63-39f87f697c21.png">
 
 Create an account, or sign in using <a href="https://github.com/cpsc351-group1/majorsystem/blob/main/database.sql#L192-L223">someone else's password</a>.
 
